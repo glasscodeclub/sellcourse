@@ -1,11 +1,56 @@
-<h1> Sign Up Form </h1>
+<html>
+<head>
+    <link rel="stylesheet" href="/css/signform.css"/>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"/>
+</head>
+<body>
+<div class="container">
+    <div class="formWrapper">
+        <div class="welcomeDiv">
+            <h2>Sign Up</h2>
+            <p class="text">Learn to code.</p>
+            <p class="text">Interactively.</p>
+            <p class="text">
+            Explore your creativity with thousands of inspiring classes in design, illustration, photography, and more.</p>
+            <button class="demo">Watch demo</button>
+        </div>
+        <div class="formDiv">
+            <h2>Join over 25 million learners from around the globe</h2>
+            
+            <p class="text">Register with email address</p>
+            <form method="POST" action="/register">
+                <div class="formGroup">
+                    <input type="text" name="email" id="email" placeholder="Email">
+                </div>
+                <div class="formGroup">
+                    <input type="text" name="username" id="username" placeholder="Username">
+                </div>
+                <div class="formGroup">  
+                    <input type="text" name="password" id="password" placeholder="Password">
+                </div>
+                <button class="btn">Sign Up</button>
+            </form>
 
-<form method="POST" action="/register">
-    <input type="text" name="username" placeholder="username">
-    <input type="password" name="password" placeholder="password">
-    <button> Submit </button>
-</form>
-
-<li><a href="/">Sign Up</a></li>
-<li><a href="/logout">Logout!</a></li>
-<li><a href="/login">Login!</a></li>
+            
+            <hr>
+            <div class="orDiv">or</div>
+            <center>continue with these social profiles</center>
+            <div class="or"></div>
+            <div class="socialBtn">
+                <div class="google icon"><i class="fab fa-google"></i></div>
+                <div class="fb icon"><i class="fab fa-facebook-f"></i></div>
+                <div class="twitter icon"><i class="fab fa-twitter"></i></div>
+                <div class="github icon"><i class="fab fa-github"></i></div>
+            </div>
+            <h4>Already a member? 
+                <a href="/login">Login</a>
+            </h4>
+            <hr>
+            <div class="terms">
+                <span>By signing up you agree to CrashCourse's <a href="#">Terms of Service</a>.</span>
+            </div>
+        </div>      
+    </div>
+</div>
+</body>
+</html>

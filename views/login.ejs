@@ -1,11 +1,49 @@
-<h1>Login</h1>
+<html>
+<head>
+    <link rel="stylesheet" href="/css/signform.css" />
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+</head>
 
-<form method="POST" action="/login">
-    <input type="text" name="username" placeholder="username">
-    <input type="password" name="password" placeholder="password">
-    <button> Login </button>
-</form>
+<body>
+    <div class="container">
+        <div class="formWrapper">
+            <div class="welcomeDiv">
+                <h2>Welcome back</h2>
+                <p class="text">
+                    Sign in to continue to your account.</p>
+  
+            </div>
+            <div class="formDiv">
+                <h2>Join over 25 million learners from around the globe</h2>
 
-<li><a href="/">Sign Up</a></li>
-<li><a href="/logout">Logout!</a></li>
-<li><a href="/login">Login!</a></li>
+                <p class="text">Sign in with email address</p>
+                <form method="POST" action="/login">
+                
+                <div class="formGroup">
+                    <input type="text" name="username" id="username" placeholder="Username">
+                </div>
+                <div class="formGroup">
+                    <input type="text" name="password" id="password" placeholder="Password">
+                </div>
+				 <button class="btn">Sign In</button>
+                </form>
+
+               
+                <hr>
+                <div class="orDiv">or</div>
+                <center>continue with these social profiles</center>
+                <div class="or"></div>
+                <div class="socialBtn">
+                    <div class="google icon"><i class="fab fa-google"></i></div>
+                    <div class="fb icon"><i class="fab fa-facebook-f"></i></div>
+                    <div class="twitter icon"><i class="fab fa-twitter"></i></div>
+                    <div class="github icon"><i class="fab fa-github"></i></div>
+                </div>
+                <h4>Not a member yet?
+                    <a href="/signup">Sign Up.</a>
+                </h4>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

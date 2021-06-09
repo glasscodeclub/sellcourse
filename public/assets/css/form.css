@@ -1,0 +1,72 @@
+.img-section{
+	background: url('/assets/img/form.jpg');
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	height: 100vh;
+	width: 100%;
+	padding-top: 9vw;
+}
+.img-section-child{
+	width: 80%;
+	margin-left: 20%;
+	height: initial;
+	padding: 2vw 1vw 1vw;
+}
+.img-section img{
+	width: 40%;
+	margin-left: 30%;
+	margin-right: 30%;
+}
+.img-section h3{
+	text-align: center;
+	margin-top: 2vw;
+	padding: 2vw 3vw;
+	font-size: 24px;
+	background-color: rgba(255,255,255,0.6);
+}
+.form-section{
+	margin-top: 9vw;
+	width: 80%;
+	/*margin-left: 5%;*/
+	margin-right: 20%;
+	padding: 2vw;
+}
+.toggle .btn-group{
+	width: 100%;
+}
+.form{
+	/*margin-left: 2vw;*/
+	margin-top: 2vw;
+}
+.form button{
+	width: 100%;
+}
+
+
+
+@media all and (max-width: 600px){
+	.form-section {
+		margin-bottom: 5vw;
+	}
+	.img-section{
+		/*background: url('/assets/img/form.jpg');*/
+		height: 60vh !important;
+		width: 100%;
+		margin: 0;
+		padding-top: 20vw;
+	}
+	.img-section-child{
+		width: 100%;
+		margin-left: 0;
+		height: initial;
+		padding: 2vw 1vw 1vw;
+	}
+	.form-section{
+		margin-top: 9vw;
+		width: 90%;
+		margin-left: 5%;
+		margin-right: 5%;
+		padding: 2vw;
+	}
+}
