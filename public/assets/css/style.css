@@ -737,12 +737,15 @@ section {
 # Courses
 --------------------------------------------------------------*/
 .courses .course-item {
-  border-radius: 5px;
+  border-radius: 3px;
   border: 1px solid #eef0ef;
+  margin-left: 35px;
+  margin-right: 35px;
+  box-shadow: 0 0 7px #eef0ef;
 }
 
 .courses .course-content {
-  padding: 15px;
+  padding: 25px;
 }
 
 .courses .course-content h3 {
@@ -766,10 +769,12 @@ section {
 
 .courses .course-content h4 {
   font-size: 14px;
-  background: #5fcf80;
+  background: #5fcf8131;
   padding: 7px 14px;
-  color: #fff;
+  color: #5fcf80;
   margin: 0;
+  /* border: 1px solid #5fcf80; */
+  border-radius: 10px;
 }
 
 .courses .course-content .price {
@@ -799,6 +804,15 @@ section {
 .courses .trainer .trainer-rank {
   font-size: 18px;
   color: #657a6d;
+}
+
+p.learn-more {
+  color: #5fcf80;
+}
+
+.courses .img-fluid {
+  border: none;
+  /* border-radius: 3px 3px 0 0;*/
 }
 
 /*--------------------------------------------------------------
