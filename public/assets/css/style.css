@@ -485,6 +485,41 @@ h6 {
   }
 }
 
+.getting-started{
+  margin-top: 50px;
+  margin-left: 50px;
+  max-height: 500px;
+  width: 400px;
+  background-color: white;
+  padding: 32px 24px;
+  border: 2px solid #111;
+  box-sizing: border-box;
+  align-items: center;
+  position: relative;
+  color: #111;
+}
+
+.getting-started h1{
+  font-size: 18px;
+  color:#111 !important;
+}
+
+.getting-started .btn-get-started {
+  border: 2px solid #111 !important;
+  color: #111 !important;
+}
+
+.getting-started h2{
+  color: #111 !important;
+  margin: 10px 0 0 0;
+  font-size: 24px;
+}
+
+
+
+
+
+
 /*--------------------------------------------------------------
 # Sections General
 --------------------------------------------------------------*/
