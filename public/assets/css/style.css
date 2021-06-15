@@ -422,12 +422,12 @@ h6 {
 }
 
 #hero .container {
-  padding-top: 72px;
+  padding-top: 30px;
 }
 
 @media (max-width: 992px) {
   #hero .container {
-    padding-top: 62px;
+    padding-top: 38px;
   }
 }
 
@@ -453,16 +453,18 @@ h6 {
   letter-spacing: 1px;
   display: inline-block;
   padding: 10px 35px;
-  border-radius: 50px;
+  border-radius: 10px;
   transition: 0.5s;
-  margin-top: 30px;
-  border: 2px solid #fff;
-  color: #fff;
+  margin-top: 10px;
+  border: 2px solid #f6f7f6;
+  background-color: #5fcf8131;
+  color: #5fcf80;
 }
 
 #hero .btn-get-started:hover {
   background: #5fcf80;
   border: 2px solid #5fcf80;
+  color: #111;
 }
 
 @media (min-width: 1024px) {
@@ -492,11 +494,11 @@ h6 {
   width: 400px;
   background-color: white;
   padding: 32px 24px;
-  border: 2px solid #111;
+  border: 2px solid #f6f7f6;
   box-sizing: border-box;
   align-items: center;
-  position: relative;
   color: #111;
+  border-radius: 3px;
 }
 
 .getting-started h1{
@@ -504,10 +506,7 @@ h6 {
   color:#111 !important;
 }
 
-.getting-started .btn-get-started {
-  border: 2px solid #111 !important;
-  color: #111 !important;
-}
+
 
 .getting-started h2{
   color: #111 !important;

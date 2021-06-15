@@ -13,6 +13,7 @@ router.get('/links', (req, res) => {
     res.render('links');
 });
 
+
 router.get('/secret', isLoggedIn, (req, res) => {
     res.render('secret');
 });
@@ -78,29 +79,29 @@ router.get('/signup2', (req, res) => {
 });
 
 //handling user sign up
-router.post('/register', function(req, res){
-    User.register(new User({username:req.body.username}), req.body.password, function(err, user){
-       if(err){
+router.post('/register', function (req, res) {
+    User.register(new User({ username: req.body.username }), req.body.password, function (err, user) {
+        if (err) {
             console.log(err);
             return res.render('signup');
         } //user strategy
-        passport.authenticate("local")(req, res, function(){
+        passport.authenticate("local")(req, res, function () {
             res.redirect("/secret"); //once the user sign up
-       }); 
+        });
     });
 });
 
 
 
 // middleware
-router.post("/login", passport.authenticate("local",{
-    successRedirect:"/secret",
-    failureRedirect:"/login"
-}),function(req, res){
-    res.send("User is "+ req.user.id);
+router.post("/login", passport.authenticate("local", {
+    successRedirect: "/secret",
+    failureRedirect: "/login"
+}), function (req, res) {
+    res.send("User is " + req.user.id);
 });
 
-router.get("/logout", function(req, res){
+router.get("/logout", function (req, res) {
     req.logout();
     res.redirect("/");
 });
