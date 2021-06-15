@@ -779,6 +779,10 @@ section {
   box-shadow: 0 0 7px #eef0ef;
 }
 
+.courses .course-item:hover{
+  box-shadow: 0 0 11px rgba(33,33,33,.2); 
+}
+
 .courses .course-content {
   padding: 25px;
 }
@@ -1832,7 +1836,7 @@ p.learn-more {
 
 .courses-taken {
   padding: 50px;
-  background: #eef0ef;
+/*  background: #eef0ef; */
 }
 
 .new-courses-taken {
@@ -1908,25 +1912,29 @@ p.learn-more {
 }
 
 .bio-desk {
-  padding: 15px;
-  margin: 30px;
-  border: 1px solid #eef0ef;
-  padding-left: 10px;
-  color: black;
-  background-color: white;
-  font-style: italic;
-  display: block;
-  box-shadow: 0 6px 12px rgb(0 0 0 / 8%), 0 4px 12px rgb(0 0 0 / 8%);
+  border-radius: 3px;
+    border: 1px solid #eef0ef;
+    margin-left: 25px;
+    margin-right: 25px;
+    margin-top: 35px;
+    margin-bottom: 35px;
+    box-shadow: 0 0 7px #eef0ef;;
+    background-color: white;
+}
+
+.bio-desk:hover{
+  box-shadow: 0 0 11px rgba(33,33,33,.2); 
 }
 
 .bio-desk img {
-  width: 335px;
-  height: 210px;
-  padding: 10px;
+  border: none;
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
 }
 
 .bio-desk .bio-desk-content {
-  padding-left: 20px;
+  padding: 20px;
 }
 
 .bio-desk-content h6 {
@@ -2339,7 +2347,7 @@ select.form-control:focus::-ms-value {
   width: 100%;
   background-color: rgb(94, 159, 94);
   color: #fff;
-  height: 4.8rem;
+  height: 3rem;
   position: relative;
   align-items: center;
   border-radius: 4px;
