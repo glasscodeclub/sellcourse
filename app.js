@@ -7,7 +7,12 @@ var express                 = require("express"),
     passportLocalMongoose   = require("passport-local-mongoose")
 
 const connectDB = require('./config/db');
+
+const dotenv = require('dotenv');
+dotenv.config({path: './config/config.env'});
+
 const router = require('./routes/routes');
+const courseRouter = require('./routes/course.routes/getCourses');
 const app = express();
 
 
@@ -31,8 +36,9 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.use('', router);
+app.use('/courses', courseRouter);
 
-
-app.listen(3000, function(){
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, function(){
     console.log('connect!');
 });

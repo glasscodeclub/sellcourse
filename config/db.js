@@ -1,9 +1,11 @@
 const mongoose = require('mongoose');
-const config = require('config');
-const db = config.get('mongoURI');
+const dotenv = require('dotenv');
+
+dotenv.config({path: './config/config.env'});
+const MONGO_URI = process.env.MONGO_URI;
 
 const connectDB = () => {
-    mongoose.connect(db, {
+    mongoose.connect(MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
