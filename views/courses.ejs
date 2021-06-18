@@ -83,18 +83,19 @@
 
         <div class="row" data-aos="zoom-in" data-aos-delay="100">
 
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
+          <% for(var i=0; i < results.length; i++){ %>
+          <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-4">
+            
             <div class="course-item">
               <img src="assets/img/course-1-new.jpg" class="img-fluid" alt="...">
               <div class="course-content">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                   <h4>Web Development</h4>
-                  <p class="price">$169</p>
+                  <p class="price">$<%- results[i].cost -%></p>
                 </div>
 
-                <h3><a href="course-details.html"><%-result-%></a></h3>
-                <p>Et architecto provident deleniti facere repellat nobis iste. Id facere quia quae dolores dolorem
-                  tempore.</p>
+                <h3><a href="course-details.html"><%-results[i].title-%></a></h3>
+                <p><%- results[i].description-%></p>
                 <p class="learn-more">Learn more <i class="bx bx-right-arrow-alt" data-inline="true"></i></p>
                 <div class="trainer d-flex justify-content-between align-items-center">
                   <div class="trainer-profile d-flex align-items-center">
@@ -110,7 +111,7 @@
               </div>
             </div>
           </div> <!-- End Course Item-->
-
+<!--
           <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
             <div class="course-item">
               <img src="assets/img/course-2-new.jpg" class="img-fluid" alt="...">
@@ -138,7 +139,7 @@
                 </div>
               </div>
             </div>
-          </div> <!-- End Course Item-->
+          </div>  
 
           <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-lg-0">
             <div class="course-item">
@@ -167,8 +168,9 @@
                 </div>
               </div>
             </div>
-          </div> <!-- End Course Item-->
-
+          </div>  
+        -->
+      <% } %>
         </div>
 
       </div>

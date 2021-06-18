@@ -6,7 +6,7 @@ exports.getCourses = function(req, res){
             console.log(err);
         }
         else{
-            res.render('../views/courses.ejs', {result: ans});
+            res.render('../views/courses.ejs', {results: ans});
         }
     })
 
