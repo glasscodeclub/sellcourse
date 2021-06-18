@@ -12,9 +12,10 @@ const dotenv = require('dotenv');
 dotenv.config({path: './config/config.env'});
 
 const router = require('./routes/routes');
-const courseRouter = require('./routes/course.routes/getCourses');
-const app = express();
+const courseRouter = require('./routes/course.router');
 
+const app = express();
+app.use( express.json() );
 
 app.use(express.static(__dirname + '/public'))
 connectDB();
@@ -35,8 +36,8 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-app.use('', router);
-app.use('/courses', courseRouter);
+//app.use('', router);
+app.use('', courseRouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, function(){
