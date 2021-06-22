@@ -7,8 +7,8 @@ const {
 } = require('../controllers/course.controller');
 
 
-router
-    .get('/courses', getCourses )
-    .post('/courses', createCourse);
+router.route('/')
+    .get(getCourses )
+    .post(createCourse);
     
 module.exports = router;

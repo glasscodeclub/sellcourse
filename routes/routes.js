@@ -6,7 +6,7 @@ const passport = require('passport');
 
 
 router.get('/', (req, res) => {
-    res.render("signup");
+    res.render("index");
 });
 
 router.get('/links', (req, res) => {
@@ -18,8 +18,8 @@ router.get('/secret', isLoggedIn, (req, res) => {
     res.render('secret');
 });
 
-router.get('/index', (req, res) => {
-    res.render('index');
+router.get('/signup', (req, res) => {
+    res.render('signup');
 });
 
 router.get('/about', (req, res) => {
@@ -80,22 +80,23 @@ router.get('/signup2', (req, res) => {
 
 //handling user sign up
 router.post('/register', function (req, res) {
-    User.register(new User({ username: req.body.username }), req.body.password, function (err, user) {
-        if (err) {
-            console.log(err);
-            return res.render('signup');
-        } //user strategy
-        passport.authenticate("local")(req, res, function () {
-            res.redirect("/secret"); //once the user sign up
+    User.register(new User({ username: req.body.username }), req.body.password,
+        function (err, user) {
+            if (err) {
+                console.log(err);
+                return res.render('signup');
+            } //user strategy
+            passport.authenticate("local")(req, res, function () {
+                res.redirect("/index"); //once the user sign up
+            });
         });
-    });
 });
 
 
 
 // middleware
 router.post("/login", passport.authenticate("local", {
-    successRedirect: "/secret",
+    successRedirect: "/home",
     failureRedirect: "/login"
 }), function (req, res) {
     res.send("User is " + req.user.id);
@@ -103,7 +104,7 @@ router.post("/login", passport.authenticate("local", {
 
 router.get("/logout", function (req, res) {
     req.logout();
-    res.redirect("/");
+    res.redirect("/home");
 });
 
 

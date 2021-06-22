@@ -452,10 +452,11 @@ h6 {
   font-size: 15px;
   letter-spacing: 1px;
   display: inline-block;
-  padding: 10px 35px;
+  padding: 10px 25px;
   border-radius: 10px;
   transition: 0.5s;
   margin-top: 10px;
+  margin-bottom: 10px;
   border: 2px solid #f6f7f6;
   background-color: #5fcf8131;
   color: #5fcf80;
@@ -487,9 +488,9 @@ h6 {
   }
 }
 
-.getting-started{
+.getting-started {
   margin-top: 50px;
-  margin-left: 50px;
+  margin-left: 1%;
   max-height: 500px;
   width: 400px;
   background-color: white;
@@ -499,26 +500,19 @@ h6 {
   align-items: center;
   color: #111;
   border-radius: 3px;
-  position:relative;
+  position: relative;
 }
 
-.getting-started h1{
+.getting-started h1 {
   font-size: 18px;
-  color:#111 !important;
+  color: #111 !important;
 }
 
-
-
-.getting-started h2{
+.getting-started h2 {
   color: #111 !important;
   margin: 10px 0 0 0;
   font-size: 24px;
 }
-
-
-
-
-
 
 /*--------------------------------------------------------------
 # Sections General
@@ -779,8 +773,8 @@ section {
   box-shadow: 0 0 7px #eef0ef;
 }
 
-.courses .course-item:hover{
-  box-shadow: 0 0 11px rgba(33,33,33,.2); 
+.courses .course-item:hover {
+  box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
 }
 
 .courses .course-content {
@@ -1621,7 +1615,6 @@ p.learn-more {
   text-decoration: none;
 }
 
-
 /*--------------------------------------------------------------
 # Customers
 --------------------------------------------------------------*/
@@ -1836,7 +1829,7 @@ p.learn-more {
 
 .courses-taken {
   padding: 50px;
-/*  background: #eef0ef; */
+  /*  background: #eef0ef; */
 }
 
 .new-courses-taken {
@@ -1913,17 +1906,17 @@ p.learn-more {
 
 .bio-desk {
   border-radius: 3px;
-    border: 1px solid #eef0ef;
-    margin-left: 25px;
-    margin-right: 25px;
-    margin-top: 35px;
-    margin-bottom: 35px;
-    box-shadow: 0 0 7px #eef0ef;;
-    background-color: white;
+  border: 1px solid #eef0ef;
+  margin-left: 25px;
+  margin-right: 25px;
+  margin-top: 35px;
+  margin-bottom: 35px;
+  box-shadow: 0 0 7px #eef0ef;
+  background-color: white;
 }
 
-.bio-desk:hover{
-  box-shadow: 0 0 11px rgba(33,33,33,.2); 
+.bio-desk:hover {
+  box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
 }
 
 .bio-desk img {
@@ -2226,7 +2219,6 @@ select.form-control:focus::-ms-value {
   text-align: center;
   margin: 15px;
 }
-
 
 /*--------------------------------------------------------------
 # Cource Details
@@ -2680,4 +2672,3 @@ select.form-control:focus::-ms-value {
     background: rgb(94, 159, 94);
   }
 }
-
