@@ -4,6 +4,10 @@ const isLoggedIn = require('../middleware/isLoggedIn');
 const User = require('../models/user');
 const passport = require('passport');
 
+const {
+    forgotPwd
+} = require('../controllers/auth.controller');
+
 
 router.get('/', (req, res) => {
     res.render("index");
@@ -80,7 +84,14 @@ router.get('/signup2', (req, res) => {
 
 //handling user sign up
 router.post('/register', function (req, res) {
-    User.register(new User({ username: req.body.username }), req.body.password,
+    const { username, email } = req.body;
+
+    const user = new User({
+        username,
+        email
+    });
+
+    User.register(user, req.body.password,
         function (err, user) {
             if (err) {
                 console.log(err);
@@ -93,11 +104,9 @@ router.post('/register', function (req, res) {
 });
 
 
-
-// middleware
 router.post("/login", passport.authenticate("local", {
-    successRedirect: "/home",
-    failureRedirect: "/login"
+    successRedirect: "/",
+    failureRedirect: "/home/login"
 }), function (req, res) {
     res.send("User is " + req.user.id);
 });
@@ -106,6 +115,9 @@ router.get("/logout", function (req, res) {
     req.logout();
     res.redirect("/home");
 });
+
+router.post('/forgot', forgotPwd);
+
 
 
 module.exports = router;
