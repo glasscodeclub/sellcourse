@@ -68,7 +68,13 @@ router.get('/profile', (req, res) => {
 });
 
 router.get('/login', (req, res) => {
-    res.render('login');
+    if(req.query&&req.query.err == 'no_user'){
+        res.render('login', {err: true})
+    }
+    else{
+        res.render('login');
+    }
+   
 });
 
 router.get('/signup', (req, res) => {
@@ -107,7 +113,7 @@ router.post('/register', function (req, res) {
 
 router.post("/login", passport.authenticate("local", {
     successRedirect: "/",
-    failureRedirect: "/home/login"
+    failureRedirect: '/home/login?err="no_user"'
 }), function (req, res) {
     res.send("User is " + req.user.id);
 });

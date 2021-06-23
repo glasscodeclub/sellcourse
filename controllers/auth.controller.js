@@ -3,7 +3,7 @@ const passport = require('passport');
 const sendEmail = require('../lib/sendEmail');
 const crypto = require('crypto');
 
-// forgot password,
+// forgot password
 // post /home/forgot
 // public
 exports.forgotPwd = async (req, res) => {
@@ -76,9 +76,11 @@ exports.resetPassword = async (req, res) => {
         });
     }
 
-    user.password = req.body.password;
+
+    await user.setPassword(req.body.password);
     user.resetPwdToken = undefined;
     user.resetPwdExpire = undefined;
+
     await user.save();
 
     // how to redirect logged in user to the index page?
@@ -86,7 +88,7 @@ exports.resetPassword = async (req, res) => {
     //     successRedirect: "/",
     //     failureRedirect: "/home/login"
     // });
-
+    
     res.status(200).json({
         success: true,
         msg: 'pwd reset successfully'
