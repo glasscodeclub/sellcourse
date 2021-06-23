@@ -1,15 +1,11 @@
+const express = require('express');
 const User = require('../models/user');
 const passport = require('passport');
 const sendEmail = require('../lib/sendEmail');
-const crypto = require('crypto');
 
-// forgot password,
-// post /home/forgot
-// public
 exports.forgotPwd = async (req, res) => {
     const user = await User.findOne({ email: req.body.email });
 
-    console.log(req.body.email);
     if (!user) {
         return res.status(404).json({
             success: false,
@@ -18,21 +14,20 @@ exports.forgotPwd = async (req, res) => {
     }
 
     const resetToken = user.getResetPwdToken();
-    console.log(resetToken);
     await user.save({ validateBeforeSave: false });
 
-    const resetUrl = `${req.protocol}://${req.get('host')}/home/reset/${resetToken}`;
+    const resetUrl = `${req.protocol}://${req.get('host')}/home/forgot/${resetToken}`;
 
-    const text = `Click on this link to reset your password ${resetUrl}`;
+    const message = `Click on this link to reset your password ${resetUrl}`;
 
     try {
         await sendEmail({
             email: user.email,
             subject: 'Password reset token',
-            text
+            message
         });
 
-        return res.status(200).json({
+        res.status(200).json({
             success: true,
             msg: `Email sent to ${user.email}`,
             page: ''
@@ -54,41 +49,5 @@ exports.forgotPwd = async (req, res) => {
     res.status(200).json({
         success: true,
         data: user
-    });
-}
-
-
-// reset password
-// put /home/reset/:resetToken
-// public
-exports.resetPassword = async (req, res) => {
-    const resetPwdToken = crypto.createHash('sha256').update(req.params.resettoken).digest('hex');
-
-    const user = await User.findOne({
-        resetPwdToken,
-        resetPwdExpire: { $gt: Date.now() }
-    });
-
-    if (!user) {
-        return res.status(400).json({
-            success: false,
-            msg: 'Invalid token'
-        });
-    }
-
-    user.password = req.body.password;
-    user.resetPwdToken = undefined;
-    user.resetPwdExpire = undefined;
-    await user.save();
-
-    // how to redirect logged in user to the index page?
-    // passport.authenticate("local", {
-    //     successRedirect: "/",
-    //     failureRedirect: "/home/login"
-    // });
-
-    res.status(200).json({
-        success: true,
-        msg: 'pwd reset successfully'
     });
 };

@@ -21,7 +21,7 @@ app.use(express.json());
 app.use(express.static(__dirname + "/public"));
 connectDB();
 
-app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(require('express-session')({
     secret: 'Rusty is the best og in the worldpassport',
     resave: false,

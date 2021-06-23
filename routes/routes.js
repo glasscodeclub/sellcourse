@@ -5,8 +5,7 @@ const User = require('../models/user');
 const passport = require('passport');
 
 const {
-    forgotPwd,
-    resetPassword
+    forgotPwd
 } = require('../controllers/auth.controller');
 
 
@@ -118,7 +117,7 @@ router.get("/logout", function (req, res) {
 });
 
 router.post('/forgot', forgotPwd);
-router.put('/reset/:resettoken', resetPassword)
+
 
 
 module.exports = router;
