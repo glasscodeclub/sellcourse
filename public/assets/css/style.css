@@ -125,7 +125,7 @@ h6 {
 # Header
 --------------------------------------------------------------*/
 #header {
-  background: #fff;
+  background: #212529; /* #002435; #002333    */
   transition: all 0.5s;
   z-index: 997;
   padding: 15px 0;
@@ -209,7 +209,7 @@ h6 {
   font-family: "Poppins", sans-serif;
   font-size: 15px;
   font-weight: 500;
-  color: #37423b;
+  color: #fff;
   white-space: nowrap;
   transition: 0.3s;
 }
