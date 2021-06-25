@@ -51,8 +51,8 @@ router.get('/events', (req, res) => {
     res.render('events');
 });
 
-router.get('/login2', (req, res) => {
-    res.render("login2");
+router.get('/forgot', (req, res) => {
+    res.render("forgot");
 });
 
 router.get('/pricing', (req, res) => {
@@ -113,7 +113,7 @@ router.post('/register', function (req, res) {
 
 router.post("/login", passport.authenticate("local", {
     successRedirect: "/",
-    failureRedirect: '/home/login?err="no_user"'
+    failureRedirect: '/login?err="no_user"'
 }), function (req, res) {
     res.send("User is " + req.user.id);
 });

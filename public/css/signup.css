@@ -4,9 +4,6 @@ body {
   margin: 0px;
   padding: 0px;
   font-family: sans-serif;
-  box-sizing: border-box;
-  /* background-color: 191d20; */
-  background-color: #f4f4f4;
 }
 .modal .h2 {
   font-size: 1.5rem;
