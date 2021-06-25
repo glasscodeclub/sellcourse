@@ -14,6 +14,10 @@ router.get('/', (req, res) => {
     res.render("index");
 });
 
+router.get('/index', (req, res) =>{
+    res.render("index");
+});
+
 router.get('/links', (req, res) => {
     res.render('links');
 });
@@ -41,10 +45,6 @@ router.get('/contact', (req, res) => {
 
 router.get('/course-details', (req, res) => {
     res.render('course-details');
-});
-
-router.get('/courses', (req, res) => {
-    res.render('courses');
 });
 
 router.get('/events', (req, res) => {
@@ -105,14 +105,14 @@ router.post('/register', function (req, res) {
                 return res.render('signup');
             } //user strategy
             passport.authenticate("local")(req, res, function () {
-                res.redirect("/index"); //once the user sign up
+                res.redirect("/profile#courses-taken"); //once the user sign up
             });
         });
 });
 
 
 router.post("/login", passport.authenticate("local", {
-    successRedirect: "/",
+    successRedirect: "/profile#courses-taken",
     failureRedirect: '/login?err="no_user"'
 }), function (req, res) {
     res.send("User is " + req.user.id);
