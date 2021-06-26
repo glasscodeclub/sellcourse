@@ -12,7 +12,6 @@ const dotenv = require('dotenv');
 dotenv.config({ path: './config/config.env' });
 
 const routes = require('./routes/routes');
-const authRoutes = require('./routes/auth.router')
 const courseRoutes = require('./routes/course.router');
 
 const app = express();

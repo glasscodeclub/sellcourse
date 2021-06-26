@@ -5,30 +5,17 @@ body {
   padding: 0px;
   font-family: sans-serif;
 }
-.modal .h2 {
+.popup .h2 {
   font-size: 1.5rem;
 }
 /* Modal styling */
-.modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0);
+.popup {
+  position: relative;
   transition: 200ms ease-in-out;
   z-index: 999;
 }
 
-.modal.active {
-  transform: translate(-50%, -50%) scale(1);
-}
-
-.modal-header .close-button {
-  cursor: pointer;
-  border: none;
-  outline: none;
-  background: none;
-  font-size: 1.25rem;
-  font-weight: bold;
+.popup.active {
 }
 
 #overlay {
@@ -50,17 +37,19 @@ body {
 
 /* form styling */
 
-.modal .formWrapper {
+.formWrapper {
+  height: 100%;
   position: relative;
   display: flex;
   border-radius: 10px;
   box-shadow: 0px 0px 20px black;
 }
 
-.modal .welcomeDiv {
+.welcomeDiv {
   width: 50%;
   text-align: center;
-  border-radius: 5px 0px 0px 5px;
+  /* border-radius: 5px 0px 0px 5px; */
+  border-radius: 0px;
   padding: 10px;
   background-image: url(/img/signup/Sprinkle.svg);
   background-repeat: no-repeat;
@@ -68,15 +57,16 @@ body {
   color: white;
 }
 
-.modal .formDiv {
+.formDiv {
   width: 50%;
   padding: 8%;
   background-color: white;
   text-align: left;
-  border-radius: 0px 5px 5px 0px;
+  /*  border-radius: 0px 5px 5px 0px; */
+  border-radius: 0px;
 }
 
-.modal .icon {
+.icon {
   width: 20px;
   height: 20px;
   border-color: black;
@@ -84,7 +74,7 @@ body {
   margin: 5px;
 }
 
-.modal .orDiv {
+.orDiv {
   width: 10%;
   margin: 0 auto;
   position: relative;
@@ -93,12 +83,12 @@ body {
   background-color: white;
 }
 
-.modal .formGroup {
+.formGroup {
   width: 100%;
   position: relative;
 }
 
-.modal .formGroup input {
+.formGroup input {
   width: 95%;
   padding: 10px;
   margin-bottom: 5px;
@@ -106,18 +96,18 @@ body {
   border-radius: 5px;
 }
 
-.modal input::placeholder {
+input::placeholder {
   position: relative;
   left: 10px;
 }
 
-.modal hr {
+hr {
   height: 1px;
   background: lightgrey;
   border: none;
 }
 
-.modal .btn {
+.btn {
   font-size: medium;
   font-weight: bold;
   color: white;
@@ -131,7 +121,7 @@ body {
   left: 7%;
 }
 
-.modal .demo {
+.demo {
   font-size: medium;
   font-weight: bold;
   margin: 10px;
@@ -141,11 +131,11 @@ body {
   border-radius: 20px;
 }
 
-.modal h4 {
+h4 {
   text-align: center;
 }
 
-.modal .terms {
+.terms {
   text-align: center;
 }
 
@@ -167,33 +157,33 @@ body {
 }
 
 @media screen and (min-width: 1200px) {
-  .modal .formWrapper {
+  .formWrapper {
     width: 100%;
   }
 }
 
 @media screen and (max-width: 1000px) {
-  .modal .formWrapper {
+  .formWrapper {
     width: 100%;
   }
-  .modal .formDiv {
+  .formDiv {
     width: 60%;
   }
-  .modal .welcomeDiv {
+  .welcomeDiv {
     width: 40%;
     background-image: url(/img/signup/shapes.svg);
   }
 }
 
 @media screen and (max-width: 810px) {
-  .modal .formWrapper {
+  .formWrapper {
     width: 100%;
   }
-  .modal .formDiv {
+  .formDiv {
     width: 100%;
     border-radius: 5px;
   }
-  .modal .welcomeDiv {
+  .welcomeDiv {
     display: none;
   }
 }
@@ -218,24 +208,21 @@ body {
 }
  */
 @media screen and (max-width: 450px) {
-  .modal.active {
-    position: relative;
-  }
-  .modal .formWrapper {
+  .formWrapper {
     width: 100%;
     height: 100%;
     border-radius: none;
     box-shadow: none;
   }
-  .modal .formDiv {
+  .formDiv {
     width: 100%;
     border-radius: 0px;
   }
-  .modal .welcomeDiv {
+  .welcomeDiv {
     display: none;
   }
 }
 
-.modal a:link {
+a:link {
   color: gray;
 }

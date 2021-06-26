@@ -8,16 +8,16 @@
 </head>
 
 <body>
-	<button data-modal-target="#modal">Open Modal</button>
+<!--	<button data-modal-target="#modal">Open Modal</button> -->
 	<div id="overlay">
 	
 	</div>
 	<div class="modal" id="modal">
 		<div class="formWrapper">
 			<div class="welcomeDiv">
-				<h2>Reset Password</h2>
+				<h2>Forgot Password</h2>
 				<p class="text">
-					Please confirm your password to continue</p>
+					Please confirm your email address to continue</p>
 	
 			</div>
 			<div class="formDiv">
@@ -25,18 +25,15 @@
 					<div class="title">
 						<img src="/assets/img/logo-2.png" style="max-width:30px;max-height:30px;">
 					</div>
-					<button data-close-button class="close-button">&times;</button>
+
 				</div>
-				<h2>Please confirm your new password to continue</h2>
+				<h2>Please enter your email address</h2>
 	
-			<!--<p class="text">Sign in with email address</p> -->
-				<form method="POST" action="/reset/:id/:resettoken">
+			<p class="text">Enter the email address associated with this account to get a reset password link on your email</p> 
+				<form method="POST" action="/forgot">
 	
 					<div class="formGroup">
-						<input type="text" name="new_password" id="new_password" placeholder="New Password">
-					</div>
-					<div class="formGroup">
-						<input type="text" name="conf_password" id="conf_password" placeholder="Confirm Password">
+						<input type="text" name="email" id="email" placeholder="Email Address">
 					</div>
 					<button class="btn">Confirm</button>
 				</form>

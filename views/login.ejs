@@ -3,16 +3,10 @@
 <head>
     <link rel="stylesheet" href="/css/signup.css" />
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
-    <script defer src="/js/modal_script.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
-    <button data-modal-target="#modal">Open Modal</button>
-    <div id="overlay">
-
-    </div>
-    <div class="modal" id="modal">
         <div class="formWrapper">
             <div class="welcomeDiv">
                 <h2>Welcome back</h2>
@@ -23,9 +17,8 @@
             <div class="formDiv">
                 <div class="modal-header">
                     <div class="title">
-                        <img src="/assets/img/logo-2.png" style="max-width:30px;max-height:30px;">
+                        <a href="/"><img src="/assets/img/logo-2.png" style="max-width:30px;max-height:30px;"></a>
                     </div>
-                    <button data-close-button class="close-button">&times;</button>
                 </div>
                 <h2>Join over 25 million learners from around the globe</h2>
 
@@ -38,6 +31,9 @@
                     <div class="formGroup">
                         <input type="text" name="password" id="password" placeholder="Password">
                     </div>
+                    <p>
+                        <a href="/forgot">Forgot password?</a>
+                    </p>
                     <button class="btn">Sign In</button>
                 </form>
 
@@ -64,7 +60,6 @@
                 </h4>
             </div>
         </div>
-    </div>
 </body>
 
 </html>

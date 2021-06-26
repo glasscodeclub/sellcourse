@@ -5,7 +5,7 @@ const closeModalButtons = document.querySelectorAll('[data-close-button]')
 const overlay = document.getElementById('overlay')
 
 overlay.addEventListener('click', () => {
-    const modals = document.querySelectorAll('.modal.active');
+    const modals = document.querySelectorAll('.popup.active');
 
     modals.forEach(modal => {
         closeModal(modal);
@@ -21,7 +21,7 @@ openModalButtons.forEach(button => {
 
 closeModalButtons.forEach(button => {
     button.addEventListener('click', () =>{
-        const modal = button.closest('.modal');
+        const modal = button.closest('.popup');
         closeModal(modal)
     })
 })

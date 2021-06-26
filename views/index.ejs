@@ -11,22 +11,26 @@
 
       <!-- <h1 class="logo me-auto"><a href="index.html"></a></h1> -->
       <!-- Uncomment below if you prefer to use an image logo -->
-      <a href="/index" class="logo me-auto"><img src="assets/img/logo_white.png" alt="" class="img-fluid"></a>
+      <a href="/" class="logo me-auto"><img src="assets/img/logo_white.png" alt="" class="img-fluid"></a>
   
       <nav id="navbar" class="navbar order-last order-lg-0">
         <ul>
-          <li><a class="active" href="/index">Home</a></li>
+          <li><a class="active" href="/">Home</a></li>
           <li><a href="/courses">Courses</a></li>
           <li><a href="/pricing">Pricing</a></li>
-          <li class="dropdown"><a href="/profile" class="profile-btn"><i class="bx bx-user"></i>
-              <span>Profile</span><i class="bi bi-chevron-down"></i></a>
-            <ul>
-              <li><a href="/profile">My Profile</a></li>
-              <li><a href="/profile#courses-taken">My Courses</a></li>
-              <li><a href="/contact">Help</a></li>
-              <li><a href="/logout">Logout</a></li>
-            </ul>
-          </li>
+          <% if(login && login === true){ %>
+            <li class="dropdown"><a href="/profile" class="profile-btn"><i class="bx bx-user"></i>
+                <span>Profile</span><i class="bi bi-chevron-down"></i></a>
+              <ul>
+                <li style="color:black;"><a href="/profile">My Profile</a></li>
+                <li><a href="/contact">Help</a></li>
+                <li><a href="/logout">Logout</a></li>
+              </ul>
+            </li> 
+          <% } else { %>
+              <li><a href="/signup">Get Started</a></li>
+          <% } %>
+          
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
@@ -45,9 +49,14 @@
         <p>Future-ready skills are yours — starting at ₹490. Sale ends tomorrow.</p>
         <a href="/courses" class="btn-get-started">Browse courses</a>
         <hr>
-        <button data-modal-target="#modal">Open Modal</button>
-        <a href="/login" class="btn-get-started">Sign In</a> &nbsp; or &nbsp;
-        <a href="/signup" class="btn-get-started">Register</a>
+
+      <!-- <button data-modal-target="#popup">Sign in</button> -->
+
+  <%# if(login === false){ %>
+ <!--   <a href="/login" class="btn-get-started">Sign In</a> &nbsp; or &nbsp;
+    <a href="/signup" class="btn-get-started">Register</a>  -->
+  <%# } %>
+        
       </div>
     </div>
     <div id="Empty-space"></div>
@@ -56,7 +65,7 @@
   <main id="main">
 
     <!-- ======= About Section ======= -->
-    <%- include("./partials/login") %>
+    
     <section id="about" class="about">
       <div class="container" data-aos="fade-up">
 
@@ -150,19 +159,18 @@
         </div>
 
         <div class="row" data-aos="zoom-in" data-aos-delay="100">
-
+          <% for(var i=0; i < results.length; i++){ %>
           <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
             <div class="course-item">
               <img src="assets/img/course-1-new.jpg" class="img-fluid" alt="...">
               <div class="course-content">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                   <h4>Web Development</h4>
-                  <p class="price">$169</p>
+                  <p class="price">$<%- results[i].cost -%></p>
                 </div>
-
-                <h3><a href="course-details.html">Website Design</a></h3>
-                <p>Et architecto provident deleniti facere repellat nobis iste. Id facere quia quae dolores dolorem
-                  tempore.</p>
+                
+                <h3><a href="course-details.html"><%-results[i].title-%></a></h3>
+                <p><%- results[i].description-%></p>
                 <div class="trainer d-flex justify-content-between align-items-center">
                   <div class="trainer-profile d-flex align-items-center">
                     <img src="assets/img/trainers/trainer-1.jpg" class="img-fluid" alt="">
@@ -177,8 +185,8 @@
               </div>
             </div>
           </div> <!-- End Course Item-->
-
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
+            <% }%>
+<!--         <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
             <div class="course-item">
               <img src="assets/img/course-2-new.jpg" class="img-fluid" alt="...">
               <div class="course-content">
@@ -203,7 +211,7 @@
                 </div>
               </div>
             </div>
-          </div> <!-- End Course Item-->
+          </div>
 
           <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-lg-0">
             <div class="course-item">
@@ -230,8 +238,8 @@
                 </div>
               </div>
             </div>
-          </div> <!-- End Course Item-->
-
+          </div> 
+        -->
         </div>
 
       </div>

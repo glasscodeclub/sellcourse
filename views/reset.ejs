@@ -1,0 +1,65 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="/css/signup.css" />
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+    <script defer src="/js/modal_script.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+<!-- <button data-modal-target="#modal">Open Modal</button> -->
+    <div id="overlay">
+
+    </div>
+    <div class="modal" id="modal">
+        <div class="formWrapper">
+            <div class="welcomeDiv">
+                <h2>Reset Password</h2>
+                <p class="text">
+                    Please confirm your password to continue</p>
+
+            </div>
+            <div class="formDiv">
+                <div class="modal-header">
+                    <div class="title">
+                        <a href="/"><img src="/assets/img/logo-2.png" style="max-width:30px;max-height:30px;"></a>
+                    </div>
+               <!--    <button data-close-button class="close-button">&times;</button> -->
+                </div>
+                <h2>Please confirm your new password</h2>
+
+                <p class="text">Enter your new password and click on the confirm button</p>
+                <form method="POST" action="/reset/:id/:resettoken">
+
+                    <div class="formGroup">
+                        <input type="text" name="password" id="password" placeholder="New Password">
+                    </div>
+                 <!--  <div class="formGroup">
+                        <input type="text" name="conf_password" id="conf_password" placeholder="Confirm Password">
+                    </div> -->
+                    <button class="btn">Confirm</button>
+                </form>
+
+
+                <!--              <div class="orDiv">or</div>
+	                <center>continue with these social profiles</center>
+	                <div class="or"></div>
+	                <div class="socialBtn">
+	                    <div class="google icon"><i class="fab fa-google"></i></div>
+	                    <div class="fb icon"><i class="fab fa-facebook-f"></i></div>
+	                    <div class="twitter icon"><i class="fab fa-twitter"></i></div>
+	                    <div class="github icon"><i class="fab fa-github"></i></div>
+	                </div>
+	
+	            
+	                <div class="orDiv">&nbsp; or</div>
+	                <div class="or"></div>
+	                <button class="btn">Continue with &nbsp;<i class="fab fa-google"></i></button>
+	-->
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -18,10 +18,10 @@ exports.forgotPwd = async (req, res) => {
     }
 
     const resetToken = user.getResetPwdToken();
-    console.log(resetToken);
+    const id = user.id
     await user.save({ validateBeforeSave: false });
 
-    const resetUrl = `${req.protocol}://${req.get('host')}/home/reset/${resetToken}`;
+    const resetUrl = `${req.protocol}://${req.get('host')}/reset/${id}/${resetToken}`;
 
     const text = `Click on this link to reset your password ${resetUrl}`;
 
@@ -34,9 +34,8 @@ exports.forgotPwd = async (req, res) => {
 
         return res.status(200).json({
             success: true,
-            msg: `Email sent to ${user.email}`,
-            page: ''
-        })
+            msg: 'Check your inbox'
+        });
     } catch (err) {
         console.log(err);
         user.resetPwdToken = undefined;
@@ -62,12 +61,17 @@ exports.forgotPwd = async (req, res) => {
 // put /home/reset/:resetToken
 // public
 exports.resetPassword = async (req, res) => {
+     console.log(JSON.stringify(req.body.password));
     const resetPwdToken = crypto.createHash('sha256').update(req.params.resettoken).digest('hex');
+
+    console.log(resetPwdToken);
 
     const user = await User.findOne({
         resetPwdToken,
         resetPwdExpire: { $gt: Date.now() }
     });
+
+    console.log(user);
 
     if (!user) {
         return res.status(400).json({
@@ -89,8 +93,5 @@ exports.resetPassword = async (req, res) => {
     //     failureRedirect: "/home/login"
     // });
     
-    res.status(200).json({
-        success: true,
-        msg: 'pwd reset successfully'
-    });
+    return res.redirect('/login');
 };
