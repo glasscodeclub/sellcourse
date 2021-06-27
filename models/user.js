@@ -18,11 +18,11 @@ const UserSchema = new mongoose.Schema({
 UserSchema.plugin(passportLocalMongoose);
 
 UserSchema.methods.getResetPwdToken = function() {
-    const resetToken = crypto.randomBytes(20).toString('hex');
-    this.resetPwdToken = crypto.createHash('sha256').update(resetToken).digest('hex');
+    this.resetPwdToken = crypto.randomBytes(20).toString('hex');
     this.resetPwdExpire = Date.now() + 10 * 60 * 1000;
-
-    return resetToken;
+    console.log('token generated -');
+    console.log(this.resetPwdToken);
+    return this.resetPwdToken;
 };
 
 module.exports = mongoose.model("User", UserSchema);

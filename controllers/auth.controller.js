@@ -58,20 +58,18 @@ exports.forgotPwd = async (req, res) => {
 
 
 // reset password
-// put /home/reset/:resetToken
+// put /reset/:resetToken
 // public
 exports.resetPassword = async (req, res) => {
-     console.log(JSON.stringify(req.body.password));
-    const resetPwdToken = crypto.createHash('sha256').update(req.params.resettoken).digest('hex');
+    const resetPwdToken = req.params.resettoken;
 
-    console.log(resetPwdToken);
+    console.log(req.params.resettoken);
 
     const user = await User.findOne({
         resetPwdToken,
         resetPwdExpire: { $gt: Date.now() }
     });
 
-    console.log(user);
 
     if (!user) {
         return res.status(400).json({

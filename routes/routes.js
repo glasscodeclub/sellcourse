@@ -135,7 +135,9 @@ router.post('/forgot', forgotPwd);
 
 // reset password
 router.get('/reset/:id/:resettoken', (req, res) => {
-    res.render('reset');
+    return res.render('reset', {
+        id: req.params.id,
+        token: req.params.resettoken});
 })
 router.post('/reset/:id/:resettoken', resetPassword)
 

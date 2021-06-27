@@ -10,7 +10,7 @@
 <body>
 <!-- <button data-modal-target="#modal">Open Modal</button> -->
     <div id="overlay">
-
+    <% const url = `/reset/:${id}/:${token}` %>
     </div>
     <div class="modal" id="modal">
         <div class="formWrapper">
@@ -30,7 +30,7 @@
                 <h2>Please confirm your new password</h2>
 
                 <p class="text">Enter your new password and click on the confirm button</p>
-                <form method="POST" action="/reset/:id/:resettoken">
+                <form method="POST" action="<%url%>">
 
                     <div class="formGroup">
                         <input type="text" name="password" id="password" placeholder="New Password">
