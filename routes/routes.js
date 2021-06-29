@@ -4,6 +4,7 @@ const isLoggedIn = require('../middleware/isLoggedIn');
 const User = require('../models/user');
 const passport = require('passport');
 const Course = require('../models/course.model');
+const { check, validationResult } = require('express-validator');
 
 const {
     forgotPwd,
@@ -75,10 +76,15 @@ router.get('/pricing', (req, res) => {
 });
 
 
-router.get('/profile', (req, res) => {
+router.get('/profile', isLoggedIn, (req, res) => {
     res.render('profile');
 });
 
+//----------
+router.get('/signup2', (req, res) => {
+    res.render('signup2');
+});
+//---------
 
 //---------- auth routes
 
@@ -87,7 +93,19 @@ router.get('/signup', (req, res) => {
     res.render('signup');
 });
 
-router.post('/register', function (req, res) {
+router.post('/register',[
+    check('username', 'Name is required').not().isEmpty(),
+    check('email', 'Invalid Email').isEmail(),
+    check('password', 'Minimum length 6 characters').isLength({min: 6})
+], function (req, res) {
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+        res.render('signup', {
+            success: false,
+            messages: errors.array()
+        });
+    }
+
     const { username, email } = req.body;
 
     const user = new User({
@@ -135,7 +153,7 @@ router.post('/forgot', forgotPwd);
 
 // reset password
 router.get('/reset/:id/:resettoken', (req, res) => {
-    return res.render('reset', {
+    res.render('reset', {
         id: req.params.id,
         token: req.params.resettoken});
 })

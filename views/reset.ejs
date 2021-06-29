@@ -3,15 +3,13 @@
 <head>
     <link rel="stylesheet" href="/css/signup.css" />
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
-    <script defer src="/js/modal_script.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
 <!-- <button data-modal-target="#modal">Open Modal</button> -->
-    <div id="overlay">
     <% const url = `/reset/:${id}/:${token}` %>
-    </div>
     <div class="modal" id="modal">
         <div class="formWrapper">
             <div class="welcomeDiv">
@@ -29,11 +27,13 @@
                 </div>
                 <h2>Please confirm your new password</h2>
 
-                <p class="text">Enter your new password and click on the confirm button</p>
+                <p class="text">Enter your new password and click on the confirm button</p> 
+                <%- include("./partials/alertMessage") %>    
                 <form method="POST" action="<%url%>">
 
                     <div class="formGroup">
                         <input type="text" name="password" id="password" placeholder="New Password">
+                        <input type="text" name="password2" id="password2" placeholder="Confirm Password">
                     </div>
                  <!--  <div class="formGroup">
                         <input type="text" name="conf_password" id="conf_password" placeholder="Confirm Password">

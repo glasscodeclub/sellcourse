@@ -1,9 +1,10 @@
 <html>
 
 <head>
+	<base href="/">
 	<link rel="stylesheet" href="/css/signup.css" />
 	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
-	<script defer src="/js/modal_script.js"></script>
+	<link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
@@ -12,7 +13,7 @@
 	<div id="overlay">
 	
 	</div>
-	<div class="modal" id="modal">
+	
 		<div class="formWrapper">
 			<div class="welcomeDiv">
 				<h2>Forgot Password</h2>
@@ -30,12 +31,13 @@
 				<h2>Please enter your email address</h2>
 	
 			<p class="text">Enter the email address associated with this account to get a reset password link on your email</p> 
+			<%- include("./partials/alertMessage") %>
 				<form method="POST" action="/forgot">
 	
 					<div class="formGroup">
 						<input type="text" name="email" id="email" placeholder="Email Address">
 					</div>
-					<button class="btn">Confirm</button>
+					<button class="btnn">Confirm</button>
 				</form>
 	
 	
@@ -56,7 +58,9 @@
 	-->
 			</div>
 		</div>
-	</div>
+	
+	<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	</script>
 </body>
 
 </html>

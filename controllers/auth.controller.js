@@ -4,7 +4,7 @@ const sendEmail = require('../lib/sendEmail');
 const crypto = require('crypto');
 
 // forgot password
-// post /home/forgot
+// post /forgot
 // public
 exports.forgotPwd = async (req, res) => {
     const user = await User.findOne({ email: req.body.email });
@@ -24,6 +24,7 @@ exports.forgotPwd = async (req, res) => {
     const resetUrl = `${req.protocol}://${req.get('host')}/reset/${id}/${resetToken}`;
 
     const text = `Click on this link to reset your password ${resetUrl}`;
+    const messages = [];
 
     try {
         await sendEmail({
@@ -32,9 +33,10 @@ exports.forgotPwd = async (req, res) => {
             text
         });
 
-        return res.status(200).json({
+        messages.push({msg: 'Check your email for reset link'});
+        return res.render('forgot', {
             success: true,
-            msg: 'Check your inbox'
+            messages
         });
     } catch (err) {
         console.log(err);
@@ -61,6 +63,18 @@ exports.forgotPwd = async (req, res) => {
 // put /reset/:resetToken
 // public
 exports.resetPassword = async (req, res) => {
+    let alerts = [];
+
+    if(req.body.password != req.body.password2){
+        alerts.push({msg: 'Passwords do not match'});
+        return res.render('reset', {
+            alerts,
+            id: req.params.id,
+            token: req.params.resettoken
+        });
+    }
+
+
     const resetPwdToken = req.params.resettoken;
 
     console.log(req.params.resettoken);
