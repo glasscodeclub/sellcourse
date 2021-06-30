@@ -7,6 +7,7 @@
 </head>
 
 <body>
+    <div class="form-container">
         <div class="formWrapper">
             <div class="welcomeDiv">
                 <h2>Welcome back</h2>
@@ -17,13 +18,21 @@
             <div class="formDiv">
                 <div class="modal-header">
                     <div class="title">
-                        <a href="/"><img src="/assets/img/logo-2.png" style="max-width:30px;max-height:30px;"></a>
+                        <a href="/"><img src="/assets/img/logo-2.png" style="max-width:50px;max-height:50px;"></a>
                     </div>
                 </div>
                 <h2>Join over 25 million learners from around the globe</h2>
 
                 <p class="text">Sign in with email address</p>
-                <% console.log(this.route.url) %>
+                <div class="alert-container">
+                    <% if(err===true){ %>
+                        <div class="alert">
+                            Invalid User Credentials, try again!
+                        </div>
+                    
+                    <% }%>
+                </div>
+              
                 <form method="POST" action="/login">
 
                     <div class="formGroup">
@@ -35,7 +44,7 @@
                     <p>
                         <a href="/forgot">Forgot password?</a>
                     </p>
-                    <button class="btn">Sign In</button>
+                    <button class="btnn">Sign In</button>
                 </form>
 
 
@@ -60,6 +69,7 @@
                     <a href="/signup">Sign Up.</a>
                 </h4>
             </div>
+        </div>
         </div>
 </body>
 

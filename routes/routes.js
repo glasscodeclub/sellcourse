@@ -47,7 +47,9 @@ router.get('/done',isLoggedIn, async (req, res) => {
 });
 
 router.get('/links', (req, res) => {
-    res.render('links');
+    res.render('links', {
+         login: null
+    });
 });
 
 
@@ -56,23 +58,33 @@ router.get('/signup', (req, res) => {
 });
 
 router.get('/about', (req, res) => {
-    res.render('about');
+    res.render('about',{
+         login: null
+    });
 });
 
-router.get('/cart', (req, res) => {
-    res.render('cart');
+router.get('/cart', isLoggedIn, (req, res) => {
+    res.render('cart', {
+         login: null
+    });
 });
 
 router.get('/contact', (req, res) => {
-    res.render('contact');
+    res.render('contact', {
+         login: null
+    });
 });
 
 router.get('/course-details', (req, res) => {
-    res.render('course-details');
+    res.render('course-details', {
+         login: null
+    });
 });
 
 router.get('/pricing', (req, res) => {
-    res.render('pricing');
+    res.render('pricing', {
+         login: null
+    });
 });
 
 
@@ -80,11 +92,6 @@ router.get('/profile', isLoggedIn, (req, res) => {
     res.render('profile');
 });
 
-//----------
-router.get('/signup2', (req, res) => {
-    res.render('signup2');
-});
-//---------
 
 //---------- auth routes
 
@@ -94,13 +101,13 @@ router.get('/signup', (req, res) => {
 });
 
 router.post('/register',[
-    check('username', 'Name is required').not().isEmpty(),
-    check('email', 'Invalid Email').isEmail(),
-    check('password', 'Minimum length 6 characters').isLength({min: 6})
+    check('username', 'Username is required').not().isEmpty(),
+    check('email', 'Provide a valid email address').isEmail(),
+    check('password', 'Minimum password length is 6 characters').isLength({min: 6})
 ], function (req, res) {
     const errors = validationResult(req);
     if(!errors.isEmpty()){
-        res.render('signup', {
+        return res.render('signup', {
             success: false,
             messages: errors.array()
         });
@@ -132,13 +139,14 @@ router.get('/login', (req, res) => {
         res.render('login', {err: true})
     }
     else{
-        res.render('login');
+        res.render('login', {
+            err: false});
     }
 });
 
 router.post("/login", passport.authenticate("local", {
     successRedirect: "/done",
-    failureRedirect: '/login?err="no_user"'
+    failureRedirect: '/login?err=no_user'
 }), function (req, res) {
    // res.send("User is " + req.user.id);
     res.send({login: true})

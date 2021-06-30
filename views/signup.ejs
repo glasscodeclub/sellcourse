@@ -3,27 +3,22 @@
 <head>
     <link rel="stylesheet" href="/css/signup.css" />
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
-    <script defer src="/js/modal_script.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
 <!--   <button data-modal-target="#modal">Open Modal</button> -->
-    <div id="overlay">
-
-    </div>
-    <div class="modal" id="modal">
+    <div class="form-container">
 
         <div class="formWrapper">
             <div class="welcomeDiv">
                 <h2>Sign Up</h2>
-                <p class="text">Learn to code.</p>
-                <p class="text">Interactively.</p>
-                <p class="text">
-                    Explore your creativity with thousands of inspiring classes in design, illustration,
-                    photography,
-                    and more.</p>
+                <p class="text">Explore your creativity with thousands of inspiring classes in design, illustration, photography, and more.</p>
+
                 <button class="demo">Watch demo</button>
+                <div id="alert-container" class="alert-container" style="margin-top:100px; margin-left: 20px; margin-right: 20px;">
+                <%- include("./partials/alertMessage") %>
+                </div>
             </div>
             <div class="formDiv">
                 <div class="modal-header">
@@ -34,20 +29,17 @@
                 <h2>Join over 25 million learners from around the globe</h2>
 
                 <p class="text">Register with email address</p>
-                <%- include("./partials/alertMessage") %>
+               
                 <form method="POST" action="/register">
                     <div class="formGroup">
-                        <input type="text" name="email" id="email" placeholder="Email"
-                        value="<%= typeof email != 'undefined' ? email : '' %>" >
+                        <input type="text" name="email" id="email" placeholder="Email">
                     </div>
                     <div class="formGroup">
-                        <input type="text" name="username" id="username" placeholder="Username" 
-                        value="<%= typeof username != 'undefined' ? username : '' %>">
+                        <input type="text" name="username" id="username" placeholder="Username" >
                     </div>
 
                     <div class="formGroup">
-                        <input type="text" name="password" id="password" placeholder="Password"
-                        value="<%= typeof password != 'undefined' ? password : '' %>">
+                        <input type="text" name="password" id="password" placeholder="Password">
                     </div>
                     <button class="btnn">Sign Up</button>
                 </form>
@@ -68,6 +60,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </body>
 

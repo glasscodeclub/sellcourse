@@ -8,7 +8,7 @@ const {
 
 
 router.route('/')
-    .get(getCourses )
+    .get(getCourses)
     .post(createCourse);
     
 module.exports = router;

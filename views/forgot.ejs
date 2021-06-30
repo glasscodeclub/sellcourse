@@ -2,18 +2,15 @@
 
 <head>
 	<base href="/">
-	<link rel="stylesheet" href="/css/signup.css" />
+	
 	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
-	<link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="/css/signup.css" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
 <!--	<button data-modal-target="#modal">Open Modal</button> -->
-	<div id="overlay">
-	
-	</div>
-	
+	<div class="form-container">
 		<div class="formWrapper">
 			<div class="welcomeDiv">
 				<h2>Forgot Password</h2>
@@ -24,14 +21,17 @@
 			<div class="formDiv">
 				<div class="modal-header">
 					<div class="title">
-						<img src="/assets/img/logo-2.png" style="max-width:30px;max-height:30px;">
+						<a ref="/"><img src="/assets/img/logo-2.png" style="max-width:50px;max-height:50px;"></a>
 					</div>
 
 				</div>
 				<h2>Please enter your email address</h2>
 	
 			<p class="text">Enter the email address associated with this account to get a reset password link on your email</p> 
-			<%- include("./partials/alertMessage") %>
+			<div class="alert-container">
+				<%- include("./partials/alertMessage") %>
+			</div>
+			
 				<form method="POST" action="/forgot">
 	
 					<div class="formGroup">
@@ -58,7 +58,7 @@
 	-->
 			</div>
 		</div>
-	
+	</div>
 	<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	</script>
 </body>

@@ -63,12 +63,12 @@ exports.forgotPwd = async (req, res) => {
 // put /reset/:resetToken
 // public
 exports.resetPassword = async (req, res) => {
-    let alerts = [];
+    let messages = [];
 
     if(req.body.password != req.body.password2){
-        alerts.push({msg: 'Passwords do not match'});
+        messages.push({msg: 'Passwords do not match'});
         return res.render('reset', {
-            alerts,
+            messages,
             id: req.params.id,
             token: req.params.resettoken
         });
@@ -86,9 +86,11 @@ exports.resetPassword = async (req, res) => {
 
 
     if (!user) {
-        return res.status(400).json({
-            success: false,
-            msg: 'Invalid token'
+        messages.push({msg: 'Invalid Request'})
+        return res.render('reset',{
+            messages,
+            id: req.params.id,
+            token: req.params.resettoken
         });
     }
 
@@ -98,12 +100,14 @@ exports.resetPassword = async (req, res) => {
     user.resetPwdExpire = undefined;
 
     await user.save();
-
+    messages.push({msg: 'Password reset successfully'});
     // how to redirect logged in user to the index page?
     // passport.authenticate("local", {
     //     successRedirect: "/",
     //     failureRedirect: "/home/login"
     // });
     
-    return res.redirect('/login');
+    return res.render('login',{
+        messages
+    });
 };
