@@ -105,6 +105,7 @@ router.post('/register',[
     check('email', 'Provide a valid email address').isEmail(),
     check('password', 'Minimum password length is 6 characters').isLength({min: 6})
 ], function (req, res) {
+    const messages = [];
     const errors = validationResult(req);
     if(!errors.isEmpty()){
         return res.render('signup', {
@@ -123,11 +124,13 @@ router.post('/register',[
     User.register(user, req.body.password,
         function (err, user) {
             if (err) {
-                console.log(err);
-                return res.render('signup');
+                messages.push({msg: 'Username or email already exists'});
+                return res.render('signup', {
+                    messages
+                });
             } //user strategy
             passport.authenticate("local")(req, res, function () {
-               return res.render("/profile#courses-taken", {login: true}); //once the user sign up
+               return res.render('profile', {login: true}); //once the user sign up
             });
     });
 });
@@ -140,7 +143,9 @@ router.get('/login', (req, res) => {
     }
     else{
         res.render('login', {
-            err: false});
+            err: false,
+            messages: null
+        });
     }
 });
 

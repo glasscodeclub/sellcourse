@@ -7,13 +7,15 @@ const crypto = require('crypto');
 // post /forgot
 // public
 exports.forgotPwd = async (req, res) => {
+    const messages = [];
     const user = await User.findOne({ email: req.body.email });
 
     console.log(req.body.email);
     if (!user) {
-        return res.status(404).json({
+        messages.push({msg: 'Invalid email address'});
+        return res.render('forgot', {
             success: false,
-            msg: 'No such user exists'
+            messages
         });
     }
 
@@ -24,7 +26,6 @@ exports.forgotPwd = async (req, res) => {
     const resetUrl = `${req.protocol}://${req.get('host')}/reset/${id}/${resetToken}`;
 
     const text = `Click on this link to reset your password ${resetUrl}`;
-    const messages = [];
 
     try {
         await sendEmail({
@@ -45,10 +46,10 @@ exports.forgotPwd = async (req, res) => {
 
         await user.save({ validateBeforeSave: false });
 
-        return res.status(400).json({
+        messages.push({msg: 'Failed to send email'});
+        return render('forgot', {
             success: false,
-            msg: 'Failed to send email',
-            page: 'forgot'
+            messages
         });
     }
 
