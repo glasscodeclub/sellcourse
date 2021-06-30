@@ -108,6 +108,7 @@ exports.resetPassword = async (req, res) => {
     // });
     
     return res.render('login',{
-        messages
+        messages,
+        err: false
     });
 };

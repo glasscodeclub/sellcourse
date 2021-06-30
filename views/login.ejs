@@ -25,12 +25,15 @@
 
                 <p class="text">Sign in with email address</p>
                 <div class="alert-container">
-                    <% if(err===true){ %>
+                    <% if(err && err===true){ %>
                         <div class="alert">
-                            Invalid User Credentials, try again!
+                            Invalid User Credentials
                         </div>
                     
-                    <% }%>
+                    <% } else if(messages){%>
+                        <%- include("./partials/alertMessage") %>
+                        <% }%>
+                
                 </div>
               
                 <form method="POST" action="/login">
