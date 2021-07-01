@@ -4,11 +4,29 @@ body {
   margin: 0px;
   padding: 0px;
   font-family: sans-serif;
+  background-image: url(../img/signup/edu.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#overlay {
+  position: fixed; /* Sit on top of the page content */
+  width: 100%; /* Full width (cover the whole page) */
+  height: 100%; /* Full height (cover the whole page) */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 0;
+  cursor: pointer;
 }
 
 /* form styling */
 
 .form-container {
+  z-index: 10 !important;
   margin: auto;
   margin-top: 5%;
   width: 60%;
