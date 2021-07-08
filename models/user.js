@@ -3,15 +3,34 @@ const passportLocalMongoose = require("passport-local-mongoose");
 const crypto = require('crypto');
 
 const UserSchema = new mongoose.Schema({
-    username: String,
+    username: {
+        type: String,
+        unique: true,
+        required: true
+    },
     email: {
         type: String,
-        isUnique: true,
-        isRequired: true
+        unique: true,
+        required: true
     },
-    password: String,
+    password: {
+        type: String
+    },
     resetPwdToken: String,
-    resetPwdExpire: Date
+    resetPwdExpire: Date,
+    avatar: String,
+    role: {
+        type: String,
+        enum: ['user', 'publisher', 'admin'],
+        default: 'user'
+  },
+    courses: {
+        type: [String]
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
+  }
 });
 
 
@@ -26,4 +45,7 @@ UserSchema.methods.getResetPwdToken = function() {
 };
 
 module.exports = mongoose.model("User", UserSchema);
+
+
+
 

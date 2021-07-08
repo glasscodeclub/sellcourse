@@ -7,7 +7,7 @@ const crypto = require('crypto');
 // post /forgot
 // public
 exports.forgotPwd = async (req, res) => {
-    const messages = [];
+    let messages = [];
     const user = await User.findOne({ email: req.body.email });
 
     console.log(req.body.email);
@@ -66,6 +66,20 @@ exports.forgotPwd = async (req, res) => {
 exports.resetPassword = async (req, res) => {
     let messages = [];
 
+    const {
+        password,
+        password2
+    } = req.body;
+
+    if(!password || !password2 || password.length < 6 || password2.length < 6){
+       messages.push({msg: 'Enter a valid password'});
+        return res.render('reset', {
+            messages,
+            id: req.params.id,
+            token: req.params.resettoken
+        }); 
+    }
+    
     if(req.body.password != req.body.password2){
         messages.push({msg: 'Passwords do not match'});
         return res.render('reset', {
@@ -74,6 +88,7 @@ exports.resetPassword = async (req, res) => {
             token: req.params.resettoken
         });
     }
+
 
 
     const resetPwdToken = req.params.resettoken;

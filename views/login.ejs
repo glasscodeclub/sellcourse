@@ -40,10 +40,10 @@
                 <form method="POST" action="/login">
 
                     <div class="formGroup">
-                        <input type="text" name="username" id="username" placeholder="Username">
+                        <input type="text" name="username" id="username" placeholder="Username" value="<%= typeof username != 'undefined' ? username : '' %>">
                     </div>
                     <div class="formGroup">
-                        <input type="text" name="password" id="password" placeholder="Password">
+                        <input type="text" name="password" id="password" placeholder="Password" value="<%= typeof password != 'undefined' ? password : '' %>">
                     </div>
                     <p>
                         <a href="/forgot">Forgot password?</a>

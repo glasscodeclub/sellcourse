@@ -21,7 +21,7 @@
 			<div class="formDiv">
 				<div class="modal-header">
 					<div class="title">
-						<a ref="/"><img src="/assets/img/logo-2.png" style="max-width:50px;max-height:50px;"></a>
+						<a href="/"><img src="/assets/img/logo-2.png" style="max-width:50px;max-height:50px;"></a>
 					</div>
 
 				</div>
@@ -35,7 +35,7 @@
 				<form method="POST" action="/forgot">
 	
 					<div class="formGroup">
-						<input type="text" name="email" id="email" placeholder="Email Address">
+						<input type="text" name="email" id="email" placeholder="Email Address" value="<%= typeof email != 'undefined' ? email : '' %>">
 					</div>
 					<button class="btnn">Confirm</button>
 				</form>

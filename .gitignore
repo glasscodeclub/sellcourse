@@ -2,3 +2,4 @@ node_modules/
 .idea/
 config/default.json
 config/config.env
+data/

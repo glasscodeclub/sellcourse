@@ -16,11 +16,11 @@ const courseRoutes = require('./routes/course.router');
 
 const app = express();
 app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static(__dirname + "/public"));
 connectDB();
 
-app.use(express.urlencoded({ extended: true }));
 app.use(require('express-session')({
     secret: 'Rusty is the best og in the worldpassport',
     resave: false,
