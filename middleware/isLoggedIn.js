@@ -1,6 +1,5 @@
 function isLoggedIn(req, res, next){
     if(req.isAuthenticated()){
-        
         return next();
     }
     res.redirect("/login");
@@ -19,9 +18,3 @@ function isLoggedInHome(req, res, next){
 
 module.exports = isLoggedIn;
 module.exports = isLoggedInHome;
-
-
-
-
-
-module.exports = isLoggedIn;

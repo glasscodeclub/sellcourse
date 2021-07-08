@@ -4,7 +4,9 @@ const isLoggedIn = require('../middleware/isLoggedIn');
 const User = require('../models/user');
 const passport = require('passport');
 const Course = require('../models/course.model');
+const Video = require('../models/video.model');
 const { check, validationResult } = require('express-validator');
+
 
 const {
     forgotPwd,
@@ -102,14 +104,47 @@ router.get('/pricing', (req, res) => {
 
 
 router.get('/profile', isLoggedIn, (req, res) => {
-    console.log(req.body);
     res.render('profile');
 });
+
+router.get('/courses/:userid/:courseid', isLoggedIn,  (req, res) => {
+
+
+    const user = User.findById(req.params.userid, function(error, user){
+  /*      if(error)
+            console.log(error);
+        else{
+            let check;
+            console.log(check);
+        } */
+    });
+    
+})
+
+router.get('/courses/:courseid', isLoggedIn, async(req, res) => {
+    let course = await Course.findById(req.params.courseid);
+
+    let playlist = [];
+
+    for(let i=0; i < course.videos.length; i++){
+        const vid = await Video.findById(course.videos[i]).select('title url -_id');
+        playlist.push(vid);
+    }
+
+
+    res.render('coursePlayer', {
+            err: false,
+            messages: null,
+            course,
+            playlist
+        });
+
+})
 
 
 //---------- auth routes
 
-//signup/register
+// signup/register
 router.get('/signup', (req, res) => {
     res.render('signup');
 });
@@ -161,6 +196,7 @@ router.get('/login', (req, res) => {
         res.render('login', {err: true})
     }
     else{
+
         res.render('login', {
             err: false,
             messages: null

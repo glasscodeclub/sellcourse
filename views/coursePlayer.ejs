@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-<%- include("./partials/header") %>
+
+<%- include("./partials/header") -%>
 
 <body>
     <!-- ======= Header ======= -->
@@ -31,14 +32,14 @@
         </div>
     </header>
     <!-- End Header -->
+
+
     <!-- ======= Breadcrumbs ======= -->
     <div class="breadcrumbs about-mbl-view" data-aos="fade-in" style="background-color: #b4b4b4; color: black;">
         <div class="container" style="padding: 30px;">
-            <h2>About This Course</h2>
+            <h2><%- course.title -%> </h2>
             <p>
-                Est dolorum ut non facere possimus quibusdam eligendi voluptatem.
-                Quia id aut similique quia voluptas sit quaerat debitis. Rerum omnis
-                ipsam aperiam consequatur laboriosam nemo harum praesentium.
+            <%- course.description -%>
             </p>
             <div class="sidebar-render">
                 <div class="purchase-render">
@@ -47,29 +48,15 @@
                             <div class="buy-box">
                                 <div class="buy-box-item price">
                                     <div class="price-text">
-                                        <h2>₹490</h2>
-                                        <div style="font-size: 1.6rem; line-height: 1; padding: .4rem; margin-right: .8rem;
-                                  white-space: nowrap; box-sizing: border-box; color: #73726c;">90% off</div>
+                                        ₹
+                                        <%- course.cost -%>
                                     </div>
                                 </div>
-                                <div class="buy-box-item add-to-cart-button">
-                                    <button>Add To Cart</button>
-                                </div>
+
                             </div>
                         </div>
                         <div class='cta'>
-                            <ul>
-                                <div>
-                                    <h6>Available Seats
-                                        <span>20</span>
-                                    </h6>
-                                </div>
-                                <div>
-                                    <h6>Schedule
-                                        <span>5 PM - 7 PM</span>
-                                    </h6>
-                                </div>
-                            </ul>
+                            
                         </div>
                     </div>
                 </div>
@@ -79,41 +66,171 @@
     <!-- End Breadcrumbs -->
     <div class="wrapper">
         <main id="main">
-            <!-- ======= Course Details Section ======= -->
+            <!-- ======= Cource Details Section ======= -->
             <section id="course-details" class="course-details">
                 <div class="container" data-aos="fade-up" style="padding: 1.6rem 2.4rem;">
                     <div class="row">
                         <div class="background-img">
-                            <video src="/video/sample">
-
-                            </video>
-                            <iframe width="80%" height="400px" src="https://www.youtube.com/embed/LXb3EKWsInQ" title="YouTube video player"
-                                frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowfullscreen></iframe>
-                        
+                            <video width="100%" controls>
+                                <source src="<%-playlist[0].url-%>"  type="video/mp4">
+                            </video> </video>
+                            <div class="details-below-course">
+                                <h3>Et enim incidunt fuga tempora</h3>
+                                <p>
+                                    Qui et explicabo voluptatem et ab qui vero et voluptas. Sint
+                                    voluptates temporibus quam autem. Atque nostrum voluptatum
+                                    laudantium a doloremque enim et ut dicta. Nostrum ducimus est
+                                    iure minima totam doloribus nisi ullam deserunt. Corporis aut
+                                    officiis sit nihil est. Labore aut sapiente aperiam. Qui
+                                    voluptas qui vero ipsum ea voluptatem. Omnis et est.
+                                    Voluptatem officia voluptatem adipisci et iusto provident
+                                    doloremque consequatur. Quia et porro est. Et qui corrupti
+                                    laudantium ipsa. Eum quasi saepe aperiam qui delectus quaerat
+                                    in. Vitae mollitia ipsa quam. Ipsa aut qui numquam eum iste
+                                    est dolorum. Rem voluptas ut sit ut.
+                                </p>
+                            </div>
                         </div>
-    
+
                     </div>
                 </div>
             </section>
-            <!-- End Course Details Section -->
-    
+            <!-- End Cource Details Section -->
+
+
             
-    
-     
-                   </main>
+            <!-- ======= Perks Section ======= -->
+            <section id="perks" class="perks">
+                <div class="container" data-aos="fade-up">
+                    <div class="row" data-aos="zoom-in" data-aos-delay="100">
+                        <h3>
+                            Perks & Achievements on Course Completion
+                        </h3>
+                        <div class="box col-lg-4 col-md-6 col-sm-12 d-flex align-items-stretch">
+                            <div style="
+                  background-color: rgb(94, 159, 94);
+                  color: aliceblue;
+                  text-align: center;
+                  padding: 30px;
+                " class="member-content">
+                                <h4>Shareable Certificate</h4>
+                                <p>
+                                    Magni qui quod omnis unde et eos fuga et exercitationem. Odio
+                                    veritatis perspiciatis quaerat qui aut aut aut
+                                </p>
+                            </div>
+                        </div>
+                        <div class="box col-lg-4 col-md-6 col-sm-12 d-flex align-items-stretch">
+                            <div style="
+                  background-color: rgb(94, 159, 94);
+                  color: aliceblue;
+                  text-align: center;
+                  padding: 30px;
+                " class="member-content">
+                                <h4>Skill Badges</h4>
+                                <p>
+                                    Magni qui quod omnis unde et eos fuga et exercitationem. Odio
+                                    veritatis perspiciatis quaerat qui aut aut aut
+                                </p>
+                            </div>
+                        </div>
+                        <div class="box col-lg-4 col-md-6 col-sm-12 d-flex align-items-stretch">
+                            <div style="
+                  background-color: rgb(94, 159, 94);
+                  color: aliceblue;
+                  text-align: center;
+                  padding: 30px;
+                " class="member-content">
+                                <h4>Achievements</h4>
+                                <p>
+                                    Magni qui quod omnis unde et eos fuga et exercitationem. Odio
+                                    veritatis perspiciatis quaerat qui aut aut aut
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- End Perks Section -->
+
+            <!-- Rating & Reviews Section -->
+            <section id="reviews" class="reviews">
+                <div class="container" data-aos="fade-up">
+                    <div class="row" data-aos="zoom-in" data-aos-delay="100" style="padding: 1.6rem 2.4rem;">
+                        <h3>Reviews</h3>
+                        <ul class="list-group">
+                            <li class="list-group-item"><strong>User Name </strong><span><i
+                                        class="bx bx-star"></i></span><span><i class="bx bx-star"></i></span><span><i
+                                        class="bx bx-star"></i></span><span><i class="bx bx-star"></i></span><span><i
+                                        class="bx bx-star"></i></span>
+                                <p>12-12-2020</p>
+                                <p>Awesome Course! Loved it.</p>
+                            </li>
+                            <li class="list-group-item"><strong>User Name </strong><span><i
+                                        class="bx bx-star"></i></span><span><i class="bx bx-star"></i></span><span><i
+                                        class="bx bx-star"></i></span><span><i class="bx bx-star"></i></span><span><i
+                                        class="bx bx-star"></i></span>
+                                <p>12-12-2020</p>
+                                <p>Awesome Course! Loved it.</p>
+                            </li>
+                            <li class="list-group-item"><strong>User Name </strong><span><i
+                                        class="bx bx-star"></i></span><span><i class="bx bx-star"></i></span><span><i
+                                        class="bx bx-star"></i></span><span><i class="bx bx-star"></i></span><span><i
+                                        class="bx bx-star"></i></span>
+                                <p>12-12-2020</p>
+                                <p>Awesome Course! Loved it.</p>
+                            </li>
+                        </ul>
+                        <h3>Write a User Review</h3>
+                        <form id="feedback" action="">
+
+                            <div class="pinfo">Rate the course.</div>
+
+
+                            <div class="form-group">
+                                <div class="col-md-4 inputGroupContainer">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-heart"></i></span>
+                                        <select class="form-control" id="rate">
+                                            <option value="1star">1</option>
+                                            <option value="2stars">2</option>
+                                            <option value="3stars">3</option>
+                                            <option value="4stars">4</option>
+                                            <option value="5stars">5</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="pinfo">Write your feedback.</div>
+
+
+                            <div class="form-group">
+                                <div class="col-md-4 inputGroupContainer">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-pencil"></i></span>
+                                        <textarea class="form-control" id="review" rows="3"></textarea>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Submit</button>
+
+
+                        </form>
+                    </div>
+                </div>
+            </section>
+            <!-- End Rating & Reviews Section -->
+        </main>
         <!-- End #main -->
-    
-        
+
+        <!-- Sidebar-Container Section -->
         <section id="sidebar-container" class="sidebar-container">
             <div class="container" data-aos="fade-up">
                 <div class="row" data-aos="zoom-in" data-aos-delay="100">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/videoseries?list=PL_T9MO520krq5QsT1sIHdmBUNodksi8v2"
-    title="YouTube video player" frameborder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-    allowfullscreen></iframe>
-
-                 <!--  <div class="sidebar-container-content card">
+                    <div class="sidebar-container-content card">
                         <div class="sidebar-container-content-group">
                             <div class="sidebar-container-purchase-section">
                                 <div class="generic-purchase-section">
@@ -121,59 +238,41 @@
                                         <div class="buy-box">
                                             <div class="buy-box-item price">
                                                 <div class="price-text">
-                                                    <h2>₹490</h2>
+                                                    <h2><%- course.title -%></h2>
                                                     <div
                                                         style="font-size: 1rem; line-height: 1; padding: .4rem; margin-right: .8rem;
-                                                  white-space: nowrap; box-sizing: border-box; color: #73726c;text-decoration: line-through;">
+                                              white-space: nowrap; box-sizing: border-box; color: #73726c;text-decoration: line-through;">
                                                         ₹4900</div>
                                                     <div style="font-size: 1rem; line-height: 1; padding: .4rem; margin-right: .8rem;
-                                                  white-space: nowrap; box-sizing: border-box; color: #73726c;">90% off
+                                              white-space: nowrap; box-sizing: border-box; color: #73726c;">90% off
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="buy-box-item add-to-cart-button">
-                                                <button>Buy Now</button>
-                                            </div>
+                                            <hr>
                                         </div>
                                     </div>
                                     <div class='cta'>
                                         <h4>This Course Includes:</h4>
                                         <ul>
-                                            <li><i class="bx bx-user"></i> &nbsp;48 hours on-demand video</li>
-                                            <li><i class="bx bx-user"></i>&nbsp;18 articles</li>
-                                            <li><i class="bx bx-user"></i>&nbsp;10 downloadable resources</li>
-                                            <li><i class="bx bx-user"></i>&nbsp;Full lifetime access</li>
-                                            <li><i class="bx bx-user"></i>&nbsp;Access on mobile and TV</li>
-                                            <li><i class="bx bx-user"></i>&nbsp;Certificate of completion</li>
+                                            <% for(let i=0; i < playlist.length; i++){ %>
+                                                <li>
+                                                    <%- playlist[i].url -%>
+                                                </li>
+                                            <% } %>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class='sidebar-container-content-group'>
-                            <div class="generic-purchase-section">
-                                 <div class='buy-box-main'>
-                      <div class="buy-box"> 
-                                <div class="buy-box-main add-to-cart-button">
-                                    <button>Add To Cart</button>
-                                </div>
-                                    </div>
-                    </div> 
-                            </div>
-                        </div>
-                    </div> -->
+                        
+                    </div>
                 </div>
             </div>
         </section>
-    
+
         <!-- End Sidebar-Container Section -->
     </div>
     <!-- End Wrapper Section -->
-
-
-
-   
-                                   
 
     <!-- ======= Footer ======= -->
     <%- include("./partials/footer") %>

@@ -9,17 +9,25 @@ const CourseSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    duration: {
-        type: String,
-        required: true
-    },
     cost: {
         type: Number,
         required: true
     },
+    publisher: {
+        type: mongoose.Schema.ObjectId,
+        required: true
+    },
+    averageRating: {
+        type: Number,
+        default: 0
+    },
     createdAt: {
         type: Date,
         default: Date.now
+    },
+    imageUrl: String,
+    videos: {
+        type: [String]
     }
 });
 
