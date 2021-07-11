@@ -18,11 +18,19 @@ const { response } = require('express');
 router.get('/', async (req, res) => {
     const fetchCourse = await Course.find().limit(3);
 
+    let login;
+    if(!req.user){
+        login = false
+    }
+    else{
+        login= true
+    } 
+
     if(fetchCourse){
        // console.log(fetchCourse);
         return res.render('index', {
             results: fetchCourse,
-            login: null    
+            login: login    
         });
     }
 
@@ -103,8 +111,41 @@ router.get('/pricing', (req, res) => {
 });
 
 
-router.get('/profile', isLoggedIn, (req, res) => {
-    res.render('profile');
+router.get('/profile', isLoggedIn, async(req, res) => {
+    if(!req.user)
+       return res.redirect('/login');
+
+    const username = req.user.username;
+    const purchased = await User.findOne({username}).select('courses');
+
+    let courseDetails = [];
+    // purchased.courses.forEach(courseID => {
+    //   //  console.log(courseID);
+        
+    //     courseDetails = Course.findById(courseID) ;
+    
+    // })
+
+
+    for(let i = 0; i < purchased.courses.length; i++){
+        console.log( purchased.courses[i]);
+       const eachCourse = await Course.findById(purchased.courses[i]);
+       courseDetails.push(eachCourse);
+    }
+
+   /* Promise.allSettled(courseDetails).then(doc => {
+        console.log(courseDetails.title);
+    }).catch(err => {
+        console.log(err);
+    });
+    console.log(courseDetails);
+
+    */
+    
+    return res.render('profile', {
+        results: courseDetails
+    }); 
+
 });
 
 router.get('/courses/:userid/:courseid', isLoggedIn,  (req, res) => {
@@ -124,20 +165,88 @@ router.get('/courses/:userid/:courseid', isLoggedIn,  (req, res) => {
 router.get('/courses/:courseid', isLoggedIn, async(req, res) => {
     let course = await Course.findById(req.params.courseid);
 
-    let playlist = [];
-
-    for(let i=0; i < course.videos.length; i++){
-        const vid = await Video.findById(course.videos[i]).select('title url -_id');
-        playlist.push(vid);
+    if(!req.user){
+        return res.render('course-details', {
+            course,
+            login: false
+        });
     }
+    
+    let playlist = [];
+    for(let i=0; i < course.videos.length; i++){
+        const vid = await Video.findById(course.videos[i]).select('title url name _id');
+        playlist.push(vid);
+    } 
 
-
-    res.render('coursePlayer', {
+  /*  course.videos.forEach(vid => {
+       playlist.push(Video.findById(vid).select('title url -_id')) ;
+    })
+    Promise.allSettled(playlist).then((doc) => {
+        console.log(playlist.title);
+        res.render('coursePlayer', {
             err: false,
             messages: null,
             course,
             playlist
         });
+    }).catch(err => {
+        // err handling
+    }) */
+
+    const activeVidUrl = playlist[0].url;
+    return res.render('coursePlayer', {
+            login: true,
+            messages: null,
+            course,
+            playlist,
+            activeVidUrl
+        });
+        
+})
+
+
+router.get('/courses/:courseid/:videoid', isLoggedIn, async(req, res) => {
+    let course = await Course.findById(req.params.courseid);
+    
+    if(!req.user){
+        return res.render('course-details', {
+            course
+        });
+    }
+    
+    let playlist = [];
+    for(let i=0; i < course.videos.length; i++){
+        const vid = await Video.findById(course.videos[i]).select('title url name -_id');
+        playlist.push(vid);
+    } 
+
+  /*  course.videos.forEach(vid => {
+       playlist.push(Video.findById(vid).select('title url -_id')) ;
+    })
+    Promise.allSettled(playlist).then((doc) => {
+        console.log(playlist.title);
+        res.render('coursePlayer', {
+            err: false,
+            messages: null,
+            course,
+            playlist
+        });
+    }).catch(err => {
+        // err handling
+    }) 
+    */ 
+
+    const activeVidUrl = await Video.findById(req.params.videoid).select('url');
+    console.log(activeVidUrl);
+    return res.render('coursePlayer', {
+            err: false,
+            messages: null,
+            course,
+            playlist,
+            activeVidUrl
+        });
+    
+    
 
 })
 
@@ -196,7 +305,6 @@ router.get('/login', (req, res) => {
         res.render('login', {err: true})
     }
     else{
-
         res.render('login', {
             err: false,
             messages: null
@@ -209,7 +317,8 @@ router.post("/login", passport.authenticate("local", {
     failureRedirect: '/login?err=no_user'
 }), function (req, res) {
     res.send({
-        login: true
+        login: true,
+        user: req.user.username
     })
 });
 

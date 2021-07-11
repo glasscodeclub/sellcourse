@@ -13,7 +13,7 @@ const connectDB = () => {
   }).then( () => {
         console.log('Connected to the database');
     }).catch( err => {
-        onsole.error('Error connecting to the database');
+        console.error(err);
     })
 }
 
