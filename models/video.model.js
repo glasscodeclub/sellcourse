@@ -5,6 +5,10 @@ const VideoSchema = new mongoose.Schema({
         type: mongoose.Schema.ObjectId,
         required: true
     },
+    title: {
+        type: String,
+        required: true
+    },
     url: {
         type: String,
         required: true

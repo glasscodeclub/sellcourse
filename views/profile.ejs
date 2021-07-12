@@ -1,42 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <meta charset="utf-8" />
-  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-
-  <title>Profile - Course Crunch Template</title>
-  <meta content="" name="description" />
-  <meta content="" name="keywords" />
-
-  <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon" />
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
-
-  <!-- Google Fonts -->
-  <link
-    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-    rel="stylesheet" />
-
-  <!-- Vendor CSS Files -->
-  <link href="assets/vendor/animate.css/animate.min.css" rel="stylesheet" />
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet" />
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
-  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet" />
-  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet" />
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet" />
-
-  <!-- Template Main CSS File -->
-  <link href="assets/css/style.css" rel="stylesheet" />
-
-  <!-- =======================================================
-  * Template Name: Course Crunch - v1.0.0
-  * Template URL: https://bootstrapmade.com/course-crunch-free-education-bootstrap-theme/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
-</head>
+<%- include("./partials/header") %>
 
 <body>
   <!-- ======= Header ======= -->
@@ -54,11 +19,10 @@
         <li><a href="/about">About</a></li>
         <li class="dropdown"><a class="active" href="/profile" class="profile-btn"><i class="bx bx-user"></i>
             <span>Profile</span><i class="bi bi-chevron-down"></i></a>
-          <ul>
-            <li><a href="/profile">My Profile</a></li>
-            <li><a href="/profile#courses-taken">My Courses</a></li>
-            <li><a href="/contact">Help</a></li>
-            <li><a href="/logout">Logout</a></li>
+          <ul >
+            <li ><a href="/profile#my-courses" style="color: black;">My Courses</a></li>
+            <li><a href="/contact" style="color: black;">Help</a></li>
+            <li><a href="/logout" style="color: #5fcf80;">Logout</a></li>
           </ul>
         </li>
       </ul>
@@ -104,7 +68,7 @@
                   <a href="#"> <i class="bx bx-edit"></i><span>Edit</span></a>
                 </li>
                 <li>
-                  <a href="#courses-taken">
+                  <a href="/profile#my-courses">
                     <i class="bx bx-book-alt"></i><span>Courses</span></a>
                 </li>
                 <li>
@@ -164,7 +128,7 @@
     </section>
     <!-- End Profile Section -->
       <!-- ======= Popular Courses Section ======= -->
-      <section id="popular-courses" class="courses">
+      <section id="my-courses" class="courses">
         <div class="container" data-aos="fade-up">
       
           <div class="section-title">

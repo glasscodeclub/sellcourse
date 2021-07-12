@@ -173,12 +173,12 @@ router.get('/courses/:courseid', isLoggedIn, async(req, res) => {
     }
     
     let playlist = [];
-    for(let i=0; i < course.videos.length; i++){
+  /*  for(let i=0; i < course.videos.length; i++){
         const vid = await Video.findById(course.videos[i]).select('title url name _id');
         playlist.push(vid);
-    } 
+    } */ 
 
-  /*  course.videos.forEach(vid => {
+    course.videos.forEach(vid => {
        playlist.push(Video.findById(vid).select('title url -_id')) ;
     })
     Promise.allSettled(playlist).then((doc) => {
@@ -191,7 +191,7 @@ router.get('/courses/:courseid', isLoggedIn, async(req, res) => {
         });
     }).catch(err => {
         // err handling
-    }) */
+    }) 
 
     const activeVidUrl = playlist[0].url;
     return res.render('coursePlayer', {
