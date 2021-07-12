@@ -75,9 +75,9 @@
                 <div class="container" data-aos="fade-up" style="padding: 1.6rem 2.4rem;">
                     <div class="row">
                         <div class="background-img">
-                            <video  width="100%" controls>
-                                <source id="current-video" src="<%-activeVidUrl-%>"  type="video/mp4">
-                            </video> </video>
+                            <video  width="100%" controls id="current_video" >
+                                <source  src="/video/sample"  type="video/mp4">
+                            </video> 
                             <div class="details-below-course">
                                 <h3>Et enim incidunt fuga tempora</h3>
                                 <p>
@@ -253,7 +253,7 @@
                                         <h4><%- playlist.length -%> &nbsp; Lessons</h4>
                                         <ul>
                                             <% for(let i=0; i < playlist.length; i++){ %>
-                                                <li onclick="changeVideo(playlist[i].url)">
+                                                <li  id="<%= playlist[i]._id %>">
                                     
                                                         <%- playlist[i].title -%>
         
@@ -292,9 +292,7 @@
         <!-- Template Main JS File -->
         <script src="assets/js/main.js"></script>
          <script>
-             function changeVideo(e){
-                 document.getElementById('cuurent-video').src=e
-             }
+    
          </script>                                   
 </body>
 

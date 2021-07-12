@@ -17,5 +17,4 @@ function isLoggedInHome(req, res, next){
     }
 }
 
-module.exports = isLoggedIn;
-module.exports = isLoggedInHome;
+module.exports = {isLoggedIn,isLoggedInHome};

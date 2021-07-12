@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const isLoggedIn = require('../middleware/isLoggedIn');
+const {isLoggedIn} = require('../middleware/isLoggedIn');
 const User = require('../models/user');
 const passport = require('passport');
 const Course = require('../models/course.model');
@@ -98,7 +98,7 @@ router.get('/course-player', (req, res) => {
     });
 });
 
-router.get('/video/:id', (req, res) => {
+router.get('/video/:id',(req, res) => {
     res.sendFile(
         req.params.id+".mp4", { root: "./video" }
     );
@@ -162,16 +162,18 @@ router.get('/courses/:userid/:courseid', isLoggedIn,  (req, res) => {
     
 })
 
-router.get('/courses/:courseid', isLoggedIn, async(req, res) => {
+router.get('/courses/:courseid', async(req, res) => {
     let course = await Course.findById(req.params.courseid);
 
-    if(!req.user){
-        return res.render('course-details', {
-            course,
-            login: false
-        });
+    // if(!req.user){
+    //     return res.render('course-details', {
+    //         course,
+    //         login: false
+    //     });
+    // }
+    if(!course){
+        console.log(err);
     }
-    
     let playlist = [];
   /*  for(let i=0; i < course.videos.length; i++){
         const vid = await Video.findById(course.videos[i]).select('title url name _id');
@@ -179,28 +181,32 @@ router.get('/courses/:courseid', isLoggedIn, async(req, res) => {
     } */ 
 
     course.videos.forEach(vid => {
-       playlist.push(Video.findById(vid).select('title url -_id')) ;
+       playlist.push(Video.findById(vid)) ;
     })
     Promise.allSettled(playlist).then((doc) => {
-        console.log(playlist.title);
+        let data=[];
+        for(let i=0;i<doc.length;++i){
+            data.push(doc[i].value)  
+        }
         res.render('coursePlayer', {
             err: false,
             messages: null,
             course,
-            playlist
+            playlist:data,
+            login:true,
         });
     }).catch(err => {
         // err handling
     }) 
 
-    const activeVidUrl = playlist[0].url;
-    return res.render('coursePlayer', {
-            login: true,
-            messages: null,
-            course,
-            playlist,
-            activeVidUrl
-        });
+    // const activeVidUrl = playlist[0].url;
+    // return res.render('coursePlayer', {
+    //         login: true,
+    //         messages: null,
+    //         course,
+    //         playlist,
+    //         activeVidUrl
+    //     });
         
 })
 
