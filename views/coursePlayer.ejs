@@ -253,7 +253,7 @@
                                         <h4><%- playlist.length -%> &nbsp; Lessons</h4>
                                         <ul>
                                             <% for(let i=0; i < playlist.length; i++){ %>
-                                                <li  id="<%= playlist[i]._id %>">
+                                                <li  id="<%= playlist[i]._id %>" onclick="changeVideo(this)">
                                     
                                                         <%- playlist[i].title -%>
         
@@ -292,7 +292,11 @@
         <!-- Template Main JS File -->
         <script src="assets/js/main.js"></script>
          <script>
-    
+         function changeVideo(e){
+         document.getElementById("current_video").innerHTML='<source src="/video/'+e.id+'" type="video/mp4">';
+         document.getElementById("current_video").load();
+         document.getElementById("current_video").play();
+         }
          </script>                                   
 </body>
 
