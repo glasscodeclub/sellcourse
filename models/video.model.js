@@ -20,7 +20,8 @@ const VideoSchema = new mongoose.Schema({
    publisher: {
         type: mongoose.Schema.ObjectId,
         required: true
-    }
+    },
+    name: String
 });
 
 

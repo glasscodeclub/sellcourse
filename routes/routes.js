@@ -5,6 +5,7 @@ const User = require('../models/user');
 const passport = require('passport');
 const Course = require('../models/course.model');
 const Video = require('../models/video.model');
+const Review = require('../models/review.model');
 const { check, validationResult } = require('express-validator');
 
 
@@ -88,7 +89,8 @@ router.get('/contact', (req, res) => {
 
 router.get('/course-details', (req, res) => {
     res.render('course-details', {
-         login: null
+         login: null,
+         course: null
     });
 });
 
@@ -165,20 +167,14 @@ router.get('/courses/:userid/:courseid', isLoggedIn,  (req, res) => {
 router.get('/courses/:courseid', async(req, res) => {
     let course = await Course.findById(req.params.courseid);
 
-    // if(!req.user){
-    //     return res.render('course-details', {
-    //         course,
-    //         login: false
-    //     });
-    // }
+    const courseid = req.params.courseid;
+    console.log(typeof courseid);
+
+
     if(!course){
-        console.log(err);
+        console.log('no');
     }
-    let playlist = [];
-  /*  for(let i=0; i < course.videos.length; i++){
-        const vid = await Video.findById(course.videos[i]).select('title url name _id');
-        playlist.push(vid);
-    } */ 
+    let playlist = []; 
 
     course.videos.forEach(vid => {
        playlist.push(Video.findById(vid)) ;
@@ -198,16 +194,6 @@ router.get('/courses/:courseid', async(req, res) => {
     }).catch(err => {
         // err handling
     }) 
-
-    // const activeVidUrl = playlist[0].url;
-    // return res.render('coursePlayer', {
-    //         login: true,
-    //         messages: null,
-    //         course,
-    //         playlist,
-    //         activeVidUrl
-    //     });
-        
 })
 
 

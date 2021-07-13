@@ -231,37 +231,33 @@
         <!-- End #main -->
 
         <!-- Sidebar-Container Section -->
-        <section id="sidebar-container" class="sidebar-container">
-            <div class="container" data-aos="fade-up">
+        <section id="sidebar-container" style="border: 0px;" class="sidebar-container">
+            <div class="container"  data-aos="fade-up">
                 <div class="row" data-aos="zoom-in" data-aos-delay="100">
-                    <div class="sidebar-container-content card">
+                    <div style="max-height: 70vh; height: auto; box-shadow: none; border-bottom: none; background-color: #eef0ef;"  class="sidebar-container-content">
+                        <div class="playlist">
+                            <h2 style="text-align: center;">
+                                <%- course.title -%>
+                            </h2>
+                        
+                        
+                        </div>
                         <div class="sidebar-container-content-group">
-                            <div class="sidebar-container-purchase-section">
-                                <div class="generic-purchase-section">
-                                    <div class="buy-box-main">
-                                        <div class="buy-box">
-                                            <div class="buy-box-item price">
-                                                <div class="price-text">
-                                                    <h2><%- course.title -%></h2>
-                                                    
-                                                </div>
-                                            </div>
-                                            <hr>
-                                        </div>
-                                    </div>
-                                    <div class='cta'>
-                                        <h4><%- playlist.length -%> &nbsp; Lessons</h4>
-                                        <ul>
-                                            <% for(let i=0; i < playlist.length; i++){ %>
-                                                <li  id="<%= playlist[i]._id %>" onclick="changeVideo(this)">
-                                    
-                                                        <%- playlist[i].title -%>
-        
-                                                </li>
-                                            <% } %>
-                                        </ul>
-                                    </div>
-                                </div>
+                            
+                            <div style="padding: 10px;" class='cta'>
+                                <h4 style="padding-left: 20px;">
+                                    <%- playlist.length -%> &nbsp; Lessons
+                                </h4>
+                                <ul>
+                                    <% for(let i=0; i < playlist.length; i++){ %>
+                                        <li style="cursor: pointer;" id="<%= playlist[i]._id %>" onclick="changeVideo(this)">
+                                            <%- i+1 %> . &nbsp;
+                                                <%- playlist[i].name -%>
+                                            
+                            
+                                        </li>
+                                        <% } %>
+                                </ul>
                             </div>
                         </div>
                         
