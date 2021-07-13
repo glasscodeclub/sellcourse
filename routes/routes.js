@@ -167,15 +167,19 @@ router.get('/courses/:userid/:courseid', isLoggedIn,  (req, res) => {
 router.get('/courses/:courseid', async(req, res) => {
     let course = await Course.findById(req.params.courseid);
 
-    const courseid = req.params.courseid;
-    console.log(typeof courseid);
-
-
     if(!course){
-        console.log('no');
+        res.redirect('/courses');
     }
-    let playlist = []; 
 
+    const reviewUsers = []
+    const reviews = await Review.find({course: req.params.courseid}).sort({date: 'desc'}).limit(5);
+    if(reviews){
+        for(let i = 0; i < reviews.length; i++){
+            reviewUsers.push(await User.findById(reviews[i].user, 'username'));
+        }
+    }
+    
+    let playlist = []; 
     course.videos.forEach(vid => {
        playlist.push(Video.findById(vid)) ;
     })
@@ -189,6 +193,8 @@ router.get('/courses/:courseid', async(req, res) => {
             messages: null,
             course,
             playlist:data,
+            reviews,
+            reviewUsers,
             login:true,
         });
     }).catch(err => {

@@ -161,29 +161,25 @@
             <section id="reviews" class="reviews">
                 <div class="container" data-aos="fade-up">
                     <div class="row" data-aos="zoom-in" data-aos-delay="100" style="padding: 1.6rem 2.4rem;">
-                        <h3>Reviews</h3>
+                        <div class="section-title">
+                            <h2>Reviews</h2>
+                           <p>Latest Reviews</p> 
+                        </div>
                         <ul class="list-group">
-                            <li class="list-group-item"><strong>User Name </strong><span><i
-                                        class="bx bx-star"></i></span><span><i class="bx bx-star"></i></span><span><i
-                                        class="bx bx-star"></i></span><span><i class="bx bx-star"></i></span><span><i
-                                        class="bx bx-star"></i></span>
-                                <p>12-12-2020</p>
-                                <p>Awesome Course! Loved it.</p>
+                            <% for(let i = 0; i < reviews.length; i++){ %>
+                            <li class="list-group-item" style="margin: 10px; border: 1px solid rgba(0, 0, 0, 0.125); border-radius: 5px;"><strong>By: &nbsp;<%- reviewUsers[i].username  %></strong>
+                                &nbsp; | &nbsp;
+                                <% for(let rating = 0; rating < reviews[i].rating; rating++){ %> 
+                                    <span><i class="bx bxs-star"></i></span>
+                                    
+                                <% } %>
+                                <% for(let j = 5 - reviews[i].rating; j > 0; j--){ %>
+                                    <span><i class="bx bx-star"></i></span><span></span>
+                                <% } %>
+                                <p><%- reviews[i].createdAt %></p>
+                                <p><%- reviews[i].text %></p>
                             </li>
-                            <li class="list-group-item"><strong>User Name </strong><span><i
-                                        class="bx bx-star"></i></span><span><i class="bx bx-star"></i></span><span><i
-                                        class="bx bx-star"></i></span><span><i class="bx bx-star"></i></span><span><i
-                                        class="bx bx-star"></i></span>
-                                <p>12-12-2020</p>
-                                <p>Awesome Course! Loved it.</p>
-                            </li>
-                            <li class="list-group-item"><strong>User Name </strong><span><i
-                                        class="bx bx-star"></i></span><span><i class="bx bx-star"></i></span><span><i
-                                        class="bx bx-star"></i></span><span><i class="bx bx-star"></i></span><span><i
-                                        class="bx bx-star"></i></span>
-                                <p>12-12-2020</p>
-                                <p>Awesome Course! Loved it.</p>
-                            </li>
+                            <% } %>
                         </ul>
                         <h3>Write a User Review</h3>
                         <form id="feedback" action="">

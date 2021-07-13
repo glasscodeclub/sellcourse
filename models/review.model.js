@@ -10,11 +10,11 @@ const ReviewSchema = new mongoose.Schema({
         required: true
     },
     course: {
-        type: mongoose.Schema.ObjectId,
+        type: String,
         required: true
     },
     user: {
-        type: mongoose.Schema.ObjectId,
+        type: String,
         required: true
     },
     createdAt: {
