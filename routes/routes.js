@@ -6,7 +6,7 @@ const passport = require('passport');
 const Course = require('../models/course.model');
 const Video = require('../models/video.model');
 const Review = require('../models/review.model');
-const { check, validationResult } = require('express-validator');
+const { check, validationResult, cookie } = require('express-validator');
 
 
 const {
@@ -70,8 +70,12 @@ router.get('/signup', (req, res) => {
 });
 
 router.get('/about', (req, res) => {
+    let login = false;
+    if(req.user)
+        login = true;
+
     res.render('about',{
-         login: null
+         login: login
     });
 });
 
@@ -87,18 +91,7 @@ router.get('/contact', (req, res) => {
     });
 });
 
-router.get('/course-details', (req, res) => {
-    res.render('course-details', {
-         login: null,
-         course: null
-    });
-});
 
-router.get('/course-player', (req, res) => {
-    res.render('coursePlayer', {
-        login: null
-    });
-});
 
 router.get('/video/:id',(req, res) => {
     res.sendFile(
@@ -150,21 +143,7 @@ router.get('/profile', isLoggedIn, async(req, res) => {
 
 });
 
-router.get('/courses/:userid/:courseid', isLoggedIn,  (req, res) => {
-
-
-    const user = User.findById(req.params.userid, function(error, user){
-  /*      if(error)
-            console.log(error);
-        else{
-            let check;
-            console.log(check);
-        } */
-    });
-    
-})
-
-router.get('/courses/:courseid', async(req, res) => {
+router.get('/profile/mycourses/:courseid', isLoggedIn, async (req, res) => {
     let course = await Course.findById(req.params.courseid);
 
     if(!course){
@@ -189,6 +168,47 @@ router.get('/courses/:courseid', async(req, res) => {
             data.push(doc[i].value)  
         }
         res.render('coursePlayer', {
+            err: false,
+            messages: null,
+            course,
+            playlist:data,
+            reviews,
+            reviewUsers,
+            login:true,
+        });
+    }).catch(err => {
+        // err handling
+    })
+
+
+});
+
+
+router.get('/courses/:courseid', isLoggedIn, async(req, res) => {
+    let course = await Course.findById(req.params.courseid);
+
+    if(!course){
+        res.redirect('/courses');
+    }
+
+    const reviewUsers = []
+    const reviews = await Review.find({course: req.params.courseid}).sort({date: 'desc'}).limit(5);
+    if(reviews){
+        for(let i = 0; i < reviews.length; i++){
+            reviewUsers.push(await User.findById(reviews[i].user, 'username'));
+        }
+    }
+    
+    let playlist = []; 
+    course.videos.forEach(vid => {
+       playlist.push(Video.findById(vid)) ;
+    })
+    Promise.allSettled(playlist).then((doc) => {
+        let data=[];
+        for(let i=0;i<doc.length;++i){
+            data.push(doc[i].value)  
+        }
+        res.render('course-details', {
             err: false,
             messages: null,
             course,

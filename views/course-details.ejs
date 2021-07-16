@@ -83,6 +83,8 @@
   <!-- End Breadcrumbs -->
   <div class="wrapper">
     <main id="main">
+
+      
       <!-- ======= Cource Details Section ======= -->
       <section id="course-details" class="course-details">
         <div class="container" data-aos="fade-up" style="padding: 1.6rem 2.4rem;">
@@ -114,7 +116,135 @@
       </section>
       <!-- End Cource Details Section -->
 
-      <!-- ======= Cource Details Tabs Section ======= -->
+      <!-- description -->
+
+      <section id="information" class="information">
+        <div class="container" data-aos="fade-up">
+          <div class="row instructors" data-aos="zoom-in" data-aos-delay="100" style="padding: 1.6rem 2.4rem;">
+      
+            <div class="section-title">
+              <h2>About the course</h2>
+              <p>Description</p>
+            </div>
+            <div class="information">
+              <p>Python is the most popular programming language of the world - it's versatile, easy to learn and very
+                powerful!</p>
+      
+              <p>We already got a Python course which you can take if you want to learn Python.</p>
+              <p>But one of the primary things you can build with Python is a website! You can use Python for web development.
+              </p>
+      
+              <p>And to make that easier, you would typically use a framework like Django - simply because that allows you to
+                focus on
+                your core business logic and you don't need to re-invent the wheel and implement all the nitty-gritty
+                technical details
+                from scratch.</p>
+      
+              And this course is about Django - the most popular Python web development framework out there!
+      
+              <p>Django covers all aspects of web development - from handling requests and responses, over rendering dynamic
+                HTML pages
+                with templates, all the way up to making database access and data management easy. It's all baked in and it's
+                all
+                covered in great detail in this course!</p>
+      
+              <p>This course teaches Django from the ground up - you don't need to know anything about it to get started.
+                Basic Python
+                and web development knowledge is all you need.</p>
+      
+              <p>We'll start at the absolute basics and understand how to create Django project, how to run them and how to
+                add features
+                - step by step.</p>
+      
+              In detail, this course covers:
+              <ul>
+                <li>Installing Django</li>
+                <li>Creating and understanding Django projects</li>
+                <li>Understanding URLs, views, requests and responses</li>
+      
+                <li>Working with templates and static files like CSS and images</li>
+      
+                <li>Working with data and models</li>
+      
+                <li>Connecting data with relationships (one-to-many, one-to-one, many-to-many)</li>
+      
+                <li>Querying data with Django's powerful model solution</li>
+      
+                <li>Adding administration panels to your projects</li>
+      
+                <li>Handling user input with forms - manually and with Django's built-in form support</li>
+      
+                <li>Advanced features like class-based views (and when to use them)</li>
+      
+                <li>Dealing with file uploads and how to serve uploaded files</li>
+      
+                <li>Working with sessions</li>
+      
+                <li>In-depth deployment instructions and examples</li>
+      
+                <li>Different ways of deploying and serving static files and user uploads</li>
+      
+                <li>And much more!</li>
+              </ul>
+      
+              All those concepts are taught in great depth and backed up by a complete example course project where we build a
+              "Blog
+              website" from the ground up.
+      
+              <p>Therefore, you'll learn all the important concepts and the theory and you're also going to be able to see it
+                applied to
+                a real project.</p>
+      
+              <p> Hence, once you completed the course, you'll have a very solid understanding of Django and you'll be able to
+                dive into
+                your own Django projects!</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- end description section -->
+
+      <!-- Course Playlist -->
+      <section id="displayPlaylist" class="displayPlaylist">
+        <div class="container" data-aos="fade-up">
+          <div class="row instructors" data-aos="zoom-in" data-aos-delay="100" style="padding: 1.6rem 2.4rem;">
+            <div class="section-title">
+              <h2>Lessons</h2>
+              <p>Course Content</p>
+            </div>
+            <center>
+              <div class="playlist-content">
+      
+                <div style="max-height: 70vh; height: auto; box-shadow: none; border-bottom: none; background-color: #eef0ef;"
+                  class="sidebar-container-content">
+                  <div class="sidebar-container-content-group">
+      
+                    <div style="padding: 10px;" class='cta'>
+                      <h4 style="padding-left: 20px;">
+                        <%- playlist.length -%> &nbsp; Lessons
+                      </h4>
+                      <ul>
+                        <% for(let i=0; i < playlist.length; i++){ %>
+                          <li>
+                            <%- i+1 %> . &nbsp;
+                              <%- playlist[i].name -%>
+                          </li>
+                          <% } %>
+                      </ul>
+                    </div>
+                  </div>
+      
+                </div>
+              </div>
+            </center>
+          </div>
+        </div>
+      </section>
+      
+      <!-- course playlist end -->
+
+
+    <!--  ======= Cource Details Tabs Section ======= 
       <section id="cource-details-tabs" class="cource-details-tabs">
         <div class="container" data-aos="fade-up">
           <div class="row" data-aos="zoom-in" data-aos-delay="100">
@@ -250,14 +380,16 @@
 
 
           </div>
-      </section>
+      </section> -->
       <!-- End Cource Details Tabs Section -->
 
       <!-- ======= Who Should Take This Course Section ======= -->
       <section id="customers" class="customers">
         <div class="container" data-aos="fade-up">
           <div class="row" data-aos="zoom-in" data-aos-delay="100">
-            <h3>Who Should Take This Course?</h3>
+            <div class="section-title">
+              <h2>Who should take this course?</h2>
+            </div>
             <div class="member">
               <div class="customer-info align-items-center">
                 <i class="bx bx-check-double bx-lg"></i>
@@ -309,6 +441,23 @@
       </section>
       <!-- ======= End of Who Should Take This Course Section ======= -->
 
+      
+
+      <!-- Published  by -->
+      <section id="publishedBy" class="publishedBy">
+        <div class="container" data-aos="fade-up">
+          <div class="row instructors" data-aos="zoom-in" data-aos-delay="100" style="padding: 1.6rem 2.4rem;">
+            <div class="section-title">
+              <h2>Published by</h2>
+              <p>Meet your teacher</p>
+            </div>
+            </div>
+            </div>
+
+      </section>
+      <!-- published by end -->
+
+
       <!-- ======= Trainers Section ======= -->
       <section id="trainers" class="trainers">
         <div class="container" data-aos="fade-up">
@@ -340,9 +489,10 @@
       <section id="perks" class="perks">
         <div class="container" data-aos="fade-up">
           <div class="row" data-aos="zoom-in" data-aos-delay="100">
-            <h3>
-              Perks & Achievements on Course Completion
-            </h3>
+            <div class="section-title" style="padding: 1.6rem 2.4rem;">
+              <h2>Available on course completion</h2>
+              <p>Perks and Achievements</p>
+            </div>
             <div class="box col-lg-4 col-md-6 col-sm-12 d-flex align-items-stretch">
               <div style="
                   background-color: rgb(94, 159, 94);
@@ -390,69 +540,84 @@
       </section>
       <!-- End Perks Section -->
 
+
+
       <!-- Rating & Reviews Section -->
       <section id="reviews" class="reviews">
         <div class="container" data-aos="fade-up">
           <div class="row" data-aos="zoom-in" data-aos-delay="100" style="padding: 1.6rem 2.4rem;">
-            <h3>Reviews</h3>
+            <div class="section-title">
+              <h2>Reviews</h2>
+              <p>Latest Reviews</p>
+            </div>
             <ul class="list-group">
-              <li class="list-group-item"><strong>User Name </strong><span><i class="bx bx-star"></i></span><span><i
-                    class="bx bx-star"></i></span><span><i class="bx bx-star"></i></span><span><i
-                    class="bx bx-star"></i></span><span><i class="bx bx-star"></i></span>
-                <p>12-12-2020</p>
-                <p>Awesome Course! Loved it.</p>
-              </li>
-              <li class="list-group-item"><strong>User Name </strong><span><i class="bx bx-star"></i></span><span><i
-                    class="bx bx-star"></i></span><span><i class="bx bx-star"></i></span><span><i
-                    class="bx bx-star"></i></span><span><i class="bx bx-star"></i></span>
-                <p>12-12-2020</p>
-                <p>Awesome Course! Loved it.</p>
-              </li>
-              <li class="list-group-item"><strong>User Name </strong><span><i class="bx bx-star"></i></span><span><i
-                    class="bx bx-star"></i></span><span><i class="bx bx-star"></i></span><span><i
-                    class="bx bx-star"></i></span><span><i class="bx bx-star"></i></span>
-                <p>12-12-2020</p>
-                <p>Awesome Course! Loved it.</p>
-              </li>
+              <% for(let i=0; i < reviews.length; i++){ %>
+                <li class="list-group-item" style="margin: 10px; border: 1px solid rgba(0, 0, 0, 0.125); border-radius: 5px;">
+                  <strong>By: &nbsp;<%- reviewUsers[i].username %></strong>
+                  &nbsp; | &nbsp;
+                  <% for(let rating=0; rating < reviews[i].rating; rating++){ %>
+                    <span><i class="bx bxs-star"></i></span>
+      
+                    <% } %>
+                      <% for(let j=5 - reviews[i].rating; j> 0; j--){ %>
+                        <span><i class="bx bx-star"></i></span><span></span>
+                        <% } %>
+                          <p>
+                            <%- reviews[i].createdAt %>
+                          </p>
+                          <p>
+                            <%- reviews[i].text %>
+                          </p>
+                </li>
+                <% } %>
             </ul>
-            <h3>Write a User Review</h3>
-            <form id="feedback" action="">
-
-              <div class="pinfo">Rate the course.</div>
-
-
-              <div class="form-group">
-                <div class="col-md-4 inputGroupContainer">
-                  <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-heart"></i></span>
-                    <select class="form-control" id="rate">
-                      <option value="1star">1</option>
-                      <option value="2stars">2</option>
-                      <option value="3stars">3</option>
-                      <option value="4stars">4</option>
-                      <option value="5stars">5</option>
-                    </select>
-                  </div>
+      
+            <div class="container" data-aos="fade-up">
+              <div class="row" data-aos="zoom-in" data-aos-delay="100" style="padding: 3rem 0.7rem;">
+                <div class="section-title">
+                  <h2>Feedback</h2>
+                  <p>Your Review</p>
                 </div>
-              </div>
-
-              <div class="pinfo">Write your feedback.</div>
-
-
-              <div class="form-group">
-                <div class="col-md-4 inputGroupContainer">
-                  <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-pencil"></i></span>
-                    <textarea class="form-control" id="review" rows="3"></textarea>
-
+                <form id="feedback" action="">
+      
+                  <div class="pinfo">Rate the course.</div>
+      
+      
+                  <div class="form-group">
+                    <div class="col-md-4 inputGroupContainer">
+                      <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-heart"></i></span>
+                        <select class="form-control" id="rate">
+                          <option value="1star">1</option>
+                          <option value="2stars">2</option>
+                          <option value="3stars">3</option>
+                          <option value="4stars">4</option>
+                          <option value="5stars">5</option>
+                        </select>
+                      </div>
+                    </div>
                   </div>
-                </div>
+      
+                  <div class="pinfo">Write your feedback.</div>
+      
+      
+      
+                  <div class="form-group">
+                    <div class="col-md-4 inputGroupContainer">
+                      <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-pencil"></i></span>
+                        <textarea class="form-control" id="review" rows="3"></textarea>
+      
+                      </div>
+                    </div>
+                  </div>
+      
+                  <button type="submit" class="btn btn-primary">Submit</button>
+      
+      
+                </form>
               </div>
-
-              <button type="submit" class="btn btn-primary">Submit</button>
-
-
-            </form>
+            </div>
           </div>
         </div>
       </section>
@@ -472,7 +637,7 @@
                     <div class="buy-box">
                       <div class="buy-box-item price">
                         <div class="price-text">
-                          <!-- <h2>₹<%# course.cost -%></h2> -->
+                          <h2>₹<%- course.cost -%></h2>
                           <div
                             style="font-size: 1rem; line-height: 1; padding: .4rem; margin-right: .8rem;
                                               white-space: nowrap; box-sizing: border-box; color: #73726c;text-decoration: line-through;">

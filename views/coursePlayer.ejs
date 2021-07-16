@@ -21,9 +21,9 @@
                         <li class="dropdown"><a href="/profile" class="profile-btn"><i class="bx bx-user"></i>
                                 <span>Profile</span><i class="bi bi-chevron-down"></i></a>
                             <ul>
-                                <li style="color:black;"><a href="/profile">My Profile</a></li>
-                                <li><a href="/contact">Help</a></li>
-                                <li><a href="/logout">Logout</a></li>
+                                <li style="color:black;"><a style="color: #5fcf80;"href="/profile">My Profile</a></li>
+                                <li><a href="/contact"  style="color: #5fcf80;">Help</a></li>
+                                <li ><a href="/logout" style="color: #5fcf80;">Logout</a></li>
                             </ul>
                         </li>
                     <% } else { %>
@@ -41,6 +41,7 @@
     <!-- ======= Breadcrumbs ======= -->
     <div class="breadcrumbs about-mbl-view" data-aos="fade-in">
         <div class="container" style="padding: 30px;">
+            
             <h2><%- course.title -%> </h2>
             <p>
             <%- course.description -%>
@@ -72,7 +73,7 @@
         <main id="main">
             <!-- ======= Cource Details Section ======= -->
             <section id="course-details" class="course-details">
-                <div class="container" data-aos="fade-up" style="padding: 1.6rem 2.4rem;">
+                <div class="container" data-aos="fade-up">
                     <div class="row">
                         <div class="background-img">
                             <video  width="100%" controls id="current_video" >
@@ -101,61 +102,106 @@
             </section>
             <!-- End Cource Details Section -->
 
-
+            <!-- description -->
             
-            <!-- ======= Perks Section ======= -->
-            <section id="perks" class="perks">
+            <section id="information" class="information">
                 <div class="container" data-aos="fade-up">
-                    <div class="row" data-aos="zoom-in" data-aos-delay="100">
-                        <h3>
-                            Perks & Achievements on Course Completion
-                        </h3>
-                        <div class="box col-lg-4 col-md-6 col-sm-12 d-flex align-items-stretch">
-                            <div style="
-                  background-color: rgb(94, 159, 94);
-                  color: aliceblue;
-                  text-align: center;
-                  padding: 30px;
-                " class="member-content">
-                                <h4>Shareable Certificate</h4>
-                                <p>
-                                    Magni qui quod omnis unde et eos fuga et exercitationem. Odio
-                                    veritatis perspiciatis quaerat qui aut aut aut
-                                </p>
-                            </div>
+                    <div class="row instructors" data-aos="zoom-in" data-aos-delay="100" style="padding: 1.6rem 2.4rem;">
+            
+                        <div class="section-title">
+                            <h2>About the course</h2>
+                            <p>Description</p>
                         </div>
-                        <div class="box col-lg-4 col-md-6 col-sm-12 d-flex align-items-stretch">
-                            <div style="
-                  background-color: rgb(94, 159, 94);
-                  color: aliceblue;
-                  text-align: center;
-                  padding: 30px;
-                " class="member-content">
-                                <h4>Skill Badges</h4>
-                                <p>
-                                    Magni qui quod omnis unde et eos fuga et exercitationem. Odio
-                                    veritatis perspiciatis quaerat qui aut aut aut
-                                </p>
-                            </div>
-                        </div>
-                        <div class="box col-lg-4 col-md-6 col-sm-12 d-flex align-items-stretch">
-                            <div style="
-                  background-color: rgb(94, 159, 94);
-                  color: aliceblue;
-                  text-align: center;
-                  padding: 30px;
-                " class="member-content">
-                                <h4>Achievements</h4>
-                                <p>
-                                    Magni qui quod omnis unde et eos fuga et exercitationem. Odio
-                                    veritatis perspiciatis quaerat qui aut aut aut
-                                </p>
-                            </div>
+                        <div class="information">
+                            <p>Python is the most popular programming language of the world - it's versatile, easy to learn and very
+                                powerful!</p>
+            
+                            <p>We already got a Python course which you can take if you want to learn Python.</p>
+                            <p>But one of the primary things you can build with Python is a website! You can use Python for web
+                                development.
+                            </p>
+            
+                            <p>And to make that easier, you would typically use a framework like Django - simply because that allows
+                                you to
+                                focus on
+                                your core business logic and you don't need to re-invent the wheel and implement all the
+                                nitty-gritty
+                                technical details
+                                from scratch.</p>
+            
+                            And this course is about Django - the most popular Python web development framework out there!
+            
+                            <p>Django covers all aspects of web development - from handling requests and responses, over rendering
+                                dynamic
+                                HTML pages
+                                with templates, all the way up to making database access and data management easy. It's all baked in
+                                and it's
+                                all
+                                covered in great detail in this course!</p>
+            
+                            <p>This course teaches Django from the ground up - you don't need to know anything about it to get
+                                started.
+                                Basic Python
+                                and web development knowledge is all you need.</p>
+            
+                            <p>We'll start at the absolute basics and understand how to create Django project, how to run them and
+                                how to
+                                add features
+                                - step by step.</p>
+            
+                            In detail, this course covers:
+                            <ul>
+                                <li>Installing Django</li>
+                                <li>Creating and understanding Django projects</li>
+                                <li>Understanding URLs, views, requests and responses</li>
+            
+                                <li>Working with templates and static files like CSS and images</li>
+            
+                                <li>Working with data and models</li>
+            
+                                <li>Connecting data with relationships (one-to-many, one-to-one, many-to-many)</li>
+            
+                                <li>Querying data with Django's powerful model solution</li>
+            
+                                <li>Adding administration panels to your projects</li>
+            
+                                <li>Handling user input with forms - manually and with Django's built-in form support</li>
+            
+                                <li>Advanced features like class-based views (and when to use them)</li>
+            
+                                <li>Dealing with file uploads and how to serve uploaded files</li>
+            
+                                <li>Working with sessions</li>
+            
+                                <li>In-depth deployment instructions and examples</li>
+            
+                                <li>Different ways of deploying and serving static files and user uploads</li>
+            
+                                <li>And much more!</li>
+                            </ul>
+            
+                            All those concepts are taught in great depth and backed up by a complete example course project where we
+                            build a
+                            "Blog
+                            website" from the ground up.
+            
+                            <p>Therefore, you'll learn all the important concepts and the theory and you're also going to be able to
+                                see it
+                                applied to
+                                a real project.</p>
+            
+                            <p> Hence, once you completed the course, you'll have a very solid understanding of Django and you'll be
+                                able to
+                                dive into
+                                your own Django projects!</p>
                         </div>
                     </div>
                 </div>
             </section>
-            <!-- End Perks Section -->
+            <!-- end description section -->
+
+
+            
 
             <!-- Rating & Reviews Section -->
             <section id="reviews" class="reviews">
@@ -181,44 +227,53 @@
                             </li>
                             <% } %>
                         </ul>
-                        <h3>Write a User Review</h3>
-                        <form id="feedback" action="">
 
-                            <div class="pinfo">Rate the course.</div>
-
-
-                            <div class="form-group">
-                                <div class="col-md-4 inputGroupContainer">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-heart"></i></span>
-                                        <select class="form-control" id="rate">
-                                            <option value="1star">1</option>
-                                            <option value="2stars">2</option>
-                                            <option value="3stars">3</option>
-                                            <option value="4stars">4</option>
-                                            <option value="5stars">5</option>
-                                        </select>
-                                    </div>
+                        <div class="container" data-aos="fade-up">
+                            <div class="row" data-aos="zoom-in" data-aos-delay="100" style="padding: 3rem 0.7rem;">
+                                <div class="section-title">
+                                    <h2>Feedback</h2>
+                                    <p>Your Review</p>
                                 </div>
-                            </div>
-
-                            <div class="pinfo">Write your feedback.</div>
-
-
-                            <div class="form-group">
-                                <div class="col-md-4 inputGroupContainer">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-pencil"></i></span>
-                                        <textarea class="form-control" id="review" rows="3"></textarea>
-
-                                    </div>
+                                    <form id="feedback" action="">
+                                    
+                                        <div class="pinfo">Rate the course.</div>
+                                    
+                                    
+                                        <div class="form-group">
+                                            <div class="col-md-4 inputGroupContainer">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-heart"></i></span>
+                                                    <select class="form-control" id="rate">
+                                                        <option value="1star">1</option>
+                                                        <option value="2stars">2</option>
+                                                        <option value="3stars">3</option>
+                                                        <option value="4stars">4</option>
+                                                        <option value="5stars">5</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    
+                                        <div class="pinfo">Write your feedback.</div>
+                                    
+                                    
+                                    
+                                        <div class="form-group">
+                                            <div class="col-md-4 inputGroupContainer">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-pencil"></i></span>
+                                                    <textarea class="form-control" id="review" rows="3"></textarea>
+                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    
+                                    
+                                    </form>
                                 </div>
-                            </div>
-
-                            <button type="submit" class="btn btn-primary">Submit</button>
-
-
-                        </form>
+                                </div>
                     </div>
                 </div>
             </section>
