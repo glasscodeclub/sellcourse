@@ -40,9 +40,9 @@
   <!-- ======= Breadcrumbs ======= -->
   <div class="breadcrumbs about-mbl-view" data-aos="fade-in" >
     <div class="container" style="padding: 30px;">
-      <!-- <h2><%# course.title -%></h2> -->
+      <h2><%- course.title -%></h2> 
       <p>
-      <!-- <%# course.description -%> -->
+       <%- course.description %> 
       </p>
       <div class="sidebar-render">
         <div class="purchase-render">
@@ -51,30 +51,28 @@
               <div class="buy-box">
                 <div class="buy-box-item price">
                   <div class="price-text">
-                    <!-- <h2>₹<%# course.cost -%></h2> -->
+                     <h2>₹<%- course.cost -%></h2> 
                     <div style="font-size: 1.6rem; line-height: 1; padding: .4rem; margin-right: .8rem;
                               white-space: nowrap; box-sizing: border-box; color: #73726c;">90% off</div>
                   </div>
+                  <div class="rating">
+                    <% for(let rating=0; rating < course.averageRating; rating++){ %>
+                      <span><i class="bx bxs-star"></i></span>
+                    
+                      <% } %>
+                        <% for(let j= 5 - course.averageRating; j > 0; j--){ %>
+                          <span><i class="bx bx-star"></i></span>
+                          <% } %>
+                  </div>
+
                 </div>
                 <div class="buy-box-item add-to-cart-button">
                   <button>Add To Cart</button>
+                  <button>Buy Now</button>
                 </div>
               </div>
             </div>
-            <div class='cta'>
-              <ul>
-                <div>
-                  <h6>Available Seats
-                    <span>20</span>
-                  </h6>
-                </div>
-                <div>
-                  <h6>Schedule
-                    <span>5 PM - 7 PM</span>
-                  </h6>
-                </div>
-              </ul>
-            </div>
+            
           </div>
         </div>
       </div>
@@ -387,7 +385,7 @@
       <section id="customers" class="customers">
         <div class="container" data-aos="fade-up">
           <div class="row" data-aos="zoom-in" data-aos-delay="100">
-            <div class="section-title">
+            <div class="section-title" style="padding: 1.6rem 2.4rem;">
               <h2>Who should take this course?</h2>
             </div>
             <div class="member">
@@ -490,7 +488,7 @@
         <div class="container" data-aos="fade-up">
           <div class="row" data-aos="zoom-in" data-aos-delay="100">
             <div class="section-title" style="padding: 1.6rem 2.4rem;">
-              <h2>Available on course completion</h2>
+            
               <p>Perks and Achievements</p>
             </div>
             <div class="box col-lg-4 col-md-6 col-sm-12 d-flex align-items-stretch">
@@ -560,7 +558,7 @@
       
                     <% } %>
                       <% for(let j=5 - reviews[i].rating; j> 0; j--){ %>
-                        <span><i class="bx bx-star"></i></span><span></span>
+                        <span><i class="bx bx-star"></i></span>
                         <% } %>
                           <p>
                             <%- reviews[i].createdAt %>

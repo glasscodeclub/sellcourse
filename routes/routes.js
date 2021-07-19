@@ -43,11 +43,13 @@ router.get('/', async (req, res) => {
 router.get('/done',isLoggedIn, async (req, res) => {
     const fetchCourse = await Course.find().limit(3);
 
+    console.log(req.user.id);
     if(fetchCourse){
        // console.log(fetchCourse);
         return res.render('index', {
             results: fetchCourse,
-            login: true    
+            login: true,
+            userid: req.user.id    
         });
     }
 
@@ -79,11 +81,7 @@ router.get('/about', (req, res) => {
     });
 });
 
-router.get('/cart', isLoggedIn, (req, res) => {
-    res.render('cart', {
-         login: null
-    });
-});
+
 
 router.get('/contact', (req, res) => {
     res.render('contact', {
@@ -143,6 +141,8 @@ router.get('/profile', isLoggedIn, async(req, res) => {
 
 });
 
+
+
 router.get('/profile/mycourses/:courseid', isLoggedIn, async (req, res) => {
     let course = await Course.findById(req.params.courseid);
 
@@ -184,7 +184,7 @@ router.get('/profile/mycourses/:courseid', isLoggedIn, async (req, res) => {
 });
 
 
-router.get('/courses/:courseid', isLoggedIn, async(req, res) => {
+router.get('/courses/:courseid', async(req, res) => {
     let course = await Course.findById(req.params.courseid);
 
     if(!course){
@@ -218,55 +218,44 @@ router.get('/courses/:courseid', isLoggedIn, async(req, res) => {
             login:true,
         });
     }).catch(err => {
-        // err handling
+        console.log(err);
+        return res.redirect('/courses');
     }) 
 })
 
 
-router.get('/courses/:courseid/:videoid', isLoggedIn, async(req, res) => {
-    let course = await Course.findById(req.params.courseid);
-    
-    if(!req.user){
-        return res.render('course-details', {
-            course
-        });
+
+router.get('/cart/:userid', isLoggedIn, async(req, res) => {
+    try {
+        const userCart = await User.findById(req.params.userid);
+        
+        let courses = [];
+        userCart.cart.forEach(course => {
+            courses.push(Course.findById(course));
+            console.log(courses);
+        })
+
+        Promise.allSettled(courses).then(doc => {
+            let data=[];
+            for(let i=0;i<doc.length;++i){
+                data.push(doc[i].value)  
+            }
+
+            return res.render('cart', {
+                err: null,
+                success: true,
+                courses: data,
+                login: true
+            })
+        })
+        
+    } catch (error) {
+        console.log(error);
+        return res.redirect('/');
     }
-    
-    let playlist = [];
-    for(let i=0; i < course.videos.length; i++){
-        const vid = await Video.findById(course.videos[i]).select('title url name -_id');
-        playlist.push(vid);
-    } 
-
-  /*  course.videos.forEach(vid => {
-       playlist.push(Video.findById(vid).select('title url -_id')) ;
-    })
-    Promise.allSettled(playlist).then((doc) => {
-        console.log(playlist.title);
-        res.render('coursePlayer', {
-            err: false,
-            messages: null,
-            course,
-            playlist
-        });
-    }).catch(err => {
-        // err handling
-    }) 
-    */ 
-
-    const activeVidUrl = await Video.findById(req.params.videoid).select('url');
-    console.log(activeVidUrl);
-    return res.render('coursePlayer', {
-            err: false,
-            messages: null,
-            course,
-            playlist,
-            activeVidUrl
-        });
-    
-    
-
 })
+ 
+
 
 
 //---------- auth routes

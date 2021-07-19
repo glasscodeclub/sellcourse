@@ -25,6 +25,9 @@ const CourseSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
+    duration: {
+        type: String
+    },
     imageUrl: String,
     videos: {
         type: [String]

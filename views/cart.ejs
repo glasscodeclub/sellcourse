@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang='en'>
 <head>
+	<base href="/">
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Cart</title>
@@ -26,74 +27,68 @@
 
       <!-- <h1 class="logo me-auto"><a href="index.html"></a></h1> -->
       <!-- Uncomment below if you prefer to use an image logo -->
-      <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>
-
-      <nav id="navbar" class="navbar order-last order-lg-0">
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="courses.html">Courses</a></li>
-          <li><a href="events.html">Events</a></li>
-          <li><a href="contact.html">Contact</a></li>
-          <li><a href="profile.html" class="profile-btn">
-            <i class="bx bx-user"></i>
-            <span>Profile</span>
-          </a></li>
-        </ul>
-        <i class="bi bi-list mobile-nav-toggle"></i>
-      </nav><!-- .navbar -->
+	<a href="/" class="logo me-auto"><img src="assets/img/logo_white.png" alt="" class="img-fluid" /></a>
+	
+	<nav id="navbar" class="navbar order-last order-lg-0">
+		<ul>
+			<li><a href="/">Home</a></li>
+			<li><a class="active" href="/courses">Courses</a></li>
+			<li><a href="/pricing">Pricing</a></li>
+			<li><a href="/about">About</a></li>
+			<% if(login && login===true){ %>
+				<li class="dropdown"><a href="/profile" class="profile-btn"><i class="bx bx-user"></i>
+						<span>Profile</span><i class="bi bi-chevron-down"></i></a>
+					<ul>
+						<li style="color:black;"><a style="color: #5fcf80;" href="/profile">My Profile</a></li>
+						<li><a href="/contact" style="color: #5fcf80;">Help</a></li>
+						<li><a href="/logout" style="color: #5fcf80;">Logout</a></li>
+					</ul>
+				</li>
+				<% } else { %>
+					<li><a href="/signup">Get Started</a></li>
+					<% } %>
+		</ul>
+		<i class="bi bi-list mobile-nav-toggle"></i>
+	</nav>
 
     </div>
   </header>
 
+<!-- ======= Breadcrumbs ======= -->
+<div class="breadcrumbs" data-aos="fade-in">
+	<div class="container">
+		<h2>Your Cart</h2>
+		<p>Est dolorum ut non facere possimus quibusdam eligendi voluptatem. Quia id aut similique quia voluptas sit
+			quaerat debitis. Rerum omnis ipsam aperiam consequatur laboriosam nemo harum praesentium. </p>
+	</div>
+</div>
+<!-- End Breadcrumbs -->
 
+<% let totalCost = 0 %>
 	<div class="container cart-page">
 		<div class="row">
 			<div class="col-md-7">
 				<div class="cart">
-					<div>
-						<h2>YOUR CART</h2>
-					</div>
+					
 					<div class="cart-items">
-						<div class="item">
-							<div class="row">
-								<div class="col-md-4">
-									<img src="assets/img/course-1.jpg" alt="">
-								</div>
-								<div class="col-md-8">
-									<button class="btn text-danger float-right"><i class="fas fa-trash-alt"></i></button>
-									<h3>Introduction to JS</h3>
-									<p>$15</p>
-									<p>Duration: 8 weeks</p>
-								</div>
-							</div>
-						</div>
-						<div class="item">
-							<div class="row">
-								<div class="col-md-4">
-									<img src="assets/img/course-3.jpg" alt="">
-								</div>
-								<div class="col-md-8">
-									<button class="btn text-danger float-right"><i class="fas fa-trash-alt"></i></button>
-									<h3>Vue.js Advanced</h3>
-									<p>$15</p>
-									<p>Duration: 8 weeks</p>
+						<% for(let i = 0; i < courses.length; i++){ %>
+							<div class="item">
+								<div class="row">
+									<div class="col-md-4">
+										<img src="assets/img/course-1.jpg" alt="">
+									</div>
+									<div class="col-md-8">
+										<button class="btn text-danger float-right"><i class="fas fa-trash-alt"></i></button>
+										<h3><%- courses[i].title %></h3>
+										<p>Rs. <%- courses[i].cost %></p>
+										<% totalCost += courses[i].cost %>
+										<p>Duration: <%- courses[i].duration %></p>
+									</div>
 								</div>
 							</div>
-						</div>
-						<div class="item">
-							<div class="row">
-								<div class="col-md-4">
-									<img src="assets/img/course-3.jpg" alt="">
-								</div>
-								<div class="col-md-8">
-									<button class="btn text-danger float-right"><i class="fas fa-trash-alt"></i></button>
-									<h3>Gatsby Tutorial</h3>
-									<p>$15</p>
-									<p>Duration: 8 weeks</p>
-								</div>
-							</div>
-						</div>
+						<% } %>
+						
+					
 					</div>
 				</div>
 				<div class="cart-side-button">
@@ -120,10 +115,10 @@
 								<h3>Cart Summary</h3>
 								<hr>
 								<div class="total">
-									<h5>Subtotal <span class="float-right">$45</span></h5>
-									<h5>Taxes <span class="float-right">$3</span></h5>
+									<h5>Subtotal <span class="float-right">Rs. <%- totalCost %></span></h5>
+									<h5>Taxes <span class="float-right">Rs. <%- 0.10*totalCost %></span></h5>
 									<hr>
-									<h4>Total <span class="float-right">$48</span></h4>
+									<h4>Total <span class="float-right">Rs. <%- totalCost + 0.10*totalCost %> </span></h4>
 								</div>
 								<p class="mt-3">By proceeding you agree to the <span class="text-primary">Terms of Service</span></p>
 								<button class="container-fluid btn btn-success">Proceed To Checkout</button>
