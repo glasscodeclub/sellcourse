@@ -186,6 +186,28 @@ router.get('/profile/mycourses/:courseid', isLoggedIn, async (req, res) => {
 
 router.get('/courses/:courseid', async(req, res) => {
     let course = await Course.findById(req.params.courseid);
+    let bought = false;
+    let inCart = false;
+
+    if(req.user){
+        const user = await User.findById(req.user.id);
+
+        for(let i = 0; i < user.courses.length; i++){
+            if(user.courses[i] === req.params.courseid){
+                bought = true;
+                break;
+            }
+        }
+
+        if(bought == false){
+            for(let i = 0; i < user.cart.length; i++){
+                if(user.cart[i] === req.params.courseid){
+                    inCart = true;
+                    break;
+                }
+            }
+        }
+    }
 
     if(!course){
         res.redirect('/courses');
@@ -216,6 +238,8 @@ router.get('/courses/:courseid', async(req, res) => {
             reviews,
             reviewUsers,
             login:true,
+            bought,
+            inCart
         });
     }).catch(err => {
         console.log(err);

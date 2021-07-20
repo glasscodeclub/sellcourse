@@ -38,9 +38,9 @@
 
 
   <!-- ======= Breadcrumbs ======= -->
-  <div class="breadcrumbs about-mbl-view" data-aos="fade-in" >
+  <div class="breadcrumbs about-mbl-view" data-aos="fade-in" style="background-color: #273036;" >
     <div class="container" style="padding: 30px;">
-      <h2><%- course.title -%></h2> 
+      <h2 ><%- course.title -%></h2> 
       <p>
        <%- course.description %> 
       </p>
@@ -51,7 +51,7 @@
               <div class="buy-box">
                 <div class="buy-box-item price">
                   <div class="price-text">
-                     <h2>₹<%- course.cost -%></h2> 
+                     <h2 style="color: white;">₹<%- course.cost -%></h2> 
                     <div style="font-size: 1.6rem; line-height: 1; padding: .4rem; margin-right: .8rem;
                               white-space: nowrap; box-sizing: border-box; color: #73726c;">90% off</div>
                   </div>
@@ -66,9 +66,11 @@
                   </div>
 
                 </div>
-                <div class="buy-box-item add-to-cart-button">
-                  <button>Add To Cart</button>
-                  <button>Buy Now</button>
+                <div class="buy-box-item add-to-cart-button" style="max-width: 300px; ">
+                  <button style="margin: 10px; border: 2px solid white">Add To Cart</button>
+                  <button style="margin: 10px; border: 2px solid white">
+                    Buy Now
+                  </button>
                 </div>
               </div>
             </div>
@@ -215,7 +217,7 @@
       
                 <div style="max-height: 70vh; height: auto; box-shadow: none; border-bottom: none; background-color: #eef0ef;"
                   class="sidebar-container-content">
-                  <div class="sidebar-container-content-group">
+                  <div class="sidebar-container-content-group" style="border-bottom: 0px;">
       
                     <div style="padding: 10px;" class='cta'>
                       <h4 style="padding-left: 20px;">
@@ -628,14 +630,14 @@
       <div class="container" data-aos="fade-up">
         <div class="row" data-aos="zoom-in" data-aos-delay="100">
           <div class="sidebar-container-content card">
-            <div class="sidebar-container-content-group">
+            <div class="sidebar-container-content-group" style="border-bottom: 0px;">
               <div class="sidebar-container-purchase-section">
                 <div class="generic-purchase-section">
                   <div class="buy-box-main">
                     <div class="buy-box">
                       <div class="buy-box-item price">
                         <div class="price-text">
-                          <h2>₹<%- course.cost -%></h2>
+                          <h1>₹<%- course.cost -%></h1>
                           <div
                             style="font-size: 1rem; line-height: 1; padding: .4rem; margin-right: .8rem;
                                               white-space: nowrap; box-sizing: border-box; color: #73726c;text-decoration: line-through;">
@@ -646,7 +648,16 @@
                         </div>
                       </div>
                       <div class="buy-box-item add-to-cart-button">
-                        <button>Buy Now</button>
+                        
+                          <% if(bought == true && inCart == false){ %>
+                          <button> <a href="/profile" style="color: white;"> Purchased </a> </button>
+                          <% } else if(bought == false && inCart == true){ %>
+                           <button> Go to Cart</button> 
+                          <% } else if(bought == false && inCart == false) { %>
+                            <button> Buy Now</button>
+                          <% } else if(bought == true && inCart == true) { %>
+                             Invalid Operation
+                          <% } %>
                       </div>
                     </div>
                   </div>
@@ -661,20 +672,24 @@
                       <li><i class="bx bx-user"></i>&nbsp;Certificate of completion</li>
                     </ul>
                   </div>
+                  <% if(bought == false && inCart == false){ %>
+                  <div class="buy-box-item add-to-cart-button">
+                    <button>Add to Cart</button>
+                  </div>
+                  <% } else if(bought == false && inCart == true){ %>
+                  <div></div>
+                  <% } else if(bought == true && inCart == false){ %>
+                    <div></div>
+                  <% } else if(bought == true && inCart == true){ %>
+                    <div class="buy-box-item add-to-cart-button">
+                      <button>Invalid Operation</button>
+                      <% console.log("Invalid Operation, course bought already but still in Cart") %>
+                    </div>  
+                    <% } %>
                 </div>
               </div>
             </div>
-            <div class='sidebar-container-content-group'>
-              <div class="generic-purchase-section">
-                <!--  <div class='buy-box-main'>
-                  <div class="buy-box"> -->
-                <div class="buy-box-main add-to-cart-button">
-                  <button>Add To Cart</button>
-                </div>
-                <!--     </div>
-                </div> -->
-              </div>
-            </div>
+            
           </div>
         </div>
       </div>
