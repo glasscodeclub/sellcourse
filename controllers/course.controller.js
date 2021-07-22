@@ -1,13 +1,18 @@
 const Course = require('../models/course.model');
 
 exports.getCourses = function(req, res){
+    let login = false;
+    if(req.user){
+        login= true;
+    }
     Course.find({}, (err, ans) => {
         if(err){
             console.log(err);
         }
         else{
             res.render('../views/courses.ejs', {
-                results: ans
+                results: ans,
+                login
             });
         }
     })
