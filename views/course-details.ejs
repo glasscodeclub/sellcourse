@@ -654,7 +654,10 @@
                           <% } else if(bought == false && inCart == true){ %>
                            <button> Go to Cart</button> 
                           <% } else if(bought == false && inCart == false) { %>
-                            <button> Buy Now</button>
+                            <form action="/courses/<%-courseid%>/payment" method="POST">
+                              <button type="submit">Buy Now</button>
+                            </form>
+                           
                           <% } else if(bought == true && inCart == true) { %>
                              Invalid Operation
                           <% } %>

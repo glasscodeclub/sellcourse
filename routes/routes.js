@@ -7,7 +7,11 @@ const Course = require('../models/course.model');
 const Video = require('../models/video.model');
 const Review = require('../models/review.model');
 const { check, validationResult, cookie } = require('express-validator');
+const dotenv = require('dotenv');
 
+
+dotenv.config({ path: './config/config.env' });
+const stripe = require('stripe')(process.env.SECRET_KEY);
 
 const {
     forgotPwd,
@@ -188,6 +192,7 @@ router.get('/courses/:courseid', async(req, res) => {
     let course = await Course.findById(req.params.courseid);
     let bought = false;
     let inCart = false;
+    let courseID = req.params.courseid;
 
     if(req.user){
         const user = await User.findById(req.user.id);
@@ -239,7 +244,8 @@ router.get('/courses/:courseid', async(req, res) => {
             reviewUsers,
             login:true,
             bought,
-            inCart
+            inCart,
+            courseid: courseID
         });
     }).catch(err => {
         console.log(err);
@@ -377,6 +383,51 @@ router.get("/logout", function (req, res) {
     req.logout();
     res.redirect("/");
 });
+
+//----payment route 
+
+router.post('/courses/:courseid/payment', isLoggedIn, async(req, res) => {
+    try{
+        const course = await Course.findById(req.params.courseid);
+        const amount = course.cost
+        console.log(amount);
+
+        const session = await stripe.checkout.sessions.create({
+            payment_method_types: ['card'],
+            line_items: [{
+                price_data: {
+                    currency: 'inr',
+                    product_data: {
+                        name: course.title,
+                    },
+                    unit_amount: amount * 100,
+                },
+                quantity: 1,
+            }],
+            mode: 'payment',
+            success_url: `https://localhost:3000/success/${req.params.courseid}/${req.user.id}`,
+            cancel_url: 'https://localhost:3000',
+    });
+
+    res.redirect(303, session.url);
+
+    } catch(error){
+        console.log(error);
+    }
+});
+
+router.get('/success/:courseid/:userid', async (req, res) => {
+    const user = await User.findById(req.params.userid);
+    console.log(user);
+
+    const courseid = req.params.courseid;
+
+    user.courses.push(courseid);
+
+    res.redirect('/profile');
+
+
+})
 
 
 module.exports = router;
