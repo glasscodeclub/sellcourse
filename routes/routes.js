@@ -211,16 +211,6 @@ router.get('/courses/:courseid', async(req, res) => {
         if(user.courses.includes(req.params.courseid)){
             bought = true;
         }
-        else{
-            var options = {
-                amount: course.cost*100,  
-                currency: "INR"
-            };
-            instance.orders.create(options, function(err, order) {
-                if(err) console.log(err);
-                orderID = order.id;
-            });
-        }
     }
 
     if(!course){
@@ -253,10 +243,7 @@ router.get('/courses/:courseid', async(req, res) => {
             reviewUsers,
             login,
             bought,
-            courseid: courseID,
-            order: orderID,
-            raz_id: process.env.RAZ_ID,
-            currUser: user
+            courseid: courseID
         });
     }).catch(err => {
         console.log(err);
@@ -264,39 +251,41 @@ router.get('/courses/:courseid', async(req, res) => {
     }) 
 })
 
-/*
 
-router.get('/cart/:userid', isLoggedIn, async(req, res) => {
+
+router.get('/checkout/:courseid', isLoggedIn, async(req, res) => {
     try {
-        const userCart = await User.findById(req.params.userid);
-        
-        let courses = [];
-        userCart.cart.forEach(course => {
-            courses.push(Course.findById(course));
-        })
+        const course = await Course.findById(req.params.courseid); 
+        console.log(course.id);
+        var orderID;
+        let login = false;
+        if(course && req.user){
+            login = true;
+            var options = {
+                amount: course.cost*100,  
+                currency: "INR"
+            };
+            instance.orders.create(options, function(err, order) {
+                if(err) console.log(err);
+                orderID = order.id;
+            });
 
-        Promise.allSettled(courses).then(doc => {
-            let data=[];
-            for(let i=0;i<doc.length;++i){
-                data.push(doc[i].value)  
-            }
-
-            return res.render('cart', {
-                err: null,
-                success: true,
-                courses: data,
-                login: true
+            res.render('cart', {
+                course, 
+                raz_id: process.env.RAZ_ID,
+                order: orderID,
+                login
             })
-        })
+        }
         
     } catch (error) {
         console.log(error);
-        return res.redirect('/');
+        return res.redirect('back');
     }
-})
+});
  
 
-*/
+
 
 //---------- auth routes
 
@@ -461,7 +450,7 @@ router.get('/order/:courseid/success', isLoggedIn, async (req, res) => {
 */
 //-------payment with razorpay
 
-router.post("/courses/:courseid/verify", isLoggedIn, async (req, res) => {
+router.post("/checkout/:courseid/verify", isLoggedIn, async (req, res) => {
     try{
         let login= false;
         if(req.user){
