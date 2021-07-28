@@ -1,6 +1,5 @@
 node_modules/
 .idea/
-config/default.json
-config/config.env
+config/
 data/
 video/

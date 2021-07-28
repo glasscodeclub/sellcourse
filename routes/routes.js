@@ -8,10 +8,15 @@ const Video = require('../models/video.model');
 const Review = require('../models/review.model');
 const { check, validationResult, cookie } = require('express-validator');
 const dotenv = require('dotenv');
+const Razorpay = require('razorpay');
 
 
 dotenv.config({ path: './config/config.env' });
-const stripe = require('stripe')(process.env.SECRET_KEY);
+
+var instance = new Razorpay({ 
+    key_id: process.env.RAZ_ID, 
+    key_secret: process.env.RAZ_SEC
+});
 
 const {
     forgotPwd,
@@ -191,26 +196,33 @@ router.get('/profile/mycourses/:courseid', isLoggedIn, async (req, res) => {
 router.get('/courses/:courseid', async(req, res) => {
     let course = await Course.findById(req.params.courseid);
     let bought = false;
-    let inCart = false;
+    let login = false;
     let courseID = req.params.courseid;
+    let user;
+    let orderID;
 
     if(req.user){
-        const user = await User.findById(req.user.id);
-
-        for(let i = 0; i < user.courses.length; i++){
-            if(user.courses[i] === req.params.courseid){
-                bought = true;
-                break;
-            }
+        user = await User.findById(req.user.id);
+        
+        if(!user){
+            res.redirect('/login');
         }
 
-        if(bought == false){
-            for(let i = 0; i < user.cart.length; i++){
-                if(user.cart[i] === req.params.courseid){
-                    inCart = true;
-                    break;
-                }
-            }
+        login= true;
+        if(user.courses.includes(req.params.courseid)){
+            bought = true;
+        }
+        else{
+            console.log(user.email);
+            var options = {
+                amount: course.cost*100,  
+                currency: "INR"
+            };
+            instance.orders.create(options, function(err, order) {
+                if(err) console.log(err);
+                orderID = order.id;
+                console.log(orderID);
+            });
         }
     }
 
@@ -242,10 +254,12 @@ router.get('/courses/:courseid', async(req, res) => {
             playlist:data,
             reviews,
             reviewUsers,
-            login:true,
+            login,
             bought,
-            inCart,
-            courseid: courseID
+            courseid: courseID,
+            order: orderID,
+            raz_id: process.env.RAZ_ID,
+            currUser: user
         });
     }).catch(err => {
         console.log(err);
@@ -385,14 +399,19 @@ router.get("/logout", function (req, res) {
 });
 
 //----payment route 
-
+/*
 router.post('/courses/:courseid/payment', isLoggedIn, async(req, res) => {
     try{
+        const user = await User.findById(req.user.id);
+        if(user.courses.includes(req.params.courseid)){
+            throw "Already purchased"
+        }
         const course = await Course.findById(req.params.courseid);
         const amount = course.cost
         console.log(amount);
 
         const session = await stripe.checkout.sessions.create({
+            customer_email: user.email,
             payment_method_types: ['card'],
             line_items: [{
                 price_data: {
@@ -405,7 +424,7 @@ router.post('/courses/:courseid/payment', isLoggedIn, async(req, res) => {
                 quantity: 1,
             }],
             mode: 'payment',
-            success_url: `https://localhost:3000/success/${req.params.courseid}/${req.user.id}`,
+            success_url: `http://localhost:3000/order/${req.params.courseid}/success?session_id={CHECKOUT_SESSION_ID}`,
             cancel_url: 'https://localhost:3000',
     });
 
@@ -413,21 +432,49 @@ router.post('/courses/:courseid/payment', isLoggedIn, async(req, res) => {
 
     } catch(error){
         console.log(error);
+        res.redirect('back');
     }
 });
 
-router.get('/success/:courseid/:userid', async (req, res) => {
-    const user = await User.findById(req.params.userid);
-    console.log(user);
 
-    const courseid = req.params.courseid;
+router.get('/order/:courseid/success', isLoggedIn, async (req, res) => {
+    let login = false;
 
-    user.courses.push(courseid);
+    if(req.user){
+        login = true;
+    }
+    const session = await stripe.checkout.sessions.retrieve(req.query.session_id);
+    const customer = await stripe.customers.retrieve(session.customer);
 
-    res.redirect('/profile');
+    const user = await User.findById(req.user.id);
+    const coursePurchased = req.params.courseid;
+    
+    user.courses.push(coursePurchased);
+    user.save();
 
+    // profile data retrieval
+    let courseDetails = [];
+    for(let i = 0; i < user.courses.length; i++){
+        const eachCourse = await Course.findById(user.courses[i]);
+        courseDetails.push(eachCourse);
+    }
 
-})
+    
+    return res.render('profile', {
+        login,
+        results: courseDetails
+    });
+});
+*/
+//-------payment with razorpay
+
+router.post('/courses/:courseid/success', isLoggedIn, async(req, res) => {
+
+    console.log(req.body);
+    
+
+});
+
 
 
 module.exports = router;
