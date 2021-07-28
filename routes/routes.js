@@ -9,6 +9,7 @@ const Review = require('../models/review.model');
 const { check, validationResult, cookie } = require('express-validator');
 const dotenv = require('dotenv');
 const Razorpay = require('razorpay');
+const crypto = require('crypto');
 
 
 dotenv.config({ path: './config/config.env' });
@@ -52,7 +53,6 @@ router.get('/', async (req, res) => {
 router.get('/done',isLoggedIn, async (req, res) => {
     const fetchCourse = await Course.find().limit(3);
 
-    console.log(req.user.id);
     if(fetchCourse){
        // console.log(fetchCourse);
         return res.render('index', {
@@ -130,7 +130,6 @@ router.get('/profile', isLoggedIn, async(req, res) => {
 
 
     for(let i = 0; i < purchased.courses.length; i++){
-        console.log( purchased.courses[i]);
        const eachCourse = await Course.findById(purchased.courses[i]);
        courseDetails.push(eachCourse);
     }
@@ -213,7 +212,6 @@ router.get('/courses/:courseid', async(req, res) => {
             bought = true;
         }
         else{
-            console.log(user.email);
             var options = {
                 amount: course.cost*100,  
                 currency: "INR"
@@ -221,7 +219,6 @@ router.get('/courses/:courseid', async(req, res) => {
             instance.orders.create(options, function(err, order) {
                 if(err) console.log(err);
                 orderID = order.id;
-                console.log(orderID);
             });
         }
     }
@@ -267,7 +264,7 @@ router.get('/courses/:courseid', async(req, res) => {
     }) 
 })
 
-
+/*
 
 router.get('/cart/:userid', isLoggedIn, async(req, res) => {
     try {
@@ -276,7 +273,6 @@ router.get('/cart/:userid', isLoggedIn, async(req, res) => {
         let courses = [];
         userCart.cart.forEach(course => {
             courses.push(Course.findById(course));
-            console.log(courses);
         })
 
         Promise.allSettled(courses).then(doc => {
@@ -300,7 +296,7 @@ router.get('/cart/:userid', isLoggedIn, async(req, res) => {
 })
  
 
-
+*/
 
 //---------- auth routes
 
@@ -340,13 +336,10 @@ router.post('/register',[
                 });
             } //user strategy
             const currUser = User.findById(email);
-            console.log(currUser);
             passport.authenticate("local")(req, res, function () {
                return res.render('profile', {login: true}); //once the user sign up
             });
     });
-    const currUser = User.findById(email);
-    console.log(currUser);
 });
 
 
@@ -468,12 +461,47 @@ router.get('/order/:courseid/success', isLoggedIn, async (req, res) => {
 */
 //-------payment with razorpay
 
-router.post('/courses/:courseid/success', isLoggedIn, async(req, res) => {
+router.post("/courses/:courseid/verify", isLoggedIn, async (req, res) => {
+    try{
+        let login= false;
+        if(req.user){
+            login = true;
+            const user = await User.findById(req.user.id);
+            if(user.courses.includes(req.params.courseid)){
+                throw "Already purchased"
+            }
+        }
 
-    console.log(req.body);
-    
+        let success= false;
+        let body = req.body.razorpay_order_id + "|" + req.body.razorpay_payment_id;
 
+        const expectedSignature = crypto.createHmac("sha256", process.env.RAZ_SEC).update(body.toString()).digest("hex");
+
+        if(expectedSignature === req.body.razorpay_signature){
+            const user = await User.findById(req.user.id);
+            const coursePurchased = req.params.courseid;
+
+            user.courses.push(coursePurchased);
+            user.save();
+            
+            let courseDetails = [];
+            for(let i = 0; i < user.courses.length; i++){
+                const eachCourse = await Course.findById(user.courses[i]);
+                courseDetails.push(eachCourse);
+            }
+
+            success = true;
+            return res.render('profile', {
+                success,
+                login,
+                results: courseDetails
+            });
+        }
+    } catch (err){
+        throw err;
+    }
 });
+
 
 
 

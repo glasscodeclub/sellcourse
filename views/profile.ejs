@@ -128,7 +128,7 @@
     </section>
     <!-- End Profile Section -->
       <!-- ======= Popular Courses Section ======= -->
-      <% if(results != null){ %>
+      <% if(results != null || results != 'undefined'){ %>
       <section id="my-courses" class="courses">
         <div class="container" data-aos="fade-up">
       
@@ -145,7 +145,7 @@
                   <div class="course-content">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                       <h4>Web Development</h4>
-                      <p class="price">$<%- results[i].cost -%>
+                      <p class="price">₹<%- results[i].cost -%>
                       </p>
                     </div>
       

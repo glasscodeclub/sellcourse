@@ -711,16 +711,11 @@
         "name": "CourseCrunch",
         "description": "Test Transaction",
         "order_id": "<%-order %>", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-        "callback_url": `http://localhost:3000/courses/<%-courseid%>/success`,
-        "prefill": {
-          "name": "<%-currUser.username%>",
-          "email": "<%-currUser.email%>",
-        },
+        "callback_url": `http://localhost:3000/courses/<%-courseid%>/verify`,
         "theme": {
           "color": "#3399cc"
         }
       };
-
 
       function payment(e) {
         var rzp1 = new Razorpay(options);

@@ -25,7 +25,8 @@ const UserSchema = new mongoose.Schema({
         default: 'user'
   },
     courses: {
-        type: [String]
+        type: [String],
+        unique: true
     },
     cart: {
         type: [String]
@@ -33,7 +34,7 @@ const UserSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now
-  }
+   }
 });
 
 
