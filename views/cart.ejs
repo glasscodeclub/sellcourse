@@ -78,7 +78,7 @@
 										<img src="assets/img/course-1.jpg" alt="">
 									</div>
 									<div class="col-md-8">
-										<button class="btn text-danger float-right"><i class="fas fa-trash-alt"></i></button>
+										<!-- <button class="btn text-danger float-right"><i class="fas fa-trash-alt"></i></button> -->
 										<h3><%- course.title %></h3>
 										<p>Rs. <%- course.cost %></p>
 										<% totalCost += course.cost %>
@@ -116,8 +116,13 @@
 									<h5>Taxes <span class="float-right">Rs. <%- 0.10*totalCost %></span></h5>
 									<hr>
 									<h4>Total <span class="float-right">Rs. <%- totalCost + 0.10*totalCost %> </span></h4>
+									<h4>Total <span class="float-right">Rs. <% if(order){ %>
+									<% - order.id %>
+									<% } else {  %>
+									novalue
+									<% } %></span></h4>
 								</div>
-								<p class="mt-3">By proceeding you agree to the <span class="text-primary">Terms of Service</span></p>
+								<p class="mt-3">By proceeding you agree to the <span class="text-primary"><%- order.id %>/span></p>
 								<button id="rzp-button1" onclick="payment(this)" class="container-fluid btn btn-success">Proceed To Checkout</button>
 							</div>
 					  	</div>
@@ -145,13 +150,13 @@
 	<script defer src="https://checkout.razorpay.com/v1/checkout.js"></script>
 	<script>
 		var options = {
-			"key": "<%-raz_id%>", // Enter the Key ID generated from the Dashboard
-			"amount": "<%- course.cost*100 %>", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+			"key": "<%-raz_id%>", 
+			"amount": "<%- course.cost*100 %>", 
 			"currency": "INR",
 			"name": "CourseCrunch",
 			"description": "Test Transaction",
-			"order_id": "<%-order %>", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-			"callback_url": `http://localhost:3000/checkout/<%-course.id%>/verify`,
+			"order_id": "<%= order.id %>", 
+			"callback_url": "http://localhost:3000/checkout/<%-courseID%>/verify",
 			"theme": {
 				"color": "#3399cc"
 			}
@@ -162,7 +167,6 @@
 			rzp1.open();
 
 		}
-
 	</script>
 
     <!-- Template Main JS File -->

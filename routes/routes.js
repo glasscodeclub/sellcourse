@@ -198,7 +198,6 @@ router.get('/courses/:courseid', async(req, res) => {
     let login = false;
     let courseID = req.params.courseid;
     let user;
-    let orderID;
 
     if(req.user){
         user = await User.findById(req.user.id);
@@ -251,14 +250,15 @@ router.get('/courses/:courseid', async(req, res) => {
     }) 
 })
 
-
+// payment routes
 
 router.get('/checkout/:courseid', isLoggedIn, async(req, res) => {
     try {
         const course = await Course.findById(req.params.courseid); 
-        console.log(course.id);
-        var orderID;
+        console.log(course);
+
         let login = false;
+
         if(course && req.user){
             login = true;
             var options = {
@@ -267,20 +267,66 @@ router.get('/checkout/:courseid', isLoggedIn, async(req, res) => {
             };
             instance.orders.create(options, function(err, order) {
                 if(err) console.log(err);
-                orderID = order.id;
-            });
 
-            res.render('cart', {
-                course, 
-                raz_id: process.env.RAZ_ID,
-                order: orderID,
-                login
-            })
+                console.log("Before ", order.id);
+                const orderID = order.id;
+
+                res.render('cart', {
+                    course,
+                    courseID: course.id, 
+                    raz_id: process.env.RAZ_ID,
+                    order,
+                    login
+                })
+                
+            });
+            
+            
         }
         
     } catch (error) {
         console.log(error);
         return res.redirect('back');
+    }
+});
+
+//-------payment with razorpay
+
+router.post("/checkout/:courseid/verify", isLoggedIn, async (req, res) => {
+    try{
+        console.log(req.body);
+        let login= false;
+        if(req.user){
+            login = true;
+            const user = await User.findById(req.user.id);
+            if(user.courses.includes(req.params.courseid)){
+                throw "Already purchased"
+            }
+        }
+
+        let success= false;
+        let body = req.body.razorpay_order_id + "|" + req.body.razorpay_payment_id;
+
+        const expectedSignature = crypto.createHmac("sha256", process.env.RAZ_SEC).update(body.toString()).digest("hex");
+
+        if(expectedSignature === req.body.razorpay_signature){
+            const user = await User.findById(req.user.id);
+            const coursePurchased = req.params.courseid;
+
+            user.courses.push(coursePurchased);
+            user.save();
+            
+            let courseDetails = [];
+            for(let i = 0; i < user.courses.length; i++){
+                const eachCourse = await Course.findById(user.courses[i]);
+                courseDetails.push(eachCourse);
+            }
+
+            success = true;
+            return res.redirect('/profile');
+        }
+    } catch (err){
+        throw err;
     }
 });
  
@@ -380,116 +426,8 @@ router.get("/logout", function (req, res) {
     res.redirect("/");
 });
 
-//----payment route 
-/*
-router.post('/courses/:courseid/payment', isLoggedIn, async(req, res) => {
-    try{
-        const user = await User.findById(req.user.id);
-        if(user.courses.includes(req.params.courseid)){
-            throw "Already purchased"
-        }
-        const course = await Course.findById(req.params.courseid);
-        const amount = course.cost
-        console.log(amount);
-
-        const session = await stripe.checkout.sessions.create({
-            customer_email: user.email,
-            payment_method_types: ['card'],
-            line_items: [{
-                price_data: {
-                    currency: 'inr',
-                    product_data: {
-                        name: course.title,
-                    },
-                    unit_amount: amount * 100,
-                },
-                quantity: 1,
-            }],
-            mode: 'payment',
-            success_url: `http://localhost:3000/order/${req.params.courseid}/success?session_id={CHECKOUT_SESSION_ID}`,
-            cancel_url: 'https://localhost:3000',
-    });
-
-    res.redirect(303, session.url);
-
-    } catch(error){
-        console.log(error);
-        res.redirect('back');
-    }
-});
 
 
-router.get('/order/:courseid/success', isLoggedIn, async (req, res) => {
-    let login = false;
-
-    if(req.user){
-        login = true;
-    }
-    const session = await stripe.checkout.sessions.retrieve(req.query.session_id);
-    const customer = await stripe.customers.retrieve(session.customer);
-
-    const user = await User.findById(req.user.id);
-    const coursePurchased = req.params.courseid;
-    
-    user.courses.push(coursePurchased);
-    user.save();
-
-    // profile data retrieval
-    let courseDetails = [];
-    for(let i = 0; i < user.courses.length; i++){
-        const eachCourse = await Course.findById(user.courses[i]);
-        courseDetails.push(eachCourse);
-    }
-
-    
-    return res.render('profile', {
-        login,
-        results: courseDetails
-    });
-});
-*/
-//-------payment with razorpay
-
-router.post("/checkout/:courseid/verify", isLoggedIn, async (req, res) => {
-    try{
-        let login= false;
-        if(req.user){
-            login = true;
-            const user = await User.findById(req.user.id);
-            if(user.courses.includes(req.params.courseid)){
-                throw "Already purchased"
-            }
-        }
-
-        let success= false;
-        let body = req.body.razorpay_order_id + "|" + req.body.razorpay_payment_id;
-
-        const expectedSignature = crypto.createHmac("sha256", process.env.RAZ_SEC).update(body.toString()).digest("hex");
-
-        if(expectedSignature === req.body.razorpay_signature){
-            const user = await User.findById(req.user.id);
-            const coursePurchased = req.params.courseid;
-
-            user.courses.push(coursePurchased);
-            user.save();
-            
-            let courseDetails = [];
-            for(let i = 0; i < user.courses.length; i++){
-                const eachCourse = await Course.findById(user.courses[i]);
-                courseDetails.push(eachCourse);
-            }
-
-            success = true;
-            return res.render('profile', {
-                success,
-                login,
-                results: courseDetails
-            });
-        }
-    } catch (err){
-        throw err;
-    }
-});
 
 
 
