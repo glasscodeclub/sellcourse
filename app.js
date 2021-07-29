@@ -13,6 +13,8 @@ dotenv.config({ path: './config/config.env' });
 
 const routes = require('./routes/routes');
 const courseRoutes = require('./routes/course.router');
+const profileRoutes = require('./routes/profile.router');
+const checkoutRoutes = require('./routes/checkout.router');
 
 const app = express();
 app.use(express.json());
@@ -38,6 +40,8 @@ passport.deserializeUser(User.deserializeUser());
 
 app.use('/', routes);
 app.use('/courses', courseRoutes);
+app.use('/profile', profileRoutes);
+app.use('/checkout', checkoutRoutes);
 //app.use('/auth', authRoutes);
 
 const PORT = process.env.PORT || 3000;

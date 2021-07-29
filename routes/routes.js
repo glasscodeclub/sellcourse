@@ -8,16 +8,15 @@ const Video = require('../models/video.model');
 const Review = require('../models/review.model');
 const { check, validationResult, cookie } = require('express-validator');
 const dotenv = require('dotenv');
-const Razorpay = require('razorpay');
-const crypto = require('crypto');
+
+//--- controllers
+const {
+    getUser
+} = require('../controllers/profile.controller');
 
 
 dotenv.config({ path: './config/config.env' });
 
-var instance = new Razorpay({ 
-    key_id: process.env.RAZ_ID, 
-    key_secret: process.env.RAZ_SEC
-});
 
 const {
     forgotPwd,
@@ -113,6 +112,7 @@ router.get('/pricing', (req, res) => {
 });
 
 
+/*
 router.get('/profile', isLoggedIn, async(req, res) => {
     if(!req.user)
        return res.redirect('/login');
@@ -142,15 +142,15 @@ router.get('/profile', isLoggedIn, async(req, res) => {
     console.log(courseDetails);
 
     */
-    
+ /*   
     return res.render('profile', {
         results: courseDetails
     }); 
 
 });
 
-
-
+*/
+/*
 router.get('/profile/mycourses/:courseid', isLoggedIn, async (req, res) => {
     let course = await Course.findById(req.params.courseid);
 
@@ -191,7 +191,9 @@ router.get('/profile/mycourses/:courseid', isLoggedIn, async (req, res) => {
 
 });
 
+*/
 
+/*
 router.get('/courses/:courseid', async(req, res) => {
     let course = await Course.findById(req.params.courseid);
     let bought = false;
@@ -250,8 +252,10 @@ router.get('/courses/:courseid', async(req, res) => {
     }) 
 })
 
-// payment routes
+*/
 
+// payment routes
+/*
 router.get('/checkout/:courseid', isLoggedIn, async(req, res) => {
     try {
         const course = await Course.findById(req.params.courseid); 
@@ -329,7 +333,7 @@ router.post("/checkout/:courseid/verify", isLoggedIn, async (req, res) => {
         throw err;
     }
 });
- 
+*/
 
 
 
