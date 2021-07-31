@@ -3,6 +3,9 @@ const Course = require('../models/course.model');
 const Video = require('../models/video.model');
 const Review = require('../models/review.model');
 
+// route        GET /courses
+// access       Public 
+// desc         Fetch all courses
 exports.getCourses = function(req, res){
     let login = false;
     if(req.user){
@@ -19,7 +22,6 @@ exports.getCourses = function(req, res){
             });
         }
     })
-
 };
 
 exports.createCourse = function(req, res){
@@ -38,6 +40,9 @@ exports.createCourse = function(req, res){
     });
 };
 
+// route        GET /courses/:courseid
+// access       Public
+// desc         Fetch course information
 exports.getSingleCourse = async(req, res) => {
     let course = await Course.findById(req.params.courseid);
     let bought = false;

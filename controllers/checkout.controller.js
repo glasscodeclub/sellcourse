@@ -12,17 +12,25 @@ var instance = new Razorpay({
 });
 
 
-
-
+// route        GET /checkout/:courseid 
+// access       Protected 
+// desc         Creates an order using RazorPay and provides the checkout form
 exports.getCheckoutPage = async(req, res) =>{
     try {
         const course = await Course.findById(req.params.courseid); 
-        console.log(course);
 
         let login = false;
 
         if(course && req.user){
             login = true;
+
+            // check if already bought
+            const user = await User.findById(req.user.id);
+            if(user.courses.includes(req.params.courseid)){
+                console.log('Already purchased');
+                return res.redirect('/profile');
+            }
+            // create an order otherwise
             var options = {
                 amount: course.cost*100,  
                 currency: "INR"
@@ -52,16 +60,21 @@ exports.getCheckoutPage = async(req, res) =>{
     }
 }
 
-
+// route        POST /checkout/:courseid/verify
+// access       Protected 
+// desc         Verifies the payment via payment_signature sent from the server, 
+//              adds the course to the user's database
 exports.verifyPayment = async(req, res) => {
-        try{
-        console.log(req.body);
+    try{
         let login= false;
         if(req.user){
             login = true;
+
+            // check if already bought
             const user = await User.findById(req.user.id);
             if(user.courses.includes(req.params.courseid)){
-                throw "Already purchased"
+                console.log('Already purchased');
+                return res.redirect('/profile');
             }
         }
 
@@ -77,16 +90,12 @@ exports.verifyPayment = async(req, res) => {
             user.courses.push(coursePurchased);
             user.save();
             
-            let courseDetails = [];
-            for(let i = 0; i < user.courses.length; i++){
-                const eachCourse = await Course.findById(user.courses[i]);
-                courseDetails.push(eachCourse);
-            }
 
             success = true;
             return res.redirect('/profile');
         }
     } catch (err){
-        throw err;
+        console.log(err)
+     res.redirect('/')
     }
 }

@@ -227,14 +227,14 @@
                             </li>
                             <% } %>
                         </ul>
-
+                        <% if(role && role != 'publisher' && rev === false){ %>
                         <div class="container" data-aos="fade-up">
                             <div class="row" data-aos="zoom-in" data-aos-delay="100" style="padding: 3rem 0.7rem;">
                                 <div class="section-title">
                                     <h2>Feedback</h2>
                                     <p>Your Review</p>
                                 </div>
-                                    <form id="feedback" action="">
+                                    <form id="feedback" onsubmit="return validateForm()"  action="/profile/mycourses/<%-course.id%>" method="POST">
                                     
                                         <div class="pinfo">Rate the course.</div>
                                     
@@ -243,12 +243,12 @@
                                             <div class="col-md-4 inputGroupContainer">
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-heart"></i></span>
-                                                    <select class="form-control" id="rate">
-                                                        <option value="1star">1</option>
-                                                        <option value="2stars">2</option>
-                                                        <option value="3stars">3</option>
-                                                        <option value="4stars">4</option>
-                                                        <option value="5stars">5</option>
+                                                    <select name="rating" class="form-control" id="rating">
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5" selected>5</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -259,10 +259,10 @@
                                     
                                     
                                         <div class="form-group">
-                                            <div class="col-md-4 inputGroupContainer">
+                                            <div class="col-md-10 inputGroupContainer">
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-pencil"></i></span>
-                                                    <textarea class="form-control" id="review" rows="3"></textarea>
+                                                    <textarea name="text" class="form-control" id="review" rows="5"></textarea>
                                     
                                                 </div>
                                             </div>
@@ -271,10 +271,27 @@
                                         <button type="submit" class="btn btn-primary">Submit</button>
                                     
                                     
-                                    </form>
+                                    </form> 
+
+                                <!--   <form method="POST" action="/profile/mycourses/<%-course.id%>" id="review-form">
+                                    
+                                        <div class="formGroup">
+                                            <select name="rating" class="form-control" id="rate">
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                            </select>
+                                            
+                                            <textarea name="text" class="form-control" id="review" rows="3"></textarea>
+                                        </div>
+                                        <button class="btn btn-primary">Submit</button>
+                                    </form> -->
                                 </div>
                                 </div>
                     </div>
+                    <% } %>
                 </div>
             </section>
             <!-- End Rating & Reviews Section -->
@@ -344,6 +361,15 @@
          document.getElementById("current_video").load();
          document.getElementById("current_video").play();
          }
+         </script>
+         <script>
+             function validateForm() {
+                    let x = document.forms["feedback"]["review"].value;
+                    if (x == "") {
+                        alert("Please add your feedback");
+                        return false;
+                    }
+                }
          </script>                                   
 </body>
 

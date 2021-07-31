@@ -4,16 +4,18 @@ const { isLoggedIn } = require('../middleware/isLoggedIn');
 
 const { 
     getUser,
-    myCourses
+    myCourses,
+    postReview
 } = require('../controllers/profile.controller');
 
 
 
-router.route('/', isLoggedIn)
-        .get(getUser);
+router.route('/')
+        .get(isLoggedIn, getUser);
 
-router.route('/mycourses/:courseid', isLoggedIn)
-        .get(myCourses);
+router.route('/mycourses/:courseid')
+        .get(isLoggedIn, myCourses)
+        .post(isLoggedIn, postReview);
 
 
 module.exports = router;

@@ -9,8 +9,6 @@ const {
 } = require('../controllers/checkout.controller');
 
 
-
-
 router.route('/:courseid', isLoggedIn)
     .get(getCheckoutPage);
 

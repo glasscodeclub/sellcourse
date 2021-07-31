@@ -20,7 +20,7 @@
           <li><a href="/pricing">Pricing</a></li>
           <li><a class="active" href="/about">About</a></li>
           <% if(login && login===true){ %>
-            <li class="dropdown"><a href="/profile" class="profile-btn"><i class="bx bx-user"></i>
+            <li class="dropdown"><a href="/profile" class="profile-btn">
                 <span>Profile</span><i class="bi bi-chevron-down"></i></a>
               <ul>
                 <li style="color:black;"><a href="/profile">My Profile</a></li>
@@ -75,6 +75,43 @@
 
       </div>
     </section><!-- End About Section -->
+    <% if(jobNumber > 0){ %>
+    <section id="jobs">
+      <div class="container" data-aos="fade-up">
+        <div class="row" data-aos="zoom-in" data-aos-delay="100" style="padding: 1.6rem 2.4rem;">
+          <div class="section-title">
+            <h2>Job Openings</h2>
+            <p>Current Vacancies</p>
+          </div>
+          <div class="openings">
+            <ul class="list-group">
+              <% for(let i = 0; i < jobs.length; i++){ %>
+              <li class="list-group-item" 
+              style="margin: 10px; 
+                    border: 1px solid rgba(0, 0, 0, 0.125); 
+                    border-radius: 5px;">
+                     <h5><%= jobs[i].title %></h5>
+                     
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugiat labore doloribus vitae!
+              
+              
+              <div align="right">
+                <a href="https://<%=jobs[i].link %>" style="border: 2px solid #f6f6f6;
+                                    border-radius: 5px;
+                                    background-color: #5fcf8131;
+                                    color: #5fcf80;
+                                    padding:5px;
+                                    margin-bottom: 5px;">Apply Here</a>
+              </div> 
+            </li>
+              <% } %>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </section>
+    <% } %>
              
   </main><!-- End #main -->
 

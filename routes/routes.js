@@ -6,6 +6,7 @@ const passport = require('passport');
 const Course = require('../models/course.model');
 const Video = require('../models/video.model');
 const Review = require('../models/review.model');
+const Job = require('../models/job.model');
 const { check, validationResult, cookie } = require('express-validator');
 const dotenv = require('dotenv');
 
@@ -79,21 +80,28 @@ router.get('/signup', (req, res) => {
     res.render('signup');
 });
 
-router.get('/about', (req, res) => {
+router.get('/about', async (req, res) => {
     let login = false;
     if(req.user)
         login = true;
 
+    const jobs = await Job.find({});
+    let jobNumber = jobs.length;
+
     res.render('about',{
-         login: login
+         login: login,
+         jobs,
+         jobNumber
     });
 });
 
 
 
 router.get('/contact', (req, res) => {
+    let login = false;
+    if(req.user) login= true;
     res.render('contact', {
-         login: null
+         login
     });
 });
 
@@ -106,8 +114,10 @@ router.get('/video/:id',(req, res) => {
 })
 
 router.get('/pricing', (req, res) => {
+    let login = false;
+    if(req.user) login = true;
     res.render('pricing', {
-         login: null
+         login
     });
 });
 

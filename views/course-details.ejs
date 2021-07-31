@@ -17,6 +17,7 @@
           <li><a href="/">Home</a></li>
           <li><a class="active" href="/courses">Courses</a></li>
           <li><a href="/pricing">Pricing</a></li>
+          <li><a href="/about">About</a></li>
           <% if(login && login===true){ %>
             <li class="dropdown"><a href="/profile" class="profile-btn"><i class="bx bx-user"></i>
                 <span>Profile</span><i class="bi bi-chevron-down"></i></a>
@@ -68,10 +69,9 @@
 
                 </div>
                 <div class="buy-box-item add-to-cart-button" style="max-width: 300px; ">
-                  <button style="margin: 10px; border: 2px solid white">Add To Cart</button>
-                  <button style="margin: 10px; border: 2px solid white">
+                  <a href="/checkout/<%-courseid%>"><button style="margin: 10px; border: 2px solid white">
                     Buy Now
-                  </button>
+                  </button></a>
                 </div>
               </div>
             </div>
@@ -460,7 +460,7 @@
 
 
       <!-- ======= Trainers Section ======= -->
-      <section id="trainers" class="trainers">
+      <!-- <section id="trainers" class="trainers">
         <div class="container" data-aos="fade-up">
           <div class="row instructors" data-aos="zoom-in" data-aos-delay="100" style="padding: 1.6rem 2.4rem;">
             <h3>Instructors</h3>
@@ -484,7 +484,7 @@
             </div>
           </div>
         </div>
-      </section>
+      </section> -->
       <!-- End Trainers Section -->
       <!-- ======= Perks Section ======= -->
       <section id="perks" class="perks">
@@ -573,7 +573,7 @@
                 <% } %>
             </ul>
       
-            <div class="container" data-aos="fade-up">
+          <!--  <div class="container" data-aos="fade-up">
               <div class="row" data-aos="zoom-in" data-aos-delay="100" style="padding: 3rem 0.7rem;">
                 <div class="section-title">
                   <h2>Feedback</h2>
@@ -618,7 +618,7 @@
       
                 </form>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </section>
