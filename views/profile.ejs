@@ -17,6 +17,7 @@
         <li><a href="/courses">Courses</a></li>
         <li><a href="/pricing">Pricing</a></li>
         <li><a href="/about">About</a></li>
+        <% if(login && login===true){ %>
         <li class="dropdown"><a class="active" href="/profile" class="profile-btn">
             Profile<i class="bi bi-chevron-down"></i></a>
           <ul >
@@ -25,6 +26,9 @@
             <li><a href="/logout" style="color: #5fcf80;">Logout</a></li>
           </ul>
         </li>
+        <% } else { %>
+          <li><a href="/signup">Get Started</a></li>
+          <% } %>
       </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav>
@@ -64,7 +68,7 @@
     </section> -->
     <!-- End Profile Section -->
       <!-- ======= Popular Courses Section ======= -->
-      <% if(results != null){ %>
+      <% if(results){ %>
       <section id="my-courses" class="courses">
         <div class="container" data-aos="fade-up">
       

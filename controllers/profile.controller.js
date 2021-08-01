@@ -10,12 +10,16 @@ exports.getUser = async(req, res) =>{
     if(!req.user)
        return res.redirect('/login');
 
+    let login = false;
+
     const username = req.user.username;
+    if(username) login=true;
     const purchased = await User.findOne({username}).select('courses');
 
     if(!purchased){
         return res.render('profile', {
-        results: null
+        results: null,
+        login
     });
     }
 
@@ -35,7 +39,8 @@ exports.getUser = async(req, res) =>{
     */
     
     return res.render('profile', {
-        results: courseDetails
+        results: courseDetails,
+        login
     }); 
 }
 
@@ -59,11 +64,16 @@ exports.myCourses = async(req, res) => {
         // console.log(role);
         login = true;
 
-        // const reviewAdded = await Review.find({course: req.params.courseid, user: req.user.id});
-        // if(reviewAdded){
-        //     console.log(reviewAdded);
-        //     rev = true;
-        // } 
+        // does NOT work
+        // check if the user has already posted a review
+        // const reviewed = await Review.findOne({
+        //     course: req.params.courseid,
+        //     user: req.user.id
+        // });
+
+        // if(reviewed){
+        //     console.log(reviewed);
+        // }
     }
     else{
         return res.redirect('/login');
@@ -119,8 +129,25 @@ exports.postReview = async(req, res) => {
     
     try{
         const user = await User.findById(req.user.id);
-        if(user.role === 'publisher')
-            res.redirect('back');
+        if(user.role === 'publisher'){
+           return res.redirect('/profile');
+        }
+        if(!user.courses.includes(req.params.courseid)){
+            return res.redirect('/profile');
+        }
+        
+        // The following code does NOT work, so commented out
+        // check if the user has already posted a review
+        // const reviewed = await Review.find({
+        //     course: req.params.courseid,
+        //     user: req.user.id
+        // });
+
+        // if(reviewed){
+        //     console.log('Already reviewed');
+        //      return res.redirect(`/profile/mycourses/${req.params.courseid}`);
+        // }
+
 
         const { rating, text } = req.body;
 

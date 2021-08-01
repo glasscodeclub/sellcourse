@@ -20,14 +20,14 @@
           <li><a href="/pricing">Pricing</a></li>
           <li><a href="/about">About</a></li>
           <% if(login && login === true){ %>
-            <li class="dropdown"><a href="/profile" class="profile-btn"><i class="bx bx-user"></i>
-                <span>Profile</span><i class="bi bi-chevron-down"></i></a>
+            <li class="dropdown"><a class="active" href="/profile" class="profile-btn">
+                Profile<i class="bi bi-chevron-down"></i></a>
               <ul>
-                <li style="color:black;"><a href="/profile">My Profile</a></li>
-                <li><a href="/contact">Help</a></li>
-                <li><a href="/logout">Logout</a></li>
+                <li><a href="/profile" style="color: black;">My Courses</a></li>
+                <li><a href="/contact" style="color: black;">Help</a></li>
+                <li><a href="/logout" style="color: #5fcf80;">Logout</a></li>
               </ul>
-            </li> 
+            </li>
           <% } else { %>
               <li><a href="/signup">Get Started</a></li>
           <% } %>
