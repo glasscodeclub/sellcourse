@@ -4,6 +4,7 @@ const crypto = require('crypto');
 
 const User = require('../models/user');
 const Course = require('../models/course.model');
+const Order = require('../models/order.model');
 
 dotenv.config({ path: '../config/config.env' });
 var instance = new Razorpay({ 
@@ -38,7 +39,7 @@ exports.getCheckoutPage = async(req, res) =>{
             instance.orders.create(options, function(err, order) {
                 if(err) console.log(err);
 
-                console.log("Before ", order.id);
+                // console.log("Before ", order.id);
                 const orderID = order.id;
 
                 res.render('cart', {
@@ -52,6 +53,9 @@ exports.getCheckoutPage = async(req, res) =>{
             });
             
             
+        }
+        else{
+            res.redirect('/courses');
         }
         
     } catch (error) {
@@ -89,10 +93,28 @@ exports.verifyPayment = async(req, res) => {
 
             user.courses.push(coursePurchased);
             user.save();
-            
 
+            const order = {};
+            order.raz_payment_id = req.body.razorpay_payment_id;
+            order.raz_order_id = req.body.razorpay_order_id;
+            order.raz_signature = req.body.razorpay_signature;
+            order.user = req.user.id;
+            order.courseID = req.params.courseid;
+
+            const orderSaved = new Order(order);
+            await orderSaved.save();
+
+            console.log(orderSaved);
+            
             success = true;
             return res.redirect('/profile');
+        }
+        else{
+
+            return res.render('/courses', {
+                success: false,
+                msg: 'Order processing failed'
+            })
         }
     } catch (err){
         console.log(err)
