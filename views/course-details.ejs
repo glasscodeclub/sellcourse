@@ -58,6 +58,7 @@
                               white-space: nowrap; box-sizing: border-box; color: #73726c;">90% off</div>
                   </div>
                   <div class="rating">
+                    <% course.averageRating = Math.round(course.averageRating) %>
                     <% for(let rating=0; rating < course.averageRating; rating++){ %>
                       <span><i class="bx bxs-star"></i></span>
                     

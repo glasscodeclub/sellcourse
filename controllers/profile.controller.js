@@ -15,7 +15,7 @@ exports.getUser = async(req, res) =>{
     const username = req.user.username;
     if(username) login=true;
     const purchased = await User.findOne({username}).select('courses');
-
+    console.log(purchased);
     if(!purchased){
         return res.render('profile', {
         results: null,

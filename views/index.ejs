@@ -179,15 +179,23 @@
                 
                 <h3><a href="/courses/<%-results[i].id%>"><%-results[i].title-%></a></h3>
                 <p><%- results[i].description-%></p>
+                <p class="learn-more">
+                  <a href="/courses/<%- results[i].id %>">Learn more <i class="bx bx-right-arrow-alt" data-inline="true"></i>
+                  </a>
+                </p>
                 <div class="trainer d-flex justify-content-between align-items-center">
                   <div class="trainer-profile d-flex align-items-center">
-                    <img src="assets/img/trainers/trainer-1.jpg" class="img-fluid" alt="">
-                    <span>Antonio</span>
+                    <img src="assets/img/trainers/trainer-1.jpg" class="img-fluid" alt="" style="max-width: 30px;max-height: 30px;">
+                    <span>Rated : </span>
                   </div>
                   <div class="trainer-rank d-flex align-items-center">
-                    <i class="bx bx-user"></i>&nbsp;50
-                    &nbsp;&nbsp;
-                    <i class="bx bx-heart"></i>&nbsp;65
+                    <% for(let rating=0; rating < results[i].averageRating; rating++){ %>
+                      <span><i class="bx bxs-star"></i></span>
+                    
+                      <% } %>
+                        <% for(let j=5 - results[i].averageRating; j> 0; j--){ %>
+                          <span><i class="bx bx-star"></i></span>
+                          <% } %>
                   </div>
                 </div>
               </div>

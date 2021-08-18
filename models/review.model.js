@@ -39,7 +39,7 @@ ReviewSchema.statics.getAverageRating = async function(courseId){
 
     try{
         await this.model('Course').findByIdAndUpdate(courseId,{
-            averageRating: result[0].averageRating
+            averageRating: Math.round(result[0].averageRating)
         });
     } 
     catch(err){

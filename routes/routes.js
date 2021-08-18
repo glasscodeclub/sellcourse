@@ -358,7 +358,7 @@ router.post('/register',[
     check('username', 'Username is required').not().isEmpty(),
     check('email', 'Provide a valid email address').isEmail(),
     check('password', 'Minimum password length is 6 characters').isLength({min: 6})
-], function (req, res) {
+], async (req, res) => {
     let messages = [];
     const errors = validationResult(req);
     if(!errors.isEmpty()){
@@ -370,6 +370,16 @@ router.post('/register',[
 
     const { username, email, password } = req.body;
 
+    
+    const userExists = await User.findOne({email: email});
+    if(userExists){
+        const errExist = 'Please provide unique email' ;
+        messages.push({msg: errExist});
+        return res.render('signup', {
+            messages 
+        })
+    }
+
     const user = new User({
         username,
         email
@@ -379,14 +389,14 @@ router.post('/register',[
         function (err, user) {
             if (err) {
                 console.log(err);
-                messages.push({msg: err});
+                messages.push({msg: 'Invalid info provided'});
                 return res.render('signup', {
                     messages
                 });
             } //user strategy
             const currUser = User.findById(email);
             passport.authenticate("local")(req, res, function () {
-               return res.render('profile', {login: true}); //once the user sign up
+               return res.redirect('/courses') //once the user sign up
             });
     });
 });
