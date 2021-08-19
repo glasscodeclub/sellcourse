@@ -5,6 +5,7 @@ const crypto = require('crypto');
 const User = require('../models/user');
 const Course = require('../models/course.model');
 const Order = require('../models/order.model');
+const Discount = require('../models/discount.model');
 
 dotenv.config({ path: '../config/config.env' });
 var instance = new Razorpay({ 
@@ -18,7 +19,8 @@ var instance = new Razorpay({
 // desc         Creates an order using RazorPay and provides the checkout form
 exports.getCheckoutPage = async(req, res) =>{
     try {
-        const course = await Course.findById(req.params.courseid); 
+        const course = await Course.findById(req.params.courseid);
+        let price = course.cost; 
 
         let login = false;
 
@@ -31,9 +33,35 @@ exports.getCheckoutPage = async(req, res) =>{
                 console.log('Already purchased');
                 return res.redirect('/profile');
             }
+            // check for discount code 
+            const { discount } = req.query;
+            
+            
+            const verify = await Discount.findOne({ code: discount });
+
+            if(verify){
+                let discountPercent = 0;
+                // console.log(discount);
+                // console.log(verify);
+
+                discountPercent  = verify.disPercent;
+                //console.log("Course price: " + price);
+                if(price * (discountPercent/100) > verify.maxValue){
+                   /* console.log("Discount Calculated: " + price * (discountPercent/100) + " is larger than 
+                   maxValue: " + verify.maxValue); */
+                    price = price - verify.maxValue;
+                }
+                else{
+                   /* console.log("Discount: " + Math.round(price * (discountPercent/100))); */
+                    price = price - Math.round(price * (discountPercent/100));
+                }
+
+                console.log("Final cost: " + price);
+            }
+
             // create an order otherwise
             var options = {
-                amount: course.cost*100,  
+                amount: price*100,  
                 currency: "INR"
             };
             instance.orders.create(options, function(err, order) {
@@ -42,8 +70,18 @@ exports.getCheckoutPage = async(req, res) =>{
                 // console.log("Before ", order.id);
                 const orderID = order.id;
 
+                let disPer = 0;
+                let maxDis = 0;
+                if(verify){
+                    disPer = verify.disPercent;
+                    maxDis = verify.maxValue;
+                }
+
                 res.render('cart', {
                     course,
+                    discountPercent: disPer,
+                    maxDiscount: maxDis,
+                    newCost: price,
                     courseID: course.id, 
                     raz_id: process.env.RAZ_ID,
                     order,
