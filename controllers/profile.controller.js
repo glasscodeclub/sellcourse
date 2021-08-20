@@ -15,7 +15,7 @@ exports.getUser = async(req, res) =>{
     const username = req.user.username;
     if(username) login=true;
     const purchased = await User.findOne({username}).select('courses');
-    console.log(purchased);
+
     if(!purchased){
         return res.render('profile', {
         results: null,
@@ -138,27 +138,35 @@ exports.postReview = async(req, res) => {
         
         // The following code does NOT work, so commented out
         // check if the user has already posted a review
-        // const reviewed = await Review.find({
-        //     course: req.params.courseid,
-        //     user: req.user.id
-        // });
-
-        // if(reviewed){
-        //     console.log('Already reviewed');
-        //      return res.redirect(`/profile/mycourses/${req.params.courseid}`);
-        // }
-
-
-        const { rating, text } = req.body;
-
-        const review = await Review.create({
-            rating: rating,
-            text: text,
+        let reviewed = await Review.findOne({
             course: req.params.courseid,
             user: req.user.id
         });
 
-        return res.redirect(`/profile/mycourses/${req.params.courseid}`);
+        // get the review and rating
+        const { rating, text } = req.body;
+        try{
+            if(reviewed){
+                reviewed = await Review.findOneAndUpdate(
+                    { user: req.user.id, course: req.params.courseid },
+                    { rating: rating, text: text }
+                );
+                await reviewed.save();
+                return res.redirect(`/profile/mycourses/${req.params.courseid}`);
+            }
+        }catch(err){
+            console.log(err);
+            return res.redirect(`/profile/mycourses/${req.params.courseid}`);
+        } 
+
+
+            const review = await Review.create({
+                rating: rating,
+                text: text,
+                course: req.params.courseid,
+                user: req.user.id
+            });
+            return res.redirect(`/profile/mycourses/${req.params.courseid}`);   
     }
     catch(err) {
         console.log(err);

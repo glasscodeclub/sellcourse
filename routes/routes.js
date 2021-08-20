@@ -7,7 +7,7 @@ const Course = require('../models/course.model');
 const Video = require('../models/video.model');
 const Review = require('../models/review.model');
 const Job = require('../models/job.model');
-const { check, validationResult, cookie } = require('express-validator');
+const { check, validationResult } = require('express-validator');
 const dotenv = require('dotenv');
 
 //--- controllers
