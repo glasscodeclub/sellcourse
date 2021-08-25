@@ -81,7 +81,19 @@
                                 <source  src="/video/sample"  type="video/mp4">
                             </video> 
                             <div class="details-below-course">
-                                <h3><%- certAvailable %></h3>
+                                <h3 >
+                              <%if(certAvailable == true){%>
+                                        <a style="font-size: 14px;
+                              background: #5fcf8131;
+                              padding: 7px 14px;
+                              color: #5fcf80;
+                              margin-top: 10px;
+                              max-width: 180px;
+                              border: 1px solid #5fcf80;
+                              border-radius: 10px;
+                              text-decoration: none;"href="/profile/mycourses/<%-course.id%>/cert"> Download Certificate</a>
+                                    <% }  %>
+                                </h3>
                                 <p>
                                     Qui et explicabo voluptatem et ab qui vero et voluptas. Sint
                                     voluptates temporibus quam autem. Atque nostrum voluptatum

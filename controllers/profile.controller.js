@@ -184,16 +184,30 @@ exports.postReview = async(req, res) => {
     }    
 }
 
-// route        GET /profile/mycourses/:courseid/:cert
+// route        GET /profile/mycourses/:courseid/cert
 // access       Protected 
 // desc         Certificate
 exports.courseCertificate = async(req, res) => {
-    const cert = req.params.cert;
-    console.log(cert);
+    if(!req.user){
+        return res.redirect('/');
+    }
+    const courseStatus = await CourseCompletion.findOne({
+        user: req.user.id,
+        course: req.params.courseid
+    })
     
-    res.sendFile('cert.pdf', { 
-        root: './data' 
-    });
+    if(!courseStatus){
+        return res.redirect('back');
+    }
+    else if(courseStatus.watchPercentage > 90){
+            res.sendFile('cert.pdf', { 
+            root: './data' 
+        });
+    }
+    else{
+        return res.redirect('/');
+    }
+   
 }
 
 // route        POST /profile/mycourses/:courseid/mark/:vid

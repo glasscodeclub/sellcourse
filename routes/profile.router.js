@@ -22,7 +22,7 @@ router.route('/mycourses/:courseid')
 router.route('/mycourses/:courseid/mark/:vid')
         .post(isLoggedIn, markAsWatched);
 
-router.route('/mycourses/:courseid/cert/:cert')
+router.route('/mycourses/:courseid/cert')
         .get( courseCertificate);
 
 
