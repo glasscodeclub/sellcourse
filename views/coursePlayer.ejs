@@ -14,14 +14,14 @@
             <nav id="navbar" class="navbar order-last order-lg-0">
                 <ul>
                     <li><a href="/">Home</a></li>
-                    <li><a class="active" href="/courses">Courses</a></li>
+                    <li><a  href="/courses">Courses</a></li>
                     <li><a href="/pricing">Pricing</a></li>
                     <li><a href="/about">About</a></li>
                     <% if(login && login===true){ %>
                         <li class="dropdown"><a class="active" href="/profile" class="profile-btn">
                                 Profile<i class="bi bi-chevron-down"></i></a>
                             <ul>
-                                <li><a href="/profile" style="color: black;">My Courses</a></li>
+                                <li><a class="active" href="/profile" style="color: black;">My Courses</a></li>
                                 <li><a href="/contact" style="color: black;">Help</a></li>
                                 <li><a href="/logout" style="color: #5fcf80;">Logout</a></li>
                             </ul>
@@ -76,7 +76,8 @@
                 <div class="container" data-aos="fade-up">
                     <div class="row">
                         <div class="background-img">
-                            <video  width="100%" controls id="current_video" >
+                            <video  width="100%" controls id="current_video" 
+                            data-vid="<%-playlist[0].id%>" onended="updateStatus(this)" >
                                 <source  src="/video/sample"  type="video/mp4">
                             </video> 
                             <div class="details-below-course">
@@ -357,9 +358,13 @@
         <script src="assets/js/main.js"></script>
          <script>
          function changeVideo(e){
-         document.getElementById("current_video").innerHTML='<source src="/video/'+e.id+'" type="video/mp4">';
-         document.getElementById("current_video").load();
-         document.getElementById("current_video").play();
+             // update vid 
+            document.getElementById("current_video").setAttribute('data-vid', e.id);
+
+            // replace the video
+            document.getElementById("current_video").innerHTML='<source src="/video/'+e.id+'" type="video/mp4">';
+            document.getElementById("current_video").load();
+            document.getElementById("current_video").play();
          }
          </script>
          <script>
@@ -370,6 +375,22 @@
                         return false;
                     }
                 }
+         </script>
+         <script>
+             function updateStatus(event){
+                 var vidId = document.getElementById("current_video");
+                 console.log(vidId.dataset.vid);
+
+                 const xhttp = new XMLHttpRequest();
+                 const url = window.location.href + "/mark/" + vidId.dataset.vid ;
+                 xhttp.open("POST", url);
+                 xhttp.send();
+                 //console.log(event.data + " has ended");
+             }
+            // const video = document.querySelector('current_video');
+            // video.onended = (event) => {
+            //     console.log(event.id + ' has ended');
+            // };
          </script>                                   
 </body>
 

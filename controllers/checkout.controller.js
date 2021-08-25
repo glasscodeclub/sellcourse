@@ -75,6 +75,13 @@ exports.getCheckoutPage = async(req, res) =>{
                 if(verify){
                     disPer = verify.disPercent;
                     maxDis = verify.maxValue;
+
+                    if(verify.maxValue < (course.cost - price)){
+                        maxDis = verify.maxValue;
+                    }
+                    else{
+                        maxDis = course.cost - price;
+                    }
                 }
 
                 res.render('cart', {

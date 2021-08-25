@@ -42,6 +42,9 @@ app.use('/', routes);
 app.use('/courses', courseRoutes);
 app.use('/profile', profileRoutes);
 app.use('/checkout', checkoutRoutes);
+app.get('*', function(req, res){
+    res.redirect('/');
+})
 //app.use('/auth', authRoutes);
 
 const PORT = process.env.PORT || 3000;

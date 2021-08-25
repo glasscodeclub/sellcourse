@@ -2,13 +2,11 @@ const fs = require('fs');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 
-
 // Load env vars
 dotenv.config({path: './config/config.env'});
 
 // Load models
-const UserModel = require('./models/user');
-
+const Discount = require('./models/discount.model');
 
 // connect to database
 mongoose.connect(process.env.MONGO_URI, {
@@ -18,15 +16,17 @@ mongoose.connect(process.env.MONGO_URI, {
         useUnifiedTopology: true
 });
 
-// read the json files in _data
-const users = JSON.parse(fs.readFileSync(`${__dirname}/data/userdata.json`, 'utf-8'));
 
+// read the json files in data
+const discounts = JSON.parse(fs.readFileSync(`${__dirname}/data/discountcodes.json`, 'utf-8'));
+
+console.log(discounts)
 
 // Import data
 const importData = async() =>{
     try {
-        await UserModel.create(users);
-        console.log('Data loaded');
+        await Discount.create(discounts);
+        console.log('Discount data loaded');
         process.exit();
     } catch (err) {
         console.error(err);
@@ -36,8 +36,8 @@ const importData = async() =>{
 
 const deleteData = async() =>{
     try {
-        await UserModel.deleteMany();
-        console.log('Data deleted ');
+        await Discount.deleteMany();
+        console.log('Discount data deleted ');
         process.exit();
     } catch (err) {
         console.error(err);

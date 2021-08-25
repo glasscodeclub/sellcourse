@@ -171,7 +171,24 @@ exports.postReview = async(req, res) => {
     catch(err) {
         console.log(err);
         res.redirect(`/profile/mycourses/${req.params.courseid}`);
-    }
+    }    
+}
 
+// route        GET /profile/mycourses/:courseid/:cert
+// access       Protected 
+// desc         Certificate
+exports.courseCertificate = async(req, res) => {
+    const cert = req.params.cert;
+    console.log(cert);
     
+    res.sendFile('cert.pdf', { 
+        root: './data' 
+    });
+}
+
+// route        POST /profile/mycourses/:courseid/mark/:vid
+// access       Protected 
+// desc         mark the current video as watched
+exports.markAsWatched = async(req, res) => {
+    console.log(req.params.courseid + " has video " + req.params.vid + " watched");
 }
