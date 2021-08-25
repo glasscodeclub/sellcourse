@@ -81,7 +81,7 @@
                                 <source  src="/video/sample"  type="video/mp4">
                             </video> 
                             <div class="details-below-course">
-                                <h3>Et enim incidunt fuga tempora</h3>
+                                <h3><%- certAvailable %></h3>
                                 <p>
                                     Qui et explicabo voluptatem et ab qui vero et voluptas. Sint
                                     voluptates temporibus quam autem. Atque nostrum voluptatum
@@ -379,7 +379,6 @@
          <script>
              function updateStatus(event){
                  var vidId = document.getElementById("current_video");
-                 console.log(vidId.dataset.vid);
 
                  const xhttp = new XMLHttpRequest();
                  const url = window.location.href + "/mark/" + vidId.dataset.vid ;

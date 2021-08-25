@@ -2,6 +2,7 @@ const User = require('../models/user');
 const Course = require('../models/course.model');
 const Video = require('../models/video.model');
 const Review = require('../models/review.model');
+const CourseCompletion = require('../models/courseCompletion.model');
 
 // route        GET /profile
 // access       Protected 
@@ -93,6 +94,16 @@ exports.myCourses = async(req, res) => {
             reviewUsers.push(await User.findById(reviews[i].user, 'username'));
         }
     }
+
+    // certificate completion
+    let certAvailable = false;
+    const status = await CourseCompletion.findOne({
+        user: req.user.id,
+        course: req.params.courseid
+    });
+    if(status && status.watchPercentage > 90){
+        certAvailable = true;
+    }
     
     let playlist = []; 
     course.videos.forEach(vid => {
@@ -112,7 +123,8 @@ exports.myCourses = async(req, res) => {
             reviewUsers,
             login,
             role,
-            rev
+            rev,
+            certAvailable
         });
     }).catch(err => {
         console.log(err);
@@ -136,8 +148,6 @@ exports.postReview = async(req, res) => {
             return res.redirect('/profile');
         }
         
-        // The following code does NOT work, so commented out
-        // check if the user has already posted a review
         let reviewed = await Review.findOne({
             course: req.params.courseid,
             user: req.user.id
@@ -160,13 +170,13 @@ exports.postReview = async(req, res) => {
         } 
 
 
-            const review = await Review.create({
-                rating: rating,
-                text: text,
-                course: req.params.courseid,
-                user: req.user.id
-            });
-            return res.redirect(`/profile/mycourses/${req.params.courseid}`);   
+        const review = await Review.create({
+            rating: rating,
+            text: text,
+            course: req.params.courseid,
+            user: req.user.id
+        });
+        return res.redirect(`/profile/mycourses/${req.params.courseid}`);   
     }
     catch(err) {
         console.log(err);
@@ -190,5 +200,49 @@ exports.courseCertificate = async(req, res) => {
 // access       Protected 
 // desc         mark the current video as watched
 exports.markAsWatched = async(req, res) => {
-    console.log(req.params.courseid + " has video " + req.params.vid + " watched");
+    // check if user has purchased the course
+    if(!req.user){
+        return res.redirect('/login');
+    }
+    const user = await User.findById(req.user.id);
+    const vids = await Course.findById(req.params.courseid).select('videos');
+    if(!user){
+        return res.redirect('/');
+    }
+    if(!user.courses.includes(req.params.courseid)){
+        return res.redirect('/profile');
+    }
+
+    // find the courseCompletion entry
+    const courseStatus = await CourseCompletion.findOne({
+        user: req.user.id,
+        course: req.params.courseid
+    });
+
+    try{
+        if(!courseStatus){
+            const status = await CourseCompletion.create({
+                user: req.user.id,
+                course: req.params.courseid
+            });
+            status.videos.unshift(req.params.vid);
+            await status.save();
+
+            status.watchPercentage = (status.videos.length/vids.videos.length)*100;
+            await status.save();
+        }
+        else{
+            // check if current video has been watched already
+            if(courseStatus.videos.includes(req.params.vid)){
+                
+            }
+            else{
+                courseStatus.videos.push(req.params.vid);
+                courseStatus.watchPercentage = (courseStatus.videos.length/vids.videos.length)*100;
+                await courseStatus.save();
+            }
+        }
+    } catch (err){
+        console.log(err);
+    }
 }
