@@ -10,7 +10,7 @@ router.get('/:certid', async (req, res) => {
         return res.sendFile(verify.certificate.path)
     }
     else{
-        return res.render('pricing', {
+        return res.render('certificate', {
             login: false,
             success: false
         })

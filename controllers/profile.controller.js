@@ -110,6 +110,7 @@ exports.myCourses = async(req, res) => {
     if(status && status.watchPercentage > 90){
         certAvailable = true;
     }
+
     
     let playlist = []; 
     course.videos.forEach(vid => {
@@ -130,7 +131,8 @@ exports.myCourses = async(req, res) => {
             login,
             role,
             rev,
-            certAvailable
+            certAvailable,
+            status
         });
     }).catch(err => {
         console.log(err);

@@ -31,6 +31,7 @@ app.use(require('express-session')({
 }));
 
 app.set('view engine', 'ejs');
+
 //
 app.use(passport.initialize());
 app.use(passport.session());

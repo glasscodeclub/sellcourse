@@ -93,6 +93,7 @@
                               border-radius: 10px;
                               text-decoration: none;"
                               href="/profile/mycourses/<%-course.id%>/cert"> Download Certificate</a>
+                              <p> Verification Link: <%- %></p>
                                     <% }  %>
                                 </h3>
                                 <p>
@@ -333,8 +334,11 @@
                                 <ul>
                                     <% for(let i=0; i < playlist.length; i++){ %>
                                         <li style="cursor: pointer;" id="<%= playlist[i]._id %>" onclick="changeVideo(this)">
-                                            <%- i+1 %> . &nbsp;
-                                                <%- playlist[i].name -%>
+                                        
+                                                    <%- playlist[i].name -%>
+                                                    </style>
+                                            
+                                            
                                             
                             
                                         </li>
@@ -395,6 +399,11 @@
              function updateStatus(event){
                  var vidId = document.getElementById("current_video");
 
+                 var originalTitle = document.getElementById(vidId.dataset.vid).innerHTML
+                 /*document.getElementById(vidId.dataset.vid).innerHTML='<i class="bi bi-check"></i>' + originalTitle; */
+                 document.getElementById(vidId.dataset.vid).style.color="#5fcf80";
+                 
+
                  const xhttp = new XMLHttpRequest();
                  const url = window.location.href + "/mark/" + vidId.dataset.vid ;
                  xhttp.open("POST", url);
@@ -406,39 +415,6 @@
             //     console.log(event.id + ' has ended');
             // };
          </script>
-         <script>
-            const { PDFDocument, StandardFonts, rgb } = PDFLib
-
-            async function createPdf() {
-                // Create a new PDFDocument
-                const pdfDoc = await PDFDocument.create()
-
-                // Embed the Times Roman font
-                const timesRomanFont = await pdfDoc.embedFont(StandardFonts.TimesRoman)
-
-                // Add a blank page to the document
-                const page = pdfDoc.addPage()
-
-                // Get the width and height of the page
-                const { width, height } = page.getSize()
-
-                // Draw a string of text toward the top of the page
-                const fontSize = 30
-                page.drawText('Creating PDFs in JavaScript is awesome!', {
-                    x: 50,
-                    y: height - 4 * fontSize,
-                    size: fontSize,
-                    font: timesRomanFont,
-                    color: rgb(0, 0.53, 0.71),
-                })
-
-                // Serialize the PDFDocument to bytes (a Uint8Array)
-                const pdfBytes = await pdfDoc.save()
-
-                // Trigger the browser to download the PDF document
-                download(pdfBytes, "pdf-lib_creation_example.pdf", "application/pdf");
-            }
-        </script>
                                    
 </body>
 
