@@ -6,6 +6,9 @@ const CourseCompletion = require('../models/courseCompletion.model');
 
 const { PDFDocument, rgb, degrees, StandardFonts } = require('pdf-lib');
 const fetch = require('node-fetch')
+const path = require('path');
+const fs = require('fs');
+const { nanoid } = require('nanoid');
 
 // route        GET /profile
 // access       Protected 
@@ -187,9 +190,14 @@ exports.postReview = async(req, res) => {
     }    
 }
 
+
+
 // route        GET /profile/mycourses/:courseid/cert
 // access       Protected 
 // desc         Certificate
+const path1 = path.join(__dirname, '..', 'data', 'Template.pdf')
+const path2 = path.join(__dirname, '..', 'data', 'output.pdf');
+
 exports.courseCertificate = async(req, res) => {
     if(!req.user){
         return res.redirect('/');
@@ -203,30 +211,50 @@ exports.courseCertificate = async(req, res) => {
         return res.redirect('back');
     }
     else if(courseStatus.watchPercentage > 90){
-        console.log(courseStatus.watchPercentage);
-        // let existingPdfBytes;
-        // const url = '../data/Certificate.pdf'
-        // await fetch('http://localhost:3000/data/discountcodes.json').then((result) =>
-        //     console.log(result)   
-        // // existingPdfBytes = result.arrayBuffer()
-        // );
+        const path3 = path.join(__dirname, '..', 'data', `${req.user.id}_${req.params.courseid}.pdf`);
+        
 
-        // // Load a PDFDocument from the existing PDF bytes
-        // const pdfDoc = await PDFDocument.load(existingPdfBytes);
-        // const pages = pdfDoc.getPages();
-        // const firstPage = pages[0];
+        if(courseStatus.certificate.uuid && courseStatus.certificate.path){
+            return res.sendFile(`${req.user.id}_${req.params.courseid}.pdf`, {
+                root: './data'
+            });
+        }
+        
+        try{            
+            const pdfDoc = await PDFDocument.load(fs.readFileSync('./data/testTemplate.pdf'));
 
-        // // Draw a string of text diagonally across the first page
-        // firstPage.drawText(req.user.id, {
-        //     x: 300,
-        //     y: 270,
-        //     size: 58,
-        //     color: rgb(0.2, 0.84, 0.67),
-        // });
+            const pages = pdfDoc.getPages();
+            const firstPage = pages[0];
 
-        // // Serialize the PDFDocument to bytes (a Uint8Array)
-        // const pdfDataUri = await pdfDoc.saveAsBase64({ dataUri: true });
-        // saveAs(pdfDataUri, "newcertificate.pdf")
+            courseStatus.certificate.path = path3;
+            courseStatus.certificate.uuid = nanoid();
+            await courseStatus.save();
+
+            firstPage.drawText(req.user.username, {
+            x: 300,
+            y: 300,
+            size: 50,
+            color: rgb(0.2, 0.84, 0.67),
+            });
+
+            firstPage.drawText('Verified: ' + courseStatus.certificate.uuid, {
+            x: 500,
+            y: 500,
+            size: 10,
+            color: rgb(0.2, 0.84, 0.67),
+            });
+
+            fs.writeFileSync(path3, await pdfDoc.save());
+
+            return res.sendFile(`${req.user.id}_${req.params.courseid}.pdf`, {
+            root: './data'
+            });
+        }
+        catch(err){
+            console.error(err)
+            console.log(err)
+        }
+        
         //---------------------------------------------------------------
         // const pdfDoc = await PDFDocument.create()
         // const timesRomanFont = await pdfDoc.embedFont(StandardFonts.TimesRoman)
@@ -234,20 +262,20 @@ exports.courseCertificate = async(req, res) => {
         // const page = pdfDoc.addPage()
         // const { width, height } = page.getSize()
         // const fontSize = 30
-        // page.drawText('Creating PDFs in JavaScript is awesome!', {
+        // page.drawText('Course Completed', {
         //     x: 50,
         //     y: height - 4 * fontSize,
         //     size: fontSize,
         //     font: timesRomanFont,
         //     color: rgb(0, 0.53, 0.71),
-        // })
+        // }) 
 
-        // const pdfBytes = await pdfDoc.save()
-        // return res.download(pdfBytes);
+        // fs.writeFileSync(path2, await pdfDoc.save());
+        // return res.sendFile('output.pdf', {
+        //     root: './data'
+        // });
 
-        return res.sendFile('Certificate.pdf', { 
-            root: '../data' 
-        });
+        
     }
     else{
         return res.redirect('/');

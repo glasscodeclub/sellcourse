@@ -10,6 +10,8 @@ const Job = require('../models/job.model');
 const { check, validationResult } = require('express-validator');
 const dotenv = require('dotenv');
 
+const CourseCompletion = require('../models/courseCompletion.model');
+
 //--- controllers
 const {
     getUser

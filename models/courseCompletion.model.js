@@ -15,7 +15,16 @@ const CourseCompletionSchema = new mongoose.Schema({
     watchPercentage: {
         type: Number,
         default: 0
-    }    
+    },
+    certificate: {
+        _id: false,
+        uuid: {
+            type: String
+        },
+        path: {
+            type: String
+        }
+    }  
 });
 
 module.exports = mongoose.model('CourseCompletion', CourseCompletionSchema);

@@ -15,6 +15,7 @@ const routes = require('./routes/routes');
 const courseRoutes = require('./routes/course.router');
 const profileRoutes = require('./routes/profile.router');
 const checkoutRoutes = require('./routes/checkout.router');
+const verifyCert = require('./routes/verifyCertificate');
 
 const app = express();
 app.use(express.json());
@@ -42,6 +43,7 @@ app.use('/', routes);
 app.use('/courses', courseRoutes);
 app.use('/profile', profileRoutes);
 app.use('/checkout', checkoutRoutes);
+app.use('/verify', verifyCert);
 app.get('*', function(req, res){
     res.redirect('/');
 })
