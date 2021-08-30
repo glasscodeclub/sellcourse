@@ -40,13 +40,17 @@
 
   <main id="main" data-aos="fade-in">
 
-    <!-- ======= Breadcrumbs ======= -->
+    <!-- ======= Breadcrumbs ======= 
     <div class="breadcrumbs">
       <div class="container">
-      <!-- <h2>Courses</h2>
-        <p>Est dolorum ut non facere possimus quibusdam eligendi voluptatem. Quia id aut similique quia voluptas sit
-          quaerat debitis. Rerum omnis ipsam aperiam consequatur laboriosam nemo harum praesentium. </p>
-        -->
+      <div class="container" style="padding: 30px;">
+        <h2>
+          Our courses
+        </h2>
+        <p>
+           Latest Courses 
+        </p>
+        </div>
         <div class="search-courses">
           <form action="" method="">
             <input type="text" name="search" placeholder="Search"><input type="submit" value="Search">
@@ -57,22 +61,50 @@
       
 
       </div>
-    </div><!-- End Breadcrumbs -->
+    </div> End Breadcrumbs -->
+
+    <div class="section-title" style="padding: 20px; padding-left: 90px; margin-top: 120px;">
+      <h2>
+        Our courses
+      </h2>
+      <p>
+        Latest Courses
+      </p>
+      <div class="search-courses" align="right" style="margin-right: 120px; margin-top: 30px; ">
+        <form action="/courses/search" method="GET">
+          <input type="text" name="search" id="info" placeholder="Keywords"
+            style="outline: none; border-top: 0; border-left: 0 ; border-right: 0; border-bottom: 1px solid; border-radius: 3px; line-height: 30px; ">
+          <input type="submit" value="Search" 
+            style="
+                  line-height: 30px;
+                  border: 0;
+                  background: none;
+                  font-size: 16px;
+                  margin-top: 15px;
+                  padding: 0 20px 2px 20px;
+                  background: #5fcf80;
+                  color: #fff;
+                  border-radius: 50px;
+                  box-shadow: 0px 2px 15px rgb(0 0 0 / 10%);">
+        </form>
+      
+      </div> 
+    </div>
 
     <!-- ======= Courses Section ======= -->
     <section id="courses" class="courses">
       <div class="container" data-aos="fade-up">
 
         <div class="row" data-aos="zoom-in" data-aos-delay="100">
-
+          <% if(results && results.length > 0) { %>
           <% for(var i=0; i < results.length; i++){ %>
           <div class="col-lg-4 col-md-6 d-flex align-items-center mt-4 mt-md-4">
             
             <div class="course-item">
-              <img src="assets/img/course-1-new.jpg" class="img-fluid" alt="...">
+              <img src="<%-results[i].imageUrl%>" class="img-fluid" alt="...">
               <div class="course-content">
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                  <h4>Web Development</h4>
+                  <h4><%-results[i].tag%></h4>
                   <p class="price">₹<%- results[i].cost -%></p>
                 </div>
 
@@ -158,6 +190,11 @@
             </div>
           </div>  
         -->
+      <% } %>
+      <% } else { %>
+        <div class="no-results" style="margin: auto; width:50%;">
+          <h4>No matching courses found...</h4>
+        </div>
       <% } %>
         </div>
 

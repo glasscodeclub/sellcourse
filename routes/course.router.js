@@ -4,13 +4,16 @@ const router = express.Router();
 const {
     getCourses,
     createCourse,
-    getSingleCourse
+    getSingleCourse,
+    searchCourses
 } = require('../controllers/course.controller');
 
 
 router.route('/')
-    .get(getCourses)
-    .post(createCourse);
+    .get(getCourses);
+
+router.route('/search')
+    .get(searchCourses);
 
 router.route('/:courseid')
     .get(getSingleCourse);

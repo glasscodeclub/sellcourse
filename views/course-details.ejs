@@ -70,11 +70,11 @@
 
                 </div>
                 <div class="buy-box-item add-to-cart-button" style="max-width: 300px; ">
-                  <% if(bought==true && login==true){ %>
-                    <button> <a href="/profile" style="color: white;"> Purchased </a> </button>
-                    <% } else if(bought==false && login==false){ %>
-                      <button> <a href="/login" style="color: white;"> Login to Buy </a> </button>
-                      <% } else if(bought==false && login==true) { %>
+                  <% if(bought==true && login==true && courseExpired == false){ %>
+                     <a href="/profile" > <button style="background: #5fcf80; color: black;">Purchased</button> </a>
+                    <% } else if(bought==false && login==false && courseExpired == false){ %>
+                       <a href="/login"> <button style="background: #5fcf80; color: black;"> Login to Buy</button>  </a>
+                      <% } else if(bought==false && login==true && courseExpired == false) { %>
                         <a href="/checkout/<%-courseid%>"><button style="background: #5fcf80; color: black;">Buy Now</button></a>
                         <br>
                         <form action="/checkout/<%-courseid%>" method="get">
@@ -91,8 +91,23 @@
                         </form>
                   
                   
-                        <% } else { %>
-                          <button> Invalid Operation </button>
+                        <% } else if(bought == true && login == true && courseExpired == true) { %>
+                          <a href="/checkout/<%-courseid%>"><button style="background: #5fcf80; color: black;">Renew</button></a>
+                          <br>
+                          <form action="/checkout/<%-courseid%>" method="get">
+                            <input type="text" name="discount" placeholder="code"
+                              style="max-width: 160px; margin-right: 5px; padding: 7px 10px; margin-top: 15px; border: 2px solid #73726c; border-radius: 5px;">
+                            <!-- <input type="submit" value="Apply Discount" style="max-width:250px; border: 0px; border-radius: 5px; background-color: rgb(94, 159, 94); color: white; margin-top:15px;"> -->
+                            <input type="submit" value="Apply Discount" style="font-size: 14px;
+                                                                                background: #5fcf8131;
+                                                                                padding: 7px 14px;
+                                                                                color: #5fcf80;
+                                                                                margin-top: 10px;
+                                                                                border: 1px solid #5fcf80;
+                                                                                border-radius: 10px;">
+                          </form>
+                          <% } else { %>
+                              <button> Server Error </button>
                           <% } %>
                   
                 </div>
@@ -115,22 +130,23 @@
           <div class="row">
             <div class="background-img">
               <img
-                src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1052&q=80"
+                src="<%-course.imageUrl%>"
                 class="img-fluid" alt="" />
               <div class="details-below-course">
-                <h3>Et enim incidunt fuga tempora</h3>
+                <h3>Introduction</h3>
                 <p>
-                  Qui et explicabo voluptatem et ab qui vero et voluptas. Sint
-                  voluptates temporibus quam autem. Atque nostrum voluptatum
-                  laudantium a doloremque enim et ut dicta. Nostrum ducimus est
-                  iure minima totam doloribus nisi ullam deserunt. Corporis aut
-                  officiis sit nihil est. Labore aut sapiente aperiam. Qui
-                  voluptas qui vero ipsum ea voluptatem. Omnis et est.
-                  Voluptatem officia voluptatem adipisci et iusto provident
-                  doloremque consequatur. Quia et porro est. Et qui corrupti
-                  laudantium ipsa. Eum quasi saepe aperiam qui delectus quaerat
-                  in. Vitae mollitia ipsa quam. Ipsa aut qui numquam eum iste
-                  est dolorum. Rem voluptas ut sit ut.
+                  JavaScript is THE most important programming language you need to learn as a web developer - and with this course, you
+                  make sure that you will not miss a single thing you have to know as a JavaScript developer!</p>
+                  
+                  <p>This is the most comprehensive and modern course you can find on JavaScript - it's based on all my JavaScript knowledge
+                  AND teaching experience. It's both a complete guide, starting with the core basics of the language, as well as an
+                  extensive reference of the JavaScript language and environment, ensuring that both newcomers as well as experienced
+                  JavaScript developers get a lot out of this course!</p>
+                  
+                  <p>It's a huge course because it's packed with important knowledge and helpful content. From the core basics, over advanced
+                  concepts and JavaScript specialties, all the way up to expert topics like performance optimization and testing - this
+                  course has it all. My goal was to create your go-to resource for the JavaScript language, which you can not just use for
+                  learning it but also as a resource you can come back to and look up important topics.</p>
                 </p>
               </div>
             </div>
@@ -151,77 +167,7 @@
               <p>Description</p>
             </div>
             <div class="information">
-              <p>Python is the most popular programming language of the world - it's versatile, easy to learn and very
-                powerful!</p>
-      
-              <p>We already got a Python course which you can take if you want to learn Python.</p>
-              <p>But one of the primary things you can build with Python is a website! You can use Python for web development.
-              </p>
-      
-              <p>And to make that easier, you would typically use a framework like Django - simply because that allows you to
-                focus on
-                your core business logic and you don't need to re-invent the wheel and implement all the nitty-gritty
-                technical details
-                from scratch.</p>
-      
-              And this course is about Django - the most popular Python web development framework out there!
-      
-              <p>Django covers all aspects of web development - from handling requests and responses, over rendering dynamic
-                HTML pages
-                with templates, all the way up to making database access and data management easy. It's all baked in and it's
-                all
-                covered in great detail in this course!</p>
-      
-              <p>This course teaches Django from the ground up - you don't need to know anything about it to get started.
-                Basic Python
-                and web development knowledge is all you need.</p>
-      
-              <p>We'll start at the absolute basics and understand how to create Django project, how to run them and how to
-                add features
-                - step by step.</p>
-      
-              In detail, this course covers:
-              <ul>
-                <li>Installing Django</li>
-                <li>Creating and understanding Django projects</li>
-                <li>Understanding URLs, views, requests and responses</li>
-      
-                <li>Working with templates and static files like CSS and images</li>
-      
-                <li>Working with data and models</li>
-      
-                <li>Connecting data with relationships (one-to-many, one-to-one, many-to-many)</li>
-      
-                <li>Querying data with Django's powerful model solution</li>
-      
-                <li>Adding administration panels to your projects</li>
-      
-                <li>Handling user input with forms - manually and with Django's built-in form support</li>
-      
-                <li>Advanced features like class-based views (and when to use them)</li>
-      
-                <li>Dealing with file uploads and how to serve uploaded files</li>
-      
-                <li>Working with sessions</li>
-      
-                <li>In-depth deployment instructions and examples</li>
-      
-                <li>Different ways of deploying and serving static files and user uploads</li>
-      
-                <li>And much more!</li>
-              </ul>
-      
-              All those concepts are taught in great depth and backed up by a complete example course project where we build a
-              "Blog
-              website" from the ground up.
-      
-              <p>Therefore, you'll learn all the important concepts and the theory and you're also going to be able to see it
-                applied to
-                a real project.</p>
-      
-              <p> Hence, once you completed the course, you'll have a very solid understanding of Django and you'll be able to
-                dive into
-                your own Django projects!</p>
+              <%- course.content %>
             </div>
           </div>
         </div>
@@ -236,18 +182,18 @@
               <h2>Lessons</h2>
               <p>Course Content</p>
             </div>
-            <center>
+           
               <div class="playlist-content">
       
                 <div style="max-height: 70vh; height: auto; box-shadow: none; border-bottom: none; background-color: #eef0ef;"
                   class="sidebar-container-content">
                   <div class="sidebar-container-content-group" style="border-bottom: 0px;">
       
-                    <div style="padding: 10px;" class='cta'>
+                    <div style=" padding: 30px;" class='cta'>
                       <h4 style="padding-left: 20px;">
-                        <%- playlist.length -%> &nbsp; Lessons
+                        <%- playlist.length -%> &nbsp; Lesson(s)
                       </h4>
-                      <ul>
+                      <ul style="padding-inline-start:25px;">
                         <% for(let i=0; i < playlist.length; i++){ %>
                           <li>
                             <%- i+1 %> . &nbsp;
@@ -260,7 +206,7 @@
       
                 </div>
               </div>
-            </center>
+           
           </div>
         </div>
       </section>
@@ -413,52 +359,36 @@
           <div class="row" data-aos="zoom-in" data-aos-delay="100">
             <div class="section-title" style="padding: 1.6rem 2.4rem;">
               <h2>Who should take this course?</h2>
+              <p>Features</p>
             </div>
             <div class="member">
-              <div class="customer-info align-items-center">
+              <div class="customer-info align-items-center" style="background-color: #eef0ef; color: black;">
                 <i class="bx bx-check-double bx-lg"></i>
                 STUDENTS
                 <p>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry. Lorem Ipsum has been the industry's
-                  standard dummy text ever since the 1500s. It has survived not
-                  only five centuries, but also the leap into electronic
-                  typesetting, remaining essentially unchanged.
+                  JavaScript is THE most important programming language you need to learn as a web developer - and with this course, you
+                  make sure that you will not miss a single thing you have to know as a JavaScript developer!
                 </p>
               </div>
-              <div class="customer-info align-items-center">
+              <div class="customer-info align-items-center" style="background-color: #eef0ef; color: black;">
                 <i class="bx bx-check-double bx-lg"></i>
-                STUDENTS
+                Professionals
                 <p>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry. Lorem Ipsum has been the industry's
-                  standard dummy text ever since the 1500s. It has survived not
-                  only five centuries, but also the leap into electronic
-                  typesetting, remaining essentially unchanged.
+                  It's a huge course because it's packed with important knowledge and helpful content. From the core basics, over advanced
+                  concepts and JavaScript specialties, all the way up to expert topics like performance optimization and testing - this
+                  course has it all. My goal was to create your go-to resource for the JavaScript language, which you can not just use for
+                  learning it but also as a resource you can come back to and look up important topics.
                 </p>
               </div>
-              <div class="customer-info align-items-center">
+              <div class="customer-info align-items-center" style="background-color: #eef0ef; color: black;">
                 <i class="bx bx-check-double bx-lg"></i>
-                STUDENTS
+                Freelancers
                 <p>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry. Lorem Ipsum has been the industry's
-                  standard dummy text ever since the 1500s. It has survived not
-                  only five centuries, but also the leap into electronic
-                  typesetting, remaining essentially unchanged.
+                  JavaScript is THE most important programming language you need to learn as a web developer - and with this course, you
+                  make sure that you will not miss a single thing you have to know as a JavaScript developer!
                 </p>
               </div>
-              <div class="customer-info align-items-center">
-                <i class="bx bx-check-double bx-lg"></i>
-                STUDENTS
-                <p>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry. Lorem Ipsum has been the industry's
-                  standard dummy text ever since the 1500s. It has survived not
-                  only five centuries, but also the leap into electronic
-                  typesetting, remaining essentially unchanged.
-                </p>
-              </div>
+              
             </div>
           </div>
         </div>
@@ -475,6 +405,16 @@
               <h2>Published by</h2>
               <p>Meet your teacher</p>
             </div>
+              <div class="customer-info align-items-center" style="background-color: #5fcf80; color: black; padding: 10px 15px;
+    margin-bottom: 15px; border-radius: 5px; max-width: 350px; margin-left:50px;" >
+                
+                <div class="trainer-profile d-flex align-items-center">
+                  <img src="assets/img/trainers/trainer-1.jpg" class="img-fluid" alt="" style="max-width: 80px;max-height: 80px; border-radius: 5px;">
+                  <span> &nbsp; Publisher </span>
+                </div>
+              </div>
+
+            
             </div>
             </div>
 
@@ -515,47 +455,44 @@
           <div class="row" data-aos="zoom-in" data-aos-delay="100">
             <div class="section-title" style="padding: 1.6rem 2.4rem;">
             
-              <p>Perks and Achievements</p>
+              <p>Important Details</p>
             </div>
             <div class="box col-lg-4 col-md-6 col-sm-12 d-flex align-items-stretch">
               <div style="
-                  background-color: rgb(94, 159, 94);
+                  background-color: #5fcf80;
                   color: aliceblue;
                   text-align: center;
                   padding: 30px;
                 " class="member-content">
                 <h4>Shareable Certificate</h4>
                 <p>
-                  Magni qui quod omnis unde et eos fuga et exercitationem. Odio
-                  veritatis perspiciatis quaerat qui aut aut aut
+                 Certificate can be generated, shared and verified by th user as well as other people using the verify certificate option
                 </p>
               </div>
             </div>
             <div class="box col-lg-4 col-md-6 col-sm-12 d-flex align-items-stretch">
               <div style="
-                  background-color: rgb(94, 159, 94);
+                  background-color: #5fcf80;
                   color: aliceblue;
                   text-align: center;
                   padding: 30px;
                 " class="member-content">
-                <h4>Skill Badges</h4>
+                <h4>Valid for 6 months</h4>
                 <p>
-                  Magni qui quod omnis unde et eos fuga et exercitationem. Odio
-                  veritatis perspiciatis quaerat qui aut aut aut
+                  The course is valid for 6 months from the date of purchase, this is to ensure learning at proper pace and you can renew your course once it expires
                 </p>
               </div>
             </div>
             <div class="box col-lg-4 col-md-6 col-sm-12 d-flex align-items-stretch">
               <div style="
-                  background-color: rgb(94, 159, 94);
+                  background-color: #5fcf80;
                   color: aliceblue;
                   text-align: center;
                   padding: 30px;
                 " class="member-content">
-                <h4>Achievements</h4>
+                <h4>Add a review</h4>
                 <p>
-                  Magni qui quod omnis unde et eos fuga et exercitationem. Odio
-                  veritatis perspiciatis quaerat qui aut aut aut
+                  Let others know about your views on the course and share insights and gather data and make purchases accordingly
                 </p>
               </div>
             </div>
@@ -661,7 +598,7 @@
                     <div class="buy-box">
                       <div class="buy-box-item price">
                         <div class="price-text">
-                          <h1>₹<%- course.cost -%></h1>
+                          <h1><b>₹<%- course.cost -%></b></h1>
                           <div
                             style="font-size: 1rem; line-height: 1; padding: .4rem; margin-right: .8rem;
                                               white-space: nowrap; box-sizing: border-box; color: #73726c;text-decoration: line-through;">
@@ -673,11 +610,11 @@
                       </div>
                       <div class="buy-box-item add-to-cart-button">
                         
-                          <% if(bought == true && login== true){ %>
-                          <button> <a href="/profile" style="color: white;"> Purchased </a> </button>
-                          <% } else if(bought == false && login == false){ %>
-                          <button> <a href="/login" style="color: white;"> Login to Buy </a> </button>
-                          <% } else if(bought == false && login == true) { %>
+                          <% if(bought == true && login== true && courseExpired == false){ %>
+                          <a href="/profile" style="color: white;"><button style="background: #5fcf80; color: black;"> Purchased </button> </a> 
+                          <% } else if(bought == false && login == false && courseExpired == false){ %>
+                           <a href="/login" style="color: white;"> <button style="background: #5fcf80; color: black;">Login to Buy </button> </a> 
+                          <% } else if(bought == false && login == true && courseExpired == false) { %>
                             <a href="/checkout/<%-courseid%>"><button style="background: #5fcf80; color: black;">Buy Now</button></a>
                             <br>
                             <form action="/checkout/<%-courseid%>" method="get">
@@ -694,21 +631,36 @@
                           
                               
                            
-                          <% } else { %>
-                             <button> Invalid Operation </button>
-                          <% } %>
+                          <% } else if(bought == true && login == true && courseExpired == true) { %>
+                            <a href="/checkout/<%-courseid%>"><button style="background: #5fcf80; color: black;">Renew </button></a>
+                            <br>
+                            <form action="/checkout/<%-courseid%>" method="get">
+                              <input type="text" name="discount" placeholder="code"
+                                style="max-width: 160px; margin-right: 5px; padding: 7px 10px; margin-top: 15px; border: 2px solid #73726c; border-radius: 5px;">
+                              <!-- <input type="submit" value="Apply Discount" style="max-width:250px; border: 0px; border-radius: 5px; background-color: rgb(94, 159, 94); color: white; margin-top:15px;"> -->
+                              <input type="submit" value="Apply Discount" style="font-size: 14px;
+                                                                                  background: #5fcf8131;
+                                                                                  padding: 7px 14px;
+                                                                                  color: #5fcf80;
+                                                                                  margin-top: 10px;
+                                                                                  border: 1px solid #5fcf80;
+                                                                                  border-radius: 10px;">
+                            </form>
+                          <% } else{ %>
+                              <button> Server Error </button>
+                            <% } %>
                       </div>
                     </div>
                   </div>
                   <div class='cta'>
                     <h4>This Course Includes:</h4>
-                    <ul>
-                      <li><i class="bx bx-user"></i> &nbsp;48 hours on-demand video</li>
-                      <li><i class="bx bx-user"></i>&nbsp;18 articles</li>
-                      <li><i class="bx bx-user"></i>&nbsp;10 downloadable resources</li>
-                      <li><i class="bx bx-user"></i>&nbsp;Full lifetime access</li>
-                      <li><i class="bx bx-user"></i>&nbsp;Access on mobile and TV</li>
-                      <li><i class="bx bx-user"></i>&nbsp;Certificate of completion</li>
+                    <ul style="padding-inline-start: 20px;">
+                      <li><i class="bx bx-slideshow" style="position: relative; top: 5px;"></i> &nbsp;48 hours on-demand video</li>
+                      <li><i class="bx bx-store-alt" style="position: relative; top: 5px;"></i>&nbsp;&nbsp;18 articles</li>
+                      <li><i class="bx bx-bug-alt" style="position: relative; top: 5px;"></i>&nbsp;&nbsp;10 downloadable resources</li>
+                      <li><i class="bx bx-landscape" style="position: relative; top: 5px;"></i>&nbsp;&nbsp;Full lifetime access</li>
+                      <li><i class="bx bx-network-chart" style="position: relative; top: 5px;"></i>&nbsp;&nbsp;Access on mobile and TV</li>
+                      <li><i class="bx bx-world" style="position: relative; top: 5px;"></i>&nbsp;&nbsp;Certificate of completion</li>
                     </ul>
                   </div>
                 </div>

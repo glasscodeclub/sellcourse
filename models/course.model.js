@@ -14,7 +14,7 @@ const CourseSchema = new mongoose.Schema({
         required: true
     },
     publisher: {
-        type: mongoose.Schema.ObjectId,
+        type: String,
         required: true
     },
     averageRating: {
@@ -29,6 +29,8 @@ const CourseSchema = new mongoose.Schema({
         type: String
     },
     imageUrl: String,
+    content: String,
+    tag: String,
     videos: {
         type: [String]
     }

@@ -46,26 +46,6 @@
             <p>
             <%- course.description -%>
             </p>
-            <div class="sidebar-render">
-                <div class="purchase-render">
-                    <div class="purchase-render-item">
-                        <div class='buy-box-main'>
-                            <div class="buy-box">
-                                <div class="buy-box-item price">
-                                    <div class="price-text">
-                                        ₹
-                                        <%- course.cost -%>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class='cta'>
-                            
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
     <!-- End Breadcrumbs -->
@@ -93,21 +73,17 @@
                               border-radius: 10px;
                               text-decoration: none;"
                               href="/profile/mycourses/<%-course.id%>/cert"> Download Certificate</a>
-                              <p> Verification Link: <%- %></p>
+                             
                                     <% }  %>
                                 </h3>
                                 <p>
-                                    Qui et explicabo voluptatem et ab qui vero et voluptas. Sint
-                                    voluptates temporibus quam autem. Atque nostrum voluptatum
-                                    laudantium a doloremque enim et ut dicta. Nostrum ducimus est
-                                    iure minima totam doloribus nisi ullam deserunt. Corporis aut
-                                    officiis sit nihil est. Labore aut sapiente aperiam. Qui
-                                    voluptas qui vero ipsum ea voluptatem. Omnis et est.
-                                    Voluptatem officia voluptatem adipisci et iusto provident
-                                    doloremque consequatur. Quia et porro est. Et qui corrupti
-                                    laudantium ipsa. Eum quasi saepe aperiam qui delectus quaerat
-                                    in. Vitae mollitia ipsa quam. Ipsa aut qui numquam eum iste
-                                    est dolorum. Rem voluptas ut sit ut.
+                                    And to make that easier, you would typically use a framework like Django - simply because that allows
+                                    you to
+                                    focus on
+                                    your core business logic and you don't need to re-invent the wheel and implement all the
+                                    nitty-gritty
+                                    technical details
+                                    from scratch.
                                 </p>
                             </div>
                         </div>
@@ -326,23 +302,29 @@
                         
                         </div>
                         <div class="sidebar-container-content-group">
-                            
+                            <%  let bool = false; %>
                             <div style="padding: 10px;" class='cta'>
                                 <h4 style="padding-left: 20px;">
                                     <%- playlist.length -%> &nbsp; Lessons
                                 </h4>
                                 <ul>
                                     <% for(let i=0; i < playlist.length; i++){ %>
-                                        <li style="cursor: pointer;" id="<%= playlist[i]._id %>" onclick="changeVideo(this)">
-                                        
-                                                    <%- playlist[i].name -%>
-                                                    </style>
-                                            
-                                            
-                                            
-                            
-                                        </li>
+                                        <% bool = false %>
+                                        <% for(let j = 0; j < status.videos.length; j++){ %>
+                                            <% if(status.videos[j] == playlist[i]._id){ %>
+                                                <% bool = true; break;  %>
+                                            <% } %>
                                         <% } %>
+                                        <% if(bool == true){ %>
+                                            <li style="cursor: pointer; color: #5fcf80" id="<%= playlist[i]._id %>" onclick="changeVideo(this)">
+                                            <%- i+1 %>. &nbsp;
+                                            <%- playlist[i].name -%>
+                                        <% } else { %>
+                                            <li style="cursor: pointer;" id="<%= playlist[i]._id %>" onclick="changeVideo(this)">
+                                            <%- i+1 %>. &nbsp;
+                                            <%- playlist[i].name -%>
+                                        <% } %>
+                                    <% } %>
                                 </ul>
                             </div>
                         </div>

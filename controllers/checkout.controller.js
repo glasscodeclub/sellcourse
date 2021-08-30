@@ -1,11 +1,13 @@
 const dotenv = require('dotenv');
 const Razorpay = require('razorpay');
 const crypto = require('crypto');
+const moment = require('moment');
 
 const User = require('../models/user');
 const Course = require('../models/course.model');
 const Order = require('../models/order.model');
 const Discount = require('../models/discount.model');
+const CourseCompletion = require('../models/courseCompletion.model');
 
 dotenv.config({ path: '../config/config.env' });
 var instance = new Razorpay({ 
@@ -20,6 +22,10 @@ var instance = new Razorpay({
 exports.getCheckoutPage = async(req, res) =>{
     try {
         const course = await Course.findById(req.params.courseid);
+        const expiry = await CourseCompletion.findOne({
+            user: req.user.id,
+            course: req.params.courseid
+        });
         let price = course.cost; 
 
         let login = false;
@@ -29,9 +35,12 @@ exports.getCheckoutPage = async(req, res) =>{
 
             // check if already bought
             const user = await User.findById(req.user.id);
-            if(user.courses.includes(req.params.courseid)){
-                console.log('Already purchased');
-                return res.redirect('/profile');
+            if(user.courses.includes(req.params.courseid)){     
+                if(expiry){
+                    if(expiry.expiresOn.getTime() > Date.now()){
+                        return res.redirect('/profile');
+                    }
+                }
             }
             // check for discount code 
             const { discount } = req.query;
@@ -40,23 +49,23 @@ exports.getCheckoutPage = async(req, res) =>{
             const verify = await Discount.findOne({ code: discount });
 
             if(verify){
-                let discountPercent = 0;
-                // console.log(discount);
-                // console.log(verify);
+                if(!expiry || expiry.expiresOn.getTime() < Date.now()){
+                    let discountPercent = 0;
+                    // console.log(discount);
+                    // console.log(verify);
 
-                discountPercent  = verify.disPercent;
-                //console.log("Course price: " + price);
-                if(price * (discountPercent/100) > verify.maxValue){
-                   /* console.log("Discount Calculated: " + price * (discountPercent/100) + " is larger than 
-                   maxValue: " + verify.maxValue); */
-                    price = price - verify.maxValue;
+                    discountPercent  = verify.disPercent;
+                    //console.log("Course price: " + price);
+                    if(price * (discountPercent/100) > verify.maxValue){
+                    /* console.log("Discount Calculated: " + price * (discountPercent/100) + " is larger than 
+                    maxValue: " + verify.maxValue); */
+                        price = price - verify.maxValue;
+                    }
+                    else{
+                    /* console.log("Discount: " + Math.round(price * (discountPercent/100))); */
+                        price = price - Math.round(price * (discountPercent/100));
+                    }
                 }
-                else{
-                   /* console.log("Discount: " + Math.round(price * (discountPercent/100))); */
-                    price = price - Math.round(price * (discountPercent/100));
-                }
-
-                console.log("Final cost: " + price);
             }
 
             // create an order otherwise
@@ -122,6 +131,15 @@ exports.verifyPayment = async(req, res) => {
             // check if already bought
             const user = await User.findById(req.user.id);
             if(user.courses.includes(req.params.courseid)){
+                const expiry = await CourseCompletion.findOne({
+                    user: req.user.id,
+                    course: req.params.courseid
+                });
+                if(expiry){
+                    expiry.expiresOn = moment(Date.now()).add(6, 'M');
+                    await expiry.save();
+                    return res.redirect('/profile');
+                }
                 console.log('Already purchased');
                 return res.redirect('/profile');
             }
@@ -149,16 +167,20 @@ exports.verifyPayment = async(req, res) => {
             const orderSaved = new Order(order);
             await orderSaved.save();
 
-            console.log(orderSaved);
+            const status = await CourseCompletion.create({
+                user: req.user.id,
+                course: req.params.courseid,
+                expiresOn: moment(Date.now()).add(6, 'M')
+            });
             
             success = true;
             return res.redirect('/profile');
         }
         else{
 
-            return res.render('/courses', {
+            return res.render('/error', {
                 success: false,
-                msg: 'Order processing failed'
+                msg: 'Order processing failed, please check your connection or try again later. Contact the admin in case the issue persists'
             })
         }
     } catch (err){

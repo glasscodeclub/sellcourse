@@ -115,6 +115,7 @@ router.get('/video/:id',(req, res) => {
     );
 })
 
+/* disabled
 router.get('/pricing', (req, res) => {
     let login = false;
     if(req.user) login = true;
@@ -122,7 +123,7 @@ router.get('/pricing', (req, res) => {
          login
     });
 });
-
+*/
 
 /*
 router.get('/profile', isLoggedIn, async(req, res) => {

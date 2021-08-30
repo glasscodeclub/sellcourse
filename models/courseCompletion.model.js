@@ -16,6 +16,9 @@ const CourseCompletionSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
+    expiresOn: {
+        type: Date
+    },
     certificate: {
         _id: false,
         uuid: {

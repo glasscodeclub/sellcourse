@@ -9,6 +9,7 @@ const fetch = require('node-fetch')
 const path = require('path');
 const fs = require('fs');
 const { nanoid } = require('nanoid');
+//const moment = require('moment');
 
 // route        GET /profile
 // access       Protected 
@@ -25,15 +26,23 @@ exports.getUser = async(req, res) =>{
 
     if(!purchased){
         return res.render('profile', {
-        results: null,
-        login
-    });
+            results: null,
+            login
+        });
     }
 
+    const validity = await CourseCompletion.find({ user: req.user.id });
+
+    let expired = [];
     let courseDetails = [];
     for(let i = 0; i < purchased.courses.length; i++){
-       const eachCourse = await Course.findById(purchased.courses[i]);
-       courseDetails.push(eachCourse);
+        const eachCourse = await Course.findById(purchased.courses[i]);
+        if(validity[i].expiresOn.getTime() < Date.now()){
+            expired.push(eachCourse);
+        }
+        else if( validity[i].expiresOn.getTime() > Date.now()){
+            courseDetails.push(eachCourse);
+        }
     }
 
    /* Promise.allSettled(courseDetails).then(doc => {
@@ -47,7 +56,8 @@ exports.getUser = async(req, res) =>{
     
     return res.render('profile', {
         results: courseDetails,
-        login
+        login,
+        expired
     }); 
 }
 
@@ -91,6 +101,22 @@ exports.myCourses = async(req, res) => {
 
     if(!course){
         return res.redirect('/courses');
+    }
+
+    // check for validity
+    const validity = await CourseCompletion.findOne({
+        user: req.user.id,
+        course: req.params.courseid
+    })
+
+    if(validity){
+        if(validity.expiresOn.getTime() < Date.now()){
+            console.log(validity.expiresOn.getTime() + " is smaller than " + Date.now());
+            return res.redirect('/profile')
+        } 
+        else{
+            // console.log("Valid")
+        }
     }
 
     const reviewUsers = []
@@ -208,15 +234,17 @@ exports.courseCertificate = async(req, res) => {
         user: req.user.id,
         course: req.params.courseid
     })
-    
-    if(!courseStatus){
+
+    const course = await Course.findById(req.params.courseid);
+
+    if(!courseStatus ||!course){
         return res.redirect('back');
     }
     else if(courseStatus.watchPercentage > 90){
         const path3 = path.join(__dirname, '..', 'data', `${req.user.id}_${req.params.courseid}.pdf`);
         
-
-        if(courseStatus.certificate.uuid && courseStatus.certificate.path){
+        
+        if(courseStatus.certificate.uuid && courseStatus.certificate.path && fs.existsSync(courseStatus.certificate.path)){
             return res.sendFile(`${req.user.id}_${req.params.courseid}.pdf`, {
                 root: './data'
             });
@@ -225,6 +253,8 @@ exports.courseCertificate = async(req, res) => {
         try{            
             const pdfDoc = await PDFDocument.load(fs.readFileSync('./data/testTemplate.pdf'));
 
+            const publisher = await User.findById(course.publisher);
+
             const pages = pdfDoc.getPages();
             const firstPage = pages[0];
 
@@ -232,52 +262,56 @@ exports.courseCertificate = async(req, res) => {
             courseStatus.certificate.uuid = nanoid();
             await courseStatus.save();
 
-            firstPage.drawText(req.user.username, {
-            x: 300,
-            y: 300,
-            size: 50,
-            color: rgb(0.2, 0.84, 0.67),
+            firstPage.drawText("Harsimran Singh", {
+                x: 270,
+                y: 250,
+                size: 65,
+                color: rgb(0.2, 0.84, 0.67),
             });
 
-            firstPage.drawText('Verified: ' + courseStatus.certificate.uuid, {
-            x: 500,
-            y: 500,
-            size: 10,
-            color: rgb(0.2, 0.84, 0.67),
+            firstPage.drawText('ID: ' + courseStatus.certificate.uuid, {
+                x: 520,
+                y: 550,
+                size: 15,
+                color: rgb(0.2, 0.84, 0.67),
             });
 
+            firstPage.drawText(course.title, {
+                x: 410,
+                y: 210,
+                size: 20,
+                color: rgb(0.2, 0.84, 0.67),
+            });
+
+            firstPage.drawText(publisher.username, {
+                x: 95,
+                y: 210,
+                size: 20,
+                color: rgb(0.2, 0.84, 0.67),
+            });
+
+            firstPage.drawText("Verified", {
+                x: 100,
+                y: 115,
+                size: 20,
+                color: rgb(0.2, 0.84, 0.67),
+            });
             fs.writeFileSync(path3, await pdfDoc.save());
 
-            return res.sendFile(`${req.user.id}_${req.params.courseid}.pdf`, {
-            root: './data'
-            });
+            if(fs.existsSync(path3)){
+                return res.sendFile(`${req.user.id}_${req.params.courseid}.pdf`, {
+                    root: './data'
+                });
+            } else {
+                courseStatus.certificate = undefined;
+                courseStatus.save();
+            }
+            
         }
         catch(err){
             console.error(err)
             console.log(err)
         }
-        
-        //---------------------------------------------------------------
-        // const pdfDoc = await PDFDocument.create()
-        // const timesRomanFont = await pdfDoc.embedFont(StandardFonts.TimesRoman)
-
-        // const page = pdfDoc.addPage()
-        // const { width, height } = page.getSize()
-        // const fontSize = 30
-        // page.drawText('Course Completed', {
-        //     x: 50,
-        //     y: height - 4 * fontSize,
-        //     size: fontSize,
-        //     font: timesRomanFont,
-        //     color: rgb(0, 0.53, 0.71),
-        // }) 
-
-        // fs.writeFileSync(path2, await pdfDoc.save());
-        // return res.sendFile('output.pdf', {
-        //     root: './data'
-        // });
-
-        
     }
     else{
         return res.redirect('/');

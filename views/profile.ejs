@@ -78,101 +78,105 @@
           </div>
       
           <div class="row" data-aos="zoom-in" data-aos-delay="100">
+            
             <% for(var i=0; i < results.length; i++){ %>
-              <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
-                <div class="course-item">
-                  <img src="assets/img/course-1-new.jpg" class="img-fluid" alt="...">
-                  <div class="course-content">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                      <h4>Web Development</h4>
-                      <p class="price">₹<%- results[i].cost -%>
-                      </p>
-                    </div>
-      
-                    <h3><a href="/profile/mycourses/<%-results[i].id %>">
-                        <%- results[i].title-%>
-                      </a></h3>
-                    <p>
-                      <%- results[i].description-%>
-                    </p>
-                    <div class="trainer d-flex justify-content-between align-items-center">
-                      <div class="trainer-profile d-flex align-items-center">
-                        <img src="assets/img/trainers/trainer-1.jpg" class="img-fluid" alt="" style="max-width: 30px;max-height: 30px;">
-                        <span>Rated : </span>
-                      </div>
-                      <div class="trainer-rank d-flex align-items-center">
-                        <% for(let rating=0; rating < results[i].averageRating; rating++){ %>
-                          <span><i class="bx bxs-star"></i></span>
-                        
-                          <% } %>
-                            <% for(let j=5 - results[i].averageRating; j> 0; j--){ %>
-                              <span><i class="bx bx-star"></i></span>
-                              <% } %>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div> <!-- End Course Item-->
-              <% }%>
-                <!--         <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
-                  <div class="course-item">
-                    <img src="assets/img/course-2-new.jpg" class="img-fluid" alt="...">
-                    <div class="course-content">
-                      <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h4>Marketing</h4>
-                        <p class="price">$250</p>
-                      </div>
-      
-                      <h3><a href="course-details.html">Search Engine Optimization</a></h3>
-                      <p>Et architecto provident deleniti facere repellat nobis iste. Id facere quia quae dolores dolorem
-                        tempore.</p>
-                      <div class="trainer d-flex justify-content-between align-items-center">
-                        <div class="trainer-profile d-flex align-items-center">
-                          <img src="assets/img/trainers/trainer-2.jpg" class="img-fluid" alt="">
-                          <span>Lana</span>
-                        </div>
-                        <div class="trainer-rank d-flex align-items-center">
-                          <i class="bx bx-user"></i>&nbsp;35
-                          &nbsp;&nbsp;
-                          <i class="bx bx-heart"></i>&nbsp;42
+              
+                    <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
+                      <div class="course-item">
+                        <img src="assets/img/course-1-new.jpg" class="img-fluid" alt="...">
+                        <div class="course-content">
+                          <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h4>Web Development</h4>
+                            <p class="price">₹<%- results[i].cost -%>
+                            </p>
+                          </div>
+              
+                          <h3><a href="/profile/mycourses/<%-results[i].id %>">
+                              <%- results[i].title-%>
+                            </a></h3>
+                          <p>
+                            <%- results[i].description-%>
+                          </p>
+                          <div class="trainer d-flex justify-content-between align-items-center">
+                            <div class="trainer-profile d-flex align-items-center">
+                              <img src="assets/img/trainers/trainer-1.jpg" class="img-fluid" alt=""
+                                style="max-width: 30px;max-height: 30px;">
+                              <span>Rated : </span>
+                            </div>
+                            <div class="trainer-rank d-flex align-items-center">
+                              <% for(let rating=0; rating < results[i].averageRating; rating++){ %>
+                                <span><i class="bx bxs-star"></i></span>
+              
+                                <% } %>
+                                  <% for(let j=5 - results[i].averageRating; j> 0; j--){ %>
+                                    <span><i class="bx bx-star"></i></span>
+                                    <% } %>
+                            </div>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </div>
-                </div>
-      
-                <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-lg-0">
-                  <div class="course-item">
-                    <img src="assets/img/course-3-new.jpg" class="img-fluid" alt="...">
-                    <div class="course-content">
-                      <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h4>Content</h4>
-                        <p class="price">$180</p>
-                      </div>
-      
-                      <h3><a href="course-details.html">Copywriting</a></h3>
-                      <p>Et architecto provident deleniti facere repellat nobis iste. Id facere quia quae dolores dolorem
-                        tempore.</p>
-                      <div class="trainer d-flex justify-content-between align-items-center">
-                        <div class="trainer-profile d-flex align-items-center">
-                          <img src="assets/img/trainers/trainer-3.jpg" class="img-fluid" alt="">
-                          <span>Brandon</span>
-                        </div>
-                        <div class="trainer-rank d-flex align-items-center">
-                          <i class="bx bx-user"></i>&nbsp;20
-                          &nbsp;&nbsp;
-                          <i class="bx bx-heart"></i>&nbsp;85
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div> 
-              -->
+                    </div> <!-- End Course Item-->
+                   <% } %> 
           </div>
-      
+       
         </div>
       </section>
       <% } %>
+ <!-- expired courses -->
+      <% if(expired){ %>
+        <section id="my-courses" class="courses">
+          <div class="container" data-aos="fade-up">
+      
+            <div class="section-title">
+              <h2>Courses</h2>
+              <p>Expired Courses</p>
+            </div>
+      
+            <div class="row" data-aos="zoom-in" data-aos-delay="100">
+      
+              <% for(var i=0; i < expired.length; i++){ %>
+      
+                <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
+                  <div class="course-item">
+                    <img src="assets/img/course-1-new.jpg" class="img-fluid" alt="...">
+                    <div class="course-content" style="background-color: rgba(0,0,0,0.1);">
+                      <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4>Web Development</h4>
+                        <p class="price" style="color:#721c24;">Expired
+                        </p>
+                      </div>
+      
+                      <h3><a href="/courses/<%-expired[i].id %>">
+                          <%- expired[i].title-%>
+                        </a></h3>
+                      <p>
+                        <%- expired[i].description-%>
+                      </p>
+                      <div class="trainer d-flex justify-content-between align-items-center">
+                        <div class="trainer-profile d-flex align-items-center">
+                          <img src="assets/img/trainers/trainer-1.jpg" class="img-fluid" alt=""
+                            style="max-width: 30px;max-height: 30px;">
+                          <span>Rated : </span>
+                        </div>
+                        <div class="trainer-rank d-flex align-items-center">
+                          <% for(let rating=0; rating < expired[i].averageRating; rating++){ %>
+                            <span><i class="bx bxs-star"></i></span>
+      
+                            <% } %>
+                              <% for(let j=5 - expired[i].averageRating; j> 0; j--){ %>
+                                <span><i class="bx bx-star"></i></span>
+                                <% } %>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div> <!-- End Course Item-->
+                <% } %>
+            </div>
+      
+          </div>
+        </section>
+        <% } %>
   </main>
   <!-- End #main -->
 

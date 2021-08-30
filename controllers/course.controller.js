@@ -2,6 +2,7 @@ const User = require('../models/user.js');
 const Course = require('../models/course.model');
 const Video = require('../models/video.model');
 const Review = require('../models/review.model');
+const CourseCompletion = require('../models/courseCompletion.model');
 
 // route        GET /courses
 // access       Public 
@@ -24,21 +25,48 @@ exports.getCourses = function(req, res){
     })
 };
 
-exports.createCourse = function(req, res){
-    const createRes = Course.create(req.body);
-    console.log(req.body);
-    // if(!createRes){
-    //     res.status(400).json({
-    //         success: false,
-    //         data: null
-    //     });
-    // }
+// exports.createCourse = function(req, res){
+//     const createRes = Course.create(req.body);
+//     console.log(req.body);
+//     // if(!createRes){
+//     //     res.status(400).json({
+//     //         success: false,
+//     //         data: null
+//     //     });
+//     // }
 
-    res.status(201).json({
-        success: true,
-   //     data: createRes
-    });
-};
+//     res.status(201).json({
+//         success: true,
+//    //     data: createRes
+//     });
+// };
+
+
+// route        POST /courses/search
+// access       Public
+// desc         search for courses
+exports.searchCourses = async(req, res) => {
+    let login = false;
+    if(req.user){
+        login = true;
+    }
+
+    try{
+        const results = await Course.find({$or:[{ title: {'$regex': req.query.search, '$options' : 'i' }},
+           { description: {'$regex': req.query.search, '$options' : 'i' }} 
+        ]});
+  
+        return res.render('courses', {
+            results,
+            login
+        })
+
+    } catch (err){
+        console.log(err);
+        return res.redirect('/courses');
+    }
+}
+
 
 // route        GET /courses/:courseid
 // access       Public
@@ -49,6 +77,8 @@ exports.getSingleCourse = async(req, res) => {
     let login = false;
     let courseID = req.params.courseid;
     let user;
+    let courseExpired = false;
+    
 
     if(req.user){
         user = await User.findById(req.user.id);
@@ -60,6 +90,17 @@ exports.getSingleCourse = async(req, res) => {
         login= true;
         if(user.courses.includes(req.params.courseid)){
             bought = true;
+
+            const status = await CourseCompletion.findOne({
+                user: req.user.id,
+                course: req.params.courseid
+            });
+            if(status){
+                if(status.expiresOn.getTime() < Date.now()){
+                    courseExpired = true;
+                    console.log("expired: " + courseExpired);
+                }
+            }
         }
     }
 
@@ -93,7 +134,8 @@ exports.getSingleCourse = async(req, res) => {
             reviewUsers,
             login,
             bought,
-            courseid: courseID
+            courseid: courseID,
+            courseExpired
         });
     }).catch(err => {
         console.log(err);
