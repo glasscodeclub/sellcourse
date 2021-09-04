@@ -4,6 +4,8 @@ const Video = require('../models/video.model');
 const Review = require('../models/review.model');
 const CourseCompletion = require('../models/courseCompletion.model');
 
+const moment = require('moment');
+
 // route        GET /courses
 // access       Public 
 // desc         Fetch all courses
@@ -78,9 +80,10 @@ exports.getSingleCourse = async(req, res) => {
     let courseID = req.params.courseid;
     let user;
     let courseExpired = false;
-    
+    var expiresOn;
 
-    if(req.user){
+    try{
+        if(req.user){
         user = await User.findById(req.user.id);
         
         if(!user){
@@ -99,6 +102,9 @@ exports.getSingleCourse = async(req, res) => {
                 if(status.expiresOn.getTime() < Date.now()){
                     courseExpired = true;
                     console.log("expired: " + courseExpired);
+                }
+                else{
+                    expiresOn = await moment(status.expiresOn).format('MM/DD/YYYY');
                 }
             }
         }
@@ -135,11 +141,16 @@ exports.getSingleCourse = async(req, res) => {
             login,
             bought,
             courseid: courseID,
-            courseExpired
+            courseExpired,
+            expiresOn
         });
     }).catch(err => {
         console.log(err);
         return res.redirect('/courses');
     })
+    } catch(err){
+        console.log(err);
+        return res.redirect('/courses');
+    }
 }
 

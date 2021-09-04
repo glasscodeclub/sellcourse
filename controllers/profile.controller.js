@@ -97,73 +97,78 @@ exports.myCourses = async(req, res) => {
     }
 
 
-    let course = await Course.findById(req.params.courseid);
+    try {
+        let course = await Course.findById(req.params.courseid);
 
-    if(!course){
-        return res.redirect('/courses');
-    }
-
-    // check for validity
-    const validity = await CourseCompletion.findOne({
-        user: req.user.id,
-        course: req.params.courseid
-    })
-
-    if(validity){
-        if(validity.expiresOn.getTime() < Date.now()){
-            console.log(validity.expiresOn.getTime() + " is smaller than " + Date.now());
-            return res.redirect('/profile')
-        } 
-        else{
-            // console.log("Valid")
+        if(!course){
+            return res.redirect('/courses');
         }
-    }
 
-    const reviewUsers = []
-    const reviews = await Review.find({course: req.params.courseid}).sort({date: 'desc'}).limit(5);
-    if(reviews){
-        for(let i = 0; i < reviews.length; i++){
-            reviewUsers.push(await User.findById(reviews[i].user, 'username'));
+        // check for validity
+        const validity = await CourseCompletion.findOne({
+            user: req.user.id,
+            course: req.params.courseid
+        })
+
+        if(validity){
+            if(validity.expiresOn.getTime() < Date.now()){
+                console.log(validity.expiresOn.getTime() + " is smaller than " + Date.now());
+                return res.redirect('/profile')
+            } 
+            else{
+                // console.log("Valid")
+            }
         }
-    }
 
-    // certificate completion
-    let certAvailable = false;
-    const status = await CourseCompletion.findOne({
-        user: req.user.id,
-        course: req.params.courseid
-    });
-    if(status && status.watchPercentage > 90){
-        certAvailable = true;
-    }
-
-    
-    let playlist = []; 
-    course.videos.forEach(vid => {
-       playlist.push(Video.findById(vid)) ;
-    })
-    Promise.allSettled(playlist).then((doc) => {
-        let data=[];
-        for(let i=0;i<doc.length;++i){
-            data.push(doc[i].value)  
+        const reviewUsers = []
+        const reviews = await Review.find({course: req.params.courseid}).sort({date: 'desc'}).limit(5);
+        if(reviews){
+            for(let i = 0; i < reviews.length; i++){
+                reviewUsers.push(await User.findById(reviews[i].user, 'username'));
+            }
         }
-        res.render('coursePlayer', {
-            err: false,
-            messages: null,
-            course,
-            playlist:data,
-            reviews,
-            reviewUsers,
-            login,
-            role,
-            rev,
-            certAvailable,
-            status
+
+        // certificate completion
+        let certAvailable = false;
+        const status = await CourseCompletion.findOne({
+            user: req.user.id,
+            course: req.params.courseid
         });
-    }).catch(err => {
-        console.log(err);
-        res.redirect('/');
+        if(status && status.watchPercentage > 90){
+            certAvailable = true;
+        }
+
+        
+        let playlist = []; 
+        course.videos.forEach(vid => {
+        playlist.push(Video.findById(vid)) ;
+        })
+        Promise.allSettled(playlist).then((doc) => {
+            let data=[];
+            for(let i=0;i<doc.length;++i){
+                data.push(doc[i].value)  
+            }
+            res.render('coursePlayer', {
+                err: false,
+                messages: null,
+                course,
+                playlist:data,
+                reviews,
+                reviewUsers,
+                login,
+                role,
+                rev,
+                certAvailable,
+                status
+            });
+        }).catch(err => {
+            console.log(err);
+            res.redirect('/');
     })
+    } catch(err){
+        console.log(err);
+        return res.redirect('/')
+    }
 }
 
 // route        POST /profile/mycourses/:courseid 
@@ -230,91 +235,96 @@ exports.courseCertificate = async(req, res) => {
     if(!req.user){
         return res.redirect('/');
     }
-    const courseStatus = await CourseCompletion.findOne({
-        user: req.user.id,
-        course: req.params.courseid
-    })
+    try{
+        const courseStatus = await CourseCompletion.findOne({
+            user: req.user.id,
+            course: req.params.courseid
+        })
 
-    const course = await Course.findById(req.params.courseid);
+        const course = await Course.findById(req.params.courseid);
 
-    if(!courseStatus ||!course){
-        return res.redirect('back');
-    }
-    else if(courseStatus.watchPercentage > 90){
-        const path3 = path.join(__dirname, '..', 'data', `${req.user.id}_${req.params.courseid}.pdf`);
-        
-        
-        if(courseStatus.certificate.uuid && courseStatus.certificate.path && fs.existsSync(courseStatus.certificate.path)){
-            return res.sendFile(`${req.user.id}_${req.params.courseid}.pdf`, {
-                root: './data'
-            });
+        if(!courseStatus ||!course){
+            return res.redirect('back');
         }
-        
-        try{            
-            const pdfDoc = await PDFDocument.load(fs.readFileSync('./data/testTemplate.pdf'));
-
-            const publisher = await User.findById(course.publisher);
-
-            const pages = pdfDoc.getPages();
-            const firstPage = pages[0];
-
-            courseStatus.certificate.path = path3;
-            courseStatus.certificate.uuid = nanoid();
-            await courseStatus.save();
-
-            firstPage.drawText("Harsimran Singh", {
-                x: 270,
-                y: 250,
-                size: 65,
-                color: rgb(0.2, 0.84, 0.67),
-            });
-
-            firstPage.drawText('ID: ' + courseStatus.certificate.uuid, {
-                x: 520,
-                y: 550,
-                size: 15,
-                color: rgb(0.2, 0.84, 0.67),
-            });
-
-            firstPage.drawText(course.title, {
-                x: 410,
-                y: 210,
-                size: 20,
-                color: rgb(0.2, 0.84, 0.67),
-            });
-
-            firstPage.drawText(publisher.username, {
-                x: 95,
-                y: 210,
-                size: 20,
-                color: rgb(0.2, 0.84, 0.67),
-            });
-
-            firstPage.drawText("Verified", {
-                x: 100,
-                y: 115,
-                size: 20,
-                color: rgb(0.2, 0.84, 0.67),
-            });
-            fs.writeFileSync(path3, await pdfDoc.save());
-
-            if(fs.existsSync(path3)){
+        else if(courseStatus.watchPercentage > 90){
+            const path3 = path.join(__dirname, '..', 'data', `${req.user.id}_${req.params.courseid}.pdf`);
+            
+            
+            if(courseStatus.certificate.uuid && courseStatus.certificate.path && fs.existsSync(courseStatus.certificate.path)){
                 return res.sendFile(`${req.user.id}_${req.params.courseid}.pdf`, {
                     root: './data'
                 });
-            } else {
-                courseStatus.certificate = undefined;
-                courseStatus.save();
             }
             
+            try{            
+                const pdfDoc = await PDFDocument.load(fs.readFileSync('./data/testTemplate.pdf'));
+
+                const publisher = await User.findById(course.publisher);
+
+                const pages = pdfDoc.getPages();
+                const firstPage = pages[0];
+
+                courseStatus.certificate.path = path3;
+                courseStatus.certificate.uuid = nanoid();
+                await courseStatus.save();
+
+                firstPage.drawText(req.user.username, {
+                    x: 270,
+                    y: 250,
+                    size: 65,
+                    color: rgb(0.2, 0.84, 0.67),
+                });
+
+                firstPage.drawText('ID: ' + courseStatus.certificate.uuid, {
+                    x: 520,
+                    y: 550,
+                    size: 15,
+                    color: rgb(0.2, 0.84, 0.67),
+                });
+
+                firstPage.drawText(course.title, {
+                    x: 410,
+                    y: 210,
+                    size: 20,
+                    color: rgb(0.2, 0.84, 0.67),
+                });
+
+                firstPage.drawText(publisher.username, {
+                    x: 95,
+                    y: 210,
+                    size: 20,
+                    color: rgb(0.2, 0.84, 0.67),
+                });
+
+                firstPage.drawText("Verified", {
+                    x: 100,
+                    y: 115,
+                    size: 20,
+                    color: rgb(0.2, 0.84, 0.67),
+                });
+                fs.writeFileSync(path3, await pdfDoc.save());
+
+                if(fs.existsSync(path3)){
+                    return res.sendFile(`${req.user.id}_${req.params.courseid}.pdf`, {
+                        root: './data'
+                    });
+                } else {
+                    courseStatus.certificate = undefined;
+                    courseStatus.save();
+                }
+                
+            }
+            catch(err){
+                console.error(err)
+                console.log(err)
+            }
         }
-        catch(err){
-            console.error(err)
-            console.log(err)
+        else{
+            return res.redirect('/');
         }
-    }
-    else{
-        return res.redirect('/');
+    } catch(err){
+        console.log(err)
+        return res.redirect('/')
     }
    
 }

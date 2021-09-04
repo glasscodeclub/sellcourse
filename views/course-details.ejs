@@ -465,8 +465,9 @@
                   padding: 30px;
                 " class="member-content">
                 <h4>Shareable Certificate</h4>
-                <p>
+                <p> 
                  Certificate can be generated, shared and verified by th user as well as other people using the verify certificate option
+
                 </p>
               </div>
             </div>
@@ -479,7 +480,11 @@
                 " class="member-content">
                 <h4>Valid for 6 months</h4>
                 <p>
+                  <% if(login == true){ %> 
+                  Your course is valid till <%-expiresOn%>
+                  <% } else{ %>
                   The course is valid for 6 months from the date of purchase, this is to ensure learning at proper pace and you can renew your course once it expires
+                  <% } %>
                 </p>
               </div>
             </div>
