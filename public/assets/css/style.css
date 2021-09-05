@@ -518,7 +518,7 @@ h6 {
 # Sections General
 --------------------------------------------------------------*/
 section {
-  padding: 60px 0;
+  padding: 40px 0;
   overflow: hidden;
 }
 
@@ -563,7 +563,7 @@ section {
 
 .breadcrumbs {
   margin-top: 73px;
-  text-align: center;
+  text-align: start;
   background: #5fcf80;
   padding: 30px 0;
   color: #fff;
@@ -1949,6 +1949,12 @@ p.learn-more {
   color: black;
 }
 
+@media screen and (max-width: 450px) {
+  #disappear {
+    display: none;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .bio-desk img {
     width: 100%;
@@ -2266,6 +2272,15 @@ select.form-control:focus::-ms-value {
   background: #eef0ef;
   padding: 30px 20px;
 }
+.sidebar-container-hidden {
+  display: none;
+}
+
+@media screen and (max-width: 450px) {
+  .sidebar-container-hidden {
+    display: block !important;
+  }
+}
 
 .sidebar-render {
   box-sizing: border-box;
@@ -2312,7 +2327,6 @@ select.form-control:focus::-ms-value {
 .sidebar-container-content-group {
   padding-top: 10px;
   box-sizing: border-box;
-  border-bottom: 1px solid #b4b4b4;
 }
 
 .sidebar-container-purchase-section {
@@ -2478,6 +2492,14 @@ select.form-control:focus::-ms-value {
   }
 
   .wrapper {
+    width: 120%;
+  }
+
+  #footer {
+    width: 120%;
+  }
+
+  #main {
     width: 120%;
   }
 

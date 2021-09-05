@@ -5,10 +5,10 @@ const Review = require('../models/review.model');
 const CourseCompletion = require('../models/courseCompletion.model');
 
 const { PDFDocument, rgb, degrees, StandardFonts } = require('pdf-lib');
-const fetch = require('node-fetch')
 const path = require('path');
 const fs = require('fs');
 const { nanoid } = require('nanoid');
+const moment = require('moment');
 //const moment = require('moment');
 
 // route        GET /profile
@@ -57,7 +57,8 @@ exports.getUser = async(req, res) =>{
     return res.render('profile', {
         results: courseDetails,
         login,
-        expired
+        expired,
+        username
     }); 
 }
 
@@ -68,6 +69,9 @@ exports.myCourses = async(req, res) => {
     var role;
     let login = false;
     let rev = false;
+    var expiresOn;
+    let certAvailable = false;
+
     if(req.user){
         const user = await User.findById(req.user.id);
         if(!user)
@@ -111,13 +115,17 @@ exports.myCourses = async(req, res) => {
         })
 
         if(validity){
+            if(validity.watchPercentage > 90){
+                certAvailable = true;
+            }
             if(validity.expiresOn.getTime() < Date.now()){
-                console.log(validity.expiresOn.getTime() + " is smaller than " + Date.now());
                 return res.redirect('/profile')
             } 
             else{
-                // console.log("Valid")
+                expiresOn = await moment(validity.expiresOn).format('DD/MM/YYYY');
             }
+            
+
         }
 
         const reviewUsers = []
@@ -129,14 +137,8 @@ exports.myCourses = async(req, res) => {
         }
 
         // certificate completion
-        let certAvailable = false;
-        const status = await CourseCompletion.findOne({
-            user: req.user.id,
-            course: req.params.courseid
-        });
-        if(status && status.watchPercentage > 90){
-            certAvailable = true;
-        }
+        
+        
 
         
         let playlist = []; 
@@ -159,7 +161,8 @@ exports.myCourses = async(req, res) => {
                 role,
                 rev,
                 certAvailable,
-                status
+                validity,
+                expiresOn
             });
         }).catch(err => {
             console.log(err);

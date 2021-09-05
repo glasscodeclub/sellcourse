@@ -41,8 +41,24 @@
 
   <!-- ======= Breadcrumbs ======= -->
   <div class="breadcrumbs about-mbl-view" data-aos="fade-in" style="background-color: #273036;" >
-    <div class="container" style="padding: 30px;">
-      <h2 ><%- course.title -%></h2> 
+    <div class="container" style="padding: 20px;">
+      <h2 ><%- course.title -%></h2>
+      <h3>
+      
+        <%- publisher -%>
+      </h3>
+      <div class="rating" id="disappear" style="color: white;">
+        Rated : &nbsp;
+        <% course.averageRating=Math.round(course.averageRating) %>
+          <% for(let rating=0; rating < course.averageRating; rating++){ %>
+            <span><i class="bx bxs-star" style="color: white;"></i></span>
+      
+            <% } %>
+              <% for(let j=5 - course.averageRating; j> 0; j--){ %>
+                <span><i class="bx bx-star" style="color: white;"></i></span>
+                <% } %>
+      </div>
+      
       <p>
        <%- course.description %> 
       </p>
@@ -53,29 +69,30 @@
               <div class="buy-box">
                 <div class="buy-box-item price">
                   <div class="price-text">
-                     <h2 style="color: white;">₹<%- course.cost -%></h2> 
-                    <div style="font-size: 1.6rem; line-height: 1; padding: .4rem; margin-right: .8rem;
-                              white-space: nowrap; box-sizing: border-box; color: #73726c;">90% off</div>
+                     <h2 style="color: white; font-size: 50px ;">₹<%- course.cost -%></h2> 
+                    <!-- <div style="font-size: 1.6rem; line-height: 1; padding: .4rem; margin-right: .8rem;
+                              white-space: nowrap; box-sizing: border-box; color: white;">90% off</div> -->
                   </div>
-                  <div class="rating">
+                  <div class="rating" style="color: white;">
+                    Rated : &nbsp;
                     <% course.averageRating = Math.round(course.averageRating) %>
                     <% for(let rating=0; rating < course.averageRating; rating++){ %>
-                      <span><i class="bx bxs-star"></i></span>
+                      <span><i class="bx bxs-star" style="color: white;"></i></span>
                     
                       <% } %>
                         <% for(let j= 5 - course.averageRating; j > 0; j--){ %>
-                          <span><i class="bx bx-star"></i></span>
+                          <span><i class="bx bx-star" style="color: white;"></i></span>
                           <% } %>
                   </div>
-
+    
                 </div>
                 <div class="buy-box-item add-to-cart-button" style="max-width: 300px; ">
                   <% if(bought==true && login==true && courseExpired == false){ %>
-                     <a href="/profile" > <button style="background: #5fcf80; color: black;">Purchased</button> </a>
+                     <a href="/profile" > <button style="background: #5fcf80; color: white;">Purchased</button> </a>
                     <% } else if(bought==false && login==false && courseExpired == false){ %>
-                       <a href="/login"> <button style="background: #5fcf80; color: black;"> Login to Buy</button>  </a>
+                       <a href="/login"> <button style="background: #5fcf80; color: white;"> Login to Buy</button>  </a>
                       <% } else if(bought==false && login==true && courseExpired == false) { %>
-                        <a href="/checkout/<%-courseid%>"><button style="background: #5fcf80; color: black;">Buy Now</button></a>
+                        <a href="/checkout/<%-courseid%>"><button style="background: #5fcf80; color: white;">Buy Now</button></a>
                         <br>
                         <form action="/checkout/<%-courseid%>" method="get">
                           <input type="text" name="discount" placeholder="code"
@@ -92,7 +109,7 @@
                   
                   
                         <% } else if(bought == true && login == true && courseExpired == true) { %>
-                          <a href="/checkout/<%-courseid%>"><button style="background: #5fcf80; color: black;">Renew</button></a>
+                          <a href="/checkout/<%-courseid%>"><button style="background: #5fcf80; color: white;">Renew</button></a>
                           <br>
                           <form action="/checkout/<%-courseid%>" method="get">
                             <input type="text" name="discount" placeholder="code"
@@ -128,7 +145,7 @@
       <section id="course-details" class="course-details">
         <div class="container" data-aos="fade-up" style="padding: 1.6rem 2.4rem;">
           <div class="row">
-            <div class="background-img">
+            <div class="background-img" style="margin: 0px !important;">
               <img
                 src="<%-course.imageUrl%>"
                 class="img-fluid" alt="" />
@@ -406,11 +423,11 @@
               <p>Meet your teacher</p>
             </div>
               <div class="customer-info align-items-center" style="background-color: #5fcf80; color: black; padding: 10px 15px;
-    margin-bottom: 15px; border-radius: 5px; max-width: 350px; margin-left:50px;" >
+ border-radius: 5px; max-width: 350px;" >
                 
                 <div class="trainer-profile d-flex align-items-center">
                   <img src="assets/img/trainers/trainer-1.jpg" class="img-fluid" alt="" style="max-width: 80px;max-height: 80px; border-radius: 5px;">
-                  <span> &nbsp; Publisher </span>
+                  <span style="color: white;"> &nbsp; <%- publisher %> </span>
                 </div>
               </div>
 
@@ -616,11 +633,11 @@
                       <div class="buy-box-item add-to-cart-button">
                         
                           <% if(bought == true && login== true && courseExpired == false){ %>
-                          <a href="/profile" style="color: white;"><button style="background: #5fcf80; color: black;"> Purchased </button> </a> 
+                          <a href="/profile" style="color: white;"><button style="background: #5fcf80; color: white;"> Purchased </button> </a> 
                           <% } else if(bought == false && login == false && courseExpired == false){ %>
-                           <a href="/login" style="color: white;"> <button style="background: #5fcf80; color: black;">Login to Buy </button> </a> 
+                           <a href="/login" style="color: white;"> <button style="background: #5fcf80; color: white;">Login to Buy </button> </a> 
                           <% } else if(bought == false && login == true && courseExpired == false) { %>
-                            <a href="/checkout/<%-courseid%>"><button style="background: #5fcf80; color: black;">Buy Now</button></a>
+                            <a href="/checkout/<%-courseid%>"><button style="background: #5fcf80; color: white;">Buy Now</button></a>
                             <br>
                             <form action="/checkout/<%-courseid%>" method="get">
                               <input type="text" name="discount" placeholder="code" style="max-width: 160px; margin-right: 5px; padding: 7px 10px; margin-top: 15px; border: 2px solid #73726c; border-radius: 5px;">
@@ -637,7 +654,7 @@
                               
                            
                           <% } else if(bought == true && login == true && courseExpired == true) { %>
-                            <a href="/checkout/<%-courseid%>"><button style="background: #5fcf80; color: black;">Renew </button></a>
+                            <a href="/checkout/<%-courseid%>"><button style="background: #5fcf80; color: white;">Renew </button></a>
                             <br>
                             <form action="/checkout/<%-courseid%>" method="get">
                               <input type="text" name="discount" placeholder="code"

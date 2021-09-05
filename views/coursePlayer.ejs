@@ -39,10 +39,22 @@
 
 
     <!-- ======= Breadcrumbs ======= -->
-    <div class="breadcrumbs about-mbl-view" data-aos="fade-in">
-        <div class="container" style="padding: 30px;">
+    <div class="breadcrumbs about-mbl-view" data-aos="fade-in" style="background-color: #273036">
+        <div class="container" style="padding: 15px;  ">
             
             <h2><%- course.title -%> </h2>
+            <div class="rating" style="color: white;">
+                Rated : &nbsp;
+                <% course.averageRating=Math.round(course.averageRating) %>
+                    <% for(let rating=0; rating < course.averageRating; rating++){ %>
+                        <span><i class="bx bxs-star" style="color: white;"></i></span>
+            
+                        <% } %>
+                            <% for(let j=5 - course.averageRating; j> 0; j--){ %>
+                                <span><i class="bx bx-star" style="color: white;"></i></span>
+                                <% } %>
+            </div>
+            <br>
             <p>
             <%- course.description -%>
             </p>
@@ -55,7 +67,7 @@
             <section id="course-details" class="course-details">
                 <div class="container" data-aos="fade-up">
                     <div class="row">
-                        <div class="background-img">
+                        <div class="background-img" style="margin: 0px !important;">
                             <video  width="100%" controls id="current_video" 
                             data-vid="<%-playlist[0].id%>" onended="updateStatus(this)" >
                                 <source  src="/video/sample"  type="video/mp4">
@@ -86,6 +98,52 @@
                                     from scratch.
                                 </p>
                             </div>
+
+                                    <div style="max-height: 70vh; height: auto; box-shadow: none; border-bottom: none; background-color: #eef0ef;"
+                                        class="sidebar-container-hidden">
+                                        <div class="playlist">
+                                            <h2 style="text-align: center;">
+                                                <%- course.title -%>
+                                            </h2>
+                            
+                            
+                                        </div>
+                                        <div class="sidebar-container-content-group">
+                                            <% let bool2=false; %>
+                                                <div style="padding: 10px;" class='cta'>
+                                                    <h4 style="padding-left: 20px; margin-left: 15px;">
+                                                        <%- playlist.length -%> &nbsp; Lessons
+                                                    </h4>
+                                                    <ul>
+                                                        <% for(let i=0; i < playlist.length; i++){ %>
+                                                            <% bool2=false %>
+                                                                <% for(let j=0; j < validity.videos.length; j++){ %>
+                                                                    <% if(validity.videos[j]==playlist[i]._id){ %>
+                                                                        <% bool2=true; break; %>
+                                                                            <% } %>
+                                                                                <% } %>
+                                                                                    <% if(bool2==true){ %>
+                                                                                        <li style="cursor: pointer; color: #5fcf80"
+                                                                                            id="<%= playlist[i]._id %>" onclick="changeVideo(this)">
+                                                                                            <%- i+1 %>. &nbsp;
+                                                                                                <%- playlist[i].name -%>
+                                                                                                    <% } else { %>
+                                                                                        <li style="cursor: pointer;" id="<%= playlist[i]._id %>"
+                                                                                            onclick="changeVideo(this)">
+                                                                                            <%- i+1 %>. &nbsp;
+                                                                                                <%- playlist[i].name -%>
+                                                                                                    <% } %>
+                                                                                                        <% } %>
+                                                    </ul>
+                                                </div>
+                                        </div>
+                            
+                                    </div>
+
+<!-- div for playlist end-->
+
+
+
                         </div>
 
                     </div>
@@ -190,6 +248,72 @@
                 </div>
             </section>
             <!-- end description section -->
+
+
+            <section id="perks" class="perks">
+                <div class="container" data-aos="fade-up">
+                    <div class="row" data-aos="zoom-in" data-aos-delay="100">
+                        <div class="section-title" style="padding: 1.6rem 2.4rem;">
+            
+                            <p>Important Details</p>
+                        </div>
+                        <div class="box col-lg-4 col-md-6 col-sm-12 d-flex align-items-stretch">
+                            <div style="
+                              background-color: #5fcf80;
+                              color: aliceblue;
+                              text-align: center;
+                              padding: 30px;
+                            " class="member-content">
+                                <h4>Shareable Certificate</h4>
+                                <p>
+                                    <%if(certAvailable==true){%>
+                                        <a style="color: white;" href="http://localhost:3000/verify/<%-validity.certificate.uuid%>">
+                                        Click here and copy the link from the address bar
+                                        </a>
+                                        
+                                    <% } else { %>
+                                    Available on course completion,
+                                        <% } %>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="box col-lg-4 col-md-6 col-sm-12 d-flex align-items-stretch">
+                            <div style="
+                              background-color: #5fcf80;
+                              color: aliceblue;
+                              text-align: center;
+                              width: 100%;
+                              padding: 30px;"
+                              class="member-content">
+                                <h4>Valid for 6 months</h4>
+                                <p>
+                                    <% if(login==true){ %>
+                                        Your course is valid till <%-expiresOn%>
+                                            <% } else{ %>
+                                                The course is valid for 6 months from the date of purchase, this is to ensure
+                                                learning at proper pace and you can renew your course once it expires
+                                                <% } %>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="box col-lg-4 col-md-6 col-sm-12 d-flex align-items-stretch">
+                            <div style="
+                              background-color: #5fcf80;
+                              color: aliceblue;
+                              text-align: center;
+                              padding: 30px;
+                            " class="member-content">
+                                <h4>Add a review</h4>
+                                <p>
+                                    Let others know about your views on the course and share insights and gather data and make
+                                    purchases accordingly
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- End Perks Section -->
 
 
             
@@ -310,8 +434,8 @@
                                 <ul>
                                     <% for(let i=0; i < playlist.length; i++){ %>
                                         <% bool = false %>
-                                        <% for(let j = 0; j < status.videos.length; j++){ %>
-                                            <% if(status.videos[j] == playlist[i]._id){ %>
+                                        <% for(let j = 0; j < validity.videos.length; j++){ %>
+                                            <% if(validity.videos[j] == playlist[i]._id){ %>
                                                 <% bool = true; break;  %>
                                             <% } %>
                                         <% } %>

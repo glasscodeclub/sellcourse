@@ -104,7 +104,7 @@ exports.getSingleCourse = async(req, res) => {
                     console.log("expired: " + courseExpired);
                 }
                 else{
-                    expiresOn = await moment(status.expiresOn).format('MM/DD/YYYY');
+                    expiresOn = await moment(status.expiresOn).format('DD/MM/YYYY');
                 }
             }
         }
@@ -113,6 +113,9 @@ exports.getSingleCourse = async(req, res) => {
     if(!course){
         res.redirect('/courses');
     }
+
+    const publisher = await User.findById(course.publisher);
+
 
     const reviewUsers = []
     const reviews = await Review.find({course: req.params.courseid}).sort({date: 'desc'}).limit(5);
@@ -142,7 +145,8 @@ exports.getSingleCourse = async(req, res) => {
             bought,
             courseid: courseID,
             courseExpired,
-            expiresOn
+            expiresOn,
+            publisher: publisher.username
         });
     }).catch(err => {
         console.log(err);
