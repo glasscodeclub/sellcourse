@@ -116,7 +116,7 @@ exports.myCourses = async(req, res) => {
 
         if(validity){
             if(validity.watchPercentage > 90){
-                certAvailable = true;
+                certAvailable = true; // generate certificate?
             }
             if(validity.expiresOn.getTime() < Date.now()){
                 return res.redirect('/profile')
@@ -305,6 +305,16 @@ exports.courseCertificate = async(req, res) => {
                     size: 20,
                     color: rgb(0.2, 0.84, 0.67),
                 });
+
+                const verificationLink = `${req.protocol}://${req.get('host')}/verify/${courseStatus.certificate.uuid}`; 
+
+                firstPage.drawText("Verification Link: " + verificationLink, {
+                    x: 300,
+                    y: 20,
+                    size: 10,
+                    color: rgb(0.2, 0.84, 0.67),
+                });
+
                 fs.writeFileSync(path3, await pdfDoc.save());
 
                 if(fs.existsSync(path3)){

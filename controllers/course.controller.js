@@ -11,6 +11,7 @@ const moment = require('moment');
 // desc         Fetch all courses
 exports.getCourses = function(req, res){
     let login = false;
+    console.log(`${req.protocol}://${req.get('host')}/forgot/`)
     if(req.user){
         login= true;
     }

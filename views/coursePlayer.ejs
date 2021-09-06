@@ -267,7 +267,8 @@
                                 <h4>Shareable Certificate</h4>
                                 <p>
                                     <%if(certAvailable==true){%>
-                                        <a style="color: white;" href="http://localhost:3000/verify/<%-validity.certificate.uuid%>">
+                                        
+                                        <a style="color: white;" href="/verify/<%=validity.certificate.uuid%>">
                                         Click here and copy the link from the address bar
                                         </a>
                                         

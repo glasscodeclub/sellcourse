@@ -46,12 +46,13 @@
         <h2><%- username %></h2>
       </div>
       <div class="container">
-        <button style="font-size: 14px; background: #5fcf8131;
-                       padding: 7px 14px; color: #5fcf80;
-                       margin-top: 10px; border: 1px solid #5fcf80;
-                       border-radius: 10px;">
-         Reset Password
-        </button>
+        <a href="/forgot"><button style="font-size: 14px; background: #5fcf8131;
+                               padding: 7px 14px; color: #5fcf80;
+                               margin-top: 10px; border: 1px solid #5fcf80;
+                               border-radius: 10px;">
+          Reset Password
+        </button></a>
+        
       </div>
     </div>
     <!-- End Breadcrumbs -->
@@ -143,13 +144,14 @@
             <div class="row" data-aos="zoom-in" data-aos-delay="100">
       
               <% for(var i=0; i < expired.length; i++){ %>
+
       
                 <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
                   <div class="course-item">
                     <img src="<%-results[i].imageUrl%>" class="img-fluid" alt="...">
                     <div class="course-content" style="background-color: rgba(0,0,0,0.1);">
                       <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h4><%-results[i].tag -%></h4>
+                        <h4><%=expired[i].tag %></h4>
                         <p class="price" style="color:#721c24;">Expired
                         </p>
                       </div>
