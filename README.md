@@ -24,11 +24,33 @@ RAZ_ID=<razorpay id>
 RAZ_SEC=<razorpay secret>
 ```
 
+## Other Setup
+
+1. Create a folder called data and add a file called `testTemplate.pdf` which is your certificate generation template
+
+2. Videos go inside a folder called `video` with their names being their mongoDB ObjectID
+
+3. Discount codes can be created by creating a file called `discountcodes.json` with the following format
+
+```
+[
+    {
+    "code":"<coupon code>",
+    "disPercent":"<discount in percent without the sign>",
+    "maxValue":"<max discount value in rupees>"
+    },
+    {
+        ...
+    }
+]
+
+```
+
 ## Running the server
 
 Open up your console and type `npm start` then open up a browser and navigate to `localhost:3000` or `localhost:<port number>` as per config
 
 ## Tasks
 
-- [ ] Demo Video
-- [ ] Minor frontend changes
+- [x] Demo Video
+- [x] Minor frontend changes
