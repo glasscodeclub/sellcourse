@@ -50,7 +50,6 @@ RAZ_SEC=<razorpay secret>
 
 Open up your console and type `npm start` then open up a browser and navigate to `localhost:3000` or `localhost:<port number>` as per config
 
-## Tasks
+## Links
 
-- [x] Demo Video
-- [x] Minor frontend changes
+Demo video - https://drive.google.com/file/d/1Z-z4h1RlJN4enGcsTvwDW2Za4_Nn6IWT/view?usp=sharing
