@@ -53,3 +53,5 @@ Open up your console and type `npm start` then open up a browser and navigate to
 ## Links
 
 Demo video - https://drive.google.com/file/d/1Z-z4h1RlJN4enGcsTvwDW2Za4_Nn6IWT/view?usp=sharing
+Presentation - https://drive.google.com/file/d/1B0NZEURp5X5OcRFc4_vJ_GQuwUiXetz6/view?usp=sharing
+Postman Docs - https://documenter.getpostman.com/view/15044944/U16nK43R
